@@ -1,21 +1,31 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { createMirror } from "../objects/mirror";
 import { createCeiling } from "./ceiling";
-import { createFloor } from "./floor";
-import { createWall } from "./wall";
+import { createFloor, createFloorPhysics } from "./floor";
+import { createWall, createWallPhysics } from "./wall";
 import * as THREE from "three";
 import { createObjectFromGLTF, loadGLTFModel } from "../objects/model";
+import * as CANNON from 'cannon-es';
 
-const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
+const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
     const leftWall = createWall(20, 10, -10, 5, 0, 0, Math.PI / 2, 0, textureLoader);
     scene.add(leftWall);
 
+    const leftWallPhysics = createWallPhysics(0, -10, 5, 0, 0, Math.PI / 2, 0);
+    world.addBody(leftWallPhysics);
+
     const rightWall = createWall(20, 10, 10, 5, 0, 0, -Math.PI / 2, 0, textureLoader);
     scene.add(rightWall);
 
+    const rightWallPhysics = createWallPhysics(0, 10, 5, 0, 0, -Math.PI / 2, 0);
+    world.addBody(rightWallPhysics);
+
     const backWall = createWall(20, 10, 0, 5, -10, 0, 0, 0, textureLoader);
     scene.add(backWall);
+
+    const backWallPhysics = createWallPhysics(0, 0, 5, -10, 0, 0, 0);
+    world.addBody(backWallPhysics);
 }
 
 const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
@@ -24,9 +34,12 @@ const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) =>
     scene.add(ceiling);
 }
 
-const setupFloor = (scene: THREE.Scene) => {
+const setupFloor = (scene: THREE.Scene, world: CANNON.World) => {
     const floor = createFloor(20, 20, 0, 0, 0, -Math.PI / 2, 0, 0, 1, 1, 1);
     scene.add(floor);
+
+    const floorPhysics = createFloorPhysics(0, 0, 0, 0, -Math.PI / 2, 0, 0);
+    world.addBody(floorPhysics);
 }
 
 const setupMirrors = (scene: THREE.Scene) => {
@@ -88,15 +101,15 @@ const setupGymEquipment = async (scene: THREE.Scene, loader: GLTFLoader) => {
     catch (e) {
         console.log(e);
     }
-    
+
 
     console.log("added all objects");
 }
 
-const setupRoom = async (scene: THREE.Scene, loader: GLTFLoader, textureLoader: THREE.TextureLoader) => {
-    setupWalls(textureLoader, scene);
+const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader, textureLoader: THREE.TextureLoader) => {
+    setupWalls(textureLoader, scene, world);
     setupCeiling(textureLoader, scene);
-    setupFloor(scene);
+    setupFloor(scene, world);
     setupMirrors(scene);
     await setupGymEquipment(scene, loader);
 }

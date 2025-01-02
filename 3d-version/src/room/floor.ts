@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
 
 const createFloor = (width: number, height: number, 
     xPos: number, yPos: number, zPos: number,
@@ -18,4 +19,18 @@ const createFloor = (width: number, height: number,
     return floor;
 }
 
-export { createFloor };
+const createFloorPhysics = (mass: number,
+    xPosition: number, yPosition: number, zPosition: number,
+    xRotation: number, yRotation: number, zRotation: number
+) => {
+    const floorBody = new CANNON.Body({
+        mass: mass,
+        shape: new CANNON.Plane(),
+    });
+    floorBody.position.set(xPosition, yPosition, zPosition);
+    floorBody.quaternion.setFromEuler(xRotation, yRotation, zRotation);
+
+    return floorBody;
+}
+
+export { createFloor, createFloorPhysics };

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import * as CANNON from "cannon-es";
 
 // Load the textures
 const STRING_PREFIX = 'vinyl-siding_';
@@ -40,4 +41,18 @@ const createWall = (width: number, height: number,
     return leftWall;
 }
 
-export { createWall };
+const createWallPhysics = ( mass: number,
+    xPosition: number, yPosition: number, zPosition: number,
+    xRotation: number, yRotation: number, zRotation: number
+) => {
+    const wallBody = new CANNON.Body({
+        mass: mass,
+        shape: new CANNON.Plane(),
+    });
+    wallBody.position.set(xPosition, yPosition, zPosition);
+    wallBody.quaternion.setFromEuler(xRotation, yRotation, zRotation);
+
+    return wallBody;
+}
+
+export { createWall, createWallPhysics };

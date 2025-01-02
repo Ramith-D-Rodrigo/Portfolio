@@ -1,15 +1,18 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
+import CannonDebugger from 'cannon-es-debugger';
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { setupKeyControls } from './character/controls';
-import CharacterStateMachine from './character/stateMachine';
-import { IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK } from './character/constants';
 import { setupRoom } from './room/room';
 import { loadCharacter } from './character/utils';
 
 const main = async () => {
     const scene = new THREE.Scene();
+    const world = new CANNON.World();
+    const cannonDebugger = CannonDebugger(scene, world);
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 10, 20); // Move the camera up and back
     
@@ -41,7 +44,7 @@ const main = async () => {
     // scene.add(rectLight);
 
     // Setup the room
-    setupRoom(scene, loader, textureLoader);
+    setupRoom(scene, world, loader, textureLoader);
 
     const keysPressed = new Map<string, boolean>();
     setupKeyControls(keysPressed);
@@ -56,6 +59,9 @@ const main = async () => {
             characterStateMachine.update(delta, keysPressed);
         }
 
+        // Step the physics world
+        world.fixedStep();
+        cannonDebugger.update();
         controls.update(); // Required for damping to work
         renderer.render(scene, camera);
 
