@@ -1,8 +1,12 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { createMirror } from './objects/mirror';
 import { customizeTexture } from './utils/utils';
+import { setupKeyControls } from './character/controls';
+import CharacterStateMachine from './character/stateMachine';
+import { IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK } from './character/constants';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -142,7 +146,6 @@ loader.load(
     './models/gym_assets/dumbbell_rack/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.position.set(-9, 0, -7); // Optional: Position the model
         scene.add(model);
 
@@ -166,7 +169,6 @@ loader.load(
     './models/gym_assets/flat_seat/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.rotation.y = Math.PI / 2;
         model.position.set(0, 0, -5); // Optional: Position the model
         scene.add(model);
@@ -185,7 +187,6 @@ loader.load(
     './models/gym_assets/incline_seat/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.scale.set(1, 1, 1); // Optional: Scale your model
         model.position.set(6.5, 0, -2);
         scene.add(model);
@@ -203,7 +204,6 @@ loader.load(
     './models/gym_assets/mattress/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.position.set(-4, 0, -7); // Optional: Position the model
         model.rotation.y = Math.PI / 2;
         scene.add(model);
@@ -221,7 +221,6 @@ loader.load(
     './models/gym_assets/barbell/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.position.set(7, 0, 5); // Optional: Position the model
         scene.add(model);
     },
@@ -238,7 +237,6 @@ loader.load(
     './models/gym_assets/barbell_weights/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.position.set(9, 0, 8); // Optional: Position the model
         scene.add(model);
     },
@@ -257,7 +255,6 @@ loader.load(
     './models/gym_equipment/scene.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         //find the Bench_press_0 object
         model.traverse((child) => {
             if (child instanceof THREE.Object3D && child.name === 'Bench_press_0') {
@@ -280,7 +277,6 @@ loader.load(
     './models/squat_rack/result.gltf', // Path to your model
     (gltf) => {
         const model = gltf.scene;
-        console.log(model);
         model.scale.set(0.05, 0.05, 0.05); // Optional: Scale your model
         model.position.set(-9, 0, 5);
         scene.add(model);
@@ -293,11 +289,65 @@ loader.load(
     }
 );
 
+const keysPressed = new Map<string, boolean>();
+setupKeyControls(keysPressed);
+
+// Load the FBX model
+let animationMixer: THREE.AnimationMixer | undefined;
+let playerStateMachine: CharacterStateMachine | undefined;
+const fbxLoader = new FBXLoader();
+
+
+const loadCharacter = async () => {
+    const object = await fbxLoader.loadAsync(
+        './models/character/character.fbx',
+        (xhr) => {
+            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+        }
+    );
+
+    object.position.set(0, 0, 0);
+    object.scale.set(0.025, 0.025, 0.025);
+    animationMixer = new THREE.AnimationMixer(object);
+    scene.add(object);
+
+    // Load the animations
+    const animations: string[] = [IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK];
+
+    const animationsMap: Map<string, THREE.AnimationAction> = new Map();
+    for(let i = 0; i < animations.length; i++) {
+        const animationFbx = await fbxLoader.loadAsync(
+            `./models/character/animations/${animations[i]}.fbx`,
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+            }
+        );
+
+        const allAnimations = animationFbx.animations;
+        allAnimations.forEach((clip) => {
+            const action = animationMixer?.clipAction(clip);
+            if (action) {
+                animationsMap.set(animations[i], action);
+            }
+        });
+    }
+
+    playerStateMachine = new CharacterStateMachine(object, animationMixer, camera, controls, animationsMap, 'Idle');
+}
+
+loadCharacter();
+
+const clock = new THREE.Clock();
 const animate = () => {
-    requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+    if(playerStateMachine) {
+        playerStateMachine.update(delta, keysPressed);
+    }
 
     controls.update(); // Required for damping to work
     renderer.render(scene, camera);
+
+    requestAnimationFrame(animate);
 };
 
 animate();
