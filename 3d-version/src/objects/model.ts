@@ -13,7 +13,7 @@ const loadGLTFModel = async (path: string, gltfLoader: GLTFLoader) => {
 const createObjectFromGLTF = (gltf: GLTF, xPos: number, yPos: number, zPos: number,
     xRot: number, yRot: number, zRot: number,
     xScale: number, yScale: number, zScale: number) => {
-    const model = gltf.scene;
+    const model = gltf.scene.clone();
     model.scale.set(xScale, yScale, zScale); // Optional: Scale your model
     model.position.set(xPos, yPos, zPos);
     model.rotation.set(xRot, yRot, zRot);
