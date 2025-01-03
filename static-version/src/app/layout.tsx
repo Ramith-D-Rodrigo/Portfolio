@@ -1,8 +1,10 @@
 import './globals.css';
-import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import MenuBar from './components/MenuBar';
-import Sidebar from './components/SideBar';
+import {Instrument_Sans} from '@next/font/google';
+
+const font = Instrument_Sans();
+
 
 export const metadata = {
   title: 'My Portfolio',
@@ -16,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className={`flex flex-col min-h-screen bg-gray-800 ${font.className}`}>
         <MenuBar/>
         <main className="flex-grow">{children}</main>
         <Footer />
