@@ -4,10 +4,12 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons/faChevronDown";
+import Link from "next/link";
 
 interface DirectoryItem {
     name: string;
     type: "folder" | "file";
+    route?: string;
     children?: DirectoryItem[];
 }
 
@@ -15,45 +17,47 @@ const directoryStructure: DirectoryItem[] = [
     {
         name: "SKILLS",
         type: "folder",
-        children: [{ name: "Summary", type: "file" }],
+        children: [{ name: "Summary", type: "file", route: "/skills" }],
     },
     {
         name: "EDUCATION",
         type: "folder",
         children: [
-            { name: "Summary", type: "file" },
-            { name: "Bachelor's Degree", type: "file" },
-            { name: "High School", type: "file" },
+            { name: "Summary", type: "file", route: "/education" },
+            { name: "Bachelor's Degree", type: "file", route: "/education/bachelor" },
+            { name: "High School", type: "file", route: "/education/high-school" },
         ],
     },
     {
         name: "EXPERIENCE",
         type: "folder",
         children: [
-            { name: "Summary", type: "file" },
-            { name: "Internship", type: "file" },
+            { name: "Summary", type: "file", route: "/experience" },
+            { name: "Internship", type: "file", route: "/experience/internship" },
         ],
     },
     {
         name: "PROJECTS",
         type: "folder",
         children: [
-            { name: "WebApp", type: "file" },
-            { name: "Portfolio", type: "file" },
+            { name: "WebApp", type: "file", route: "/projects/webapp" },
+            { name: "Portfolio", type: "file", route: "/projects/portfolio" },
         ],
     },
     {
         name: "CERTIFICATIONS",
         type: "folder",
-        children: [{ name: "Summary", type: "file" }],
+        children: [{ name: "Summary", type: "file", route: "/certifications" }],
     },
     {
         name: "Contact",
         type: "file",
+        route: "/contact",
     },
     {
         name: "About",
         type: "file",
+        route: "/"
     },
 ];
 
@@ -80,7 +84,7 @@ export default function Sidebar({ onSelectItem }: SidebarProps) {
                 return (
                     <div key={currentPath}>
                         <button
-                            className="text-left w-full px-4 py-2 bg-gray-800 hover:bg-gray-300 flex items-center space-x-2"
+                            className="text-left w-full px-4 py-2 hover:bg-gray-300 flex items-center space-x-2"
                             onClick={() => toggleFolder(currentPath)}
                         >
                             {/* Icon */}
@@ -103,18 +107,23 @@ export default function Sidebar({ onSelectItem }: SidebarProps) {
                 );
             }
             return (
-                <div key={currentPath} className="px-6 py-1 bg-gray-800 hover:bg-gray-100 cursor-pointer text-gray-400">
-                    {item.name}
-                </div>
+                <Link href={item.route as string} key={currentPath}>
+                    <div className="px-6 py-1 hover:bg-gray-100 cursor-pointer text-gray-400">
+                        {item.name}
+                    </div>
+                </Link>
             );
         });
     };
 
     return (
-        <div className="w-64 h-screen bg-gray-800">
-            <h2 className="text-lg font-bold px-4 py-2 bg-gray-800 text-white">
+        <div className="w-64 h-screen">
+            <h2 className="text-lg font-bold px-4 py-2 text-white">
                 EXPLORER
             </h2>
+            <div className="font-bold px-4 py-2 text-white">
+                PORTFOLIO
+            </div>
             <div className="overflow-y-auto h-full">
                 {renderDirectory(directoryStructure)}
             </div>
