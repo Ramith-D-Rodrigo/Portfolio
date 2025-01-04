@@ -19,11 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`flex flex-col h-screen bg-gray-800 ${font.className} overflow-hidden`}>
+      <body className={`flex flex-col h-screen bg-gray-800 ${font.className}`}>
         <MenuBar />
-        <div className="flex flex-grow">
+        <div className="flex flex-grow overflow-hidden">
           {/* Sidebar */}
-          <SideBar/>
+          <SideBar />
 
           {/* Main Content Area */}
           <MainContent renderingPage={children} />
