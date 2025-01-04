@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import {addDynamicIconSelectors } from "@iconify/tailwind";
 
 export default {
   content: [
@@ -14,5 +15,5 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require('tailwind-scrollbar')],
+  plugins: [require("@tailwindcss/typography"), require('tailwind-scrollbar'), addDynamicIconSelectors()],
 } satisfies Config;
