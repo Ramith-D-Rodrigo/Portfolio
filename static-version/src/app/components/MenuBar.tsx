@@ -54,17 +54,17 @@ export default function MenuBar() {
         {/* Resize Button */}
         <button
           title="Resize"
-          className="w-6 h-6 rounded-full bg-green-400 hover:bg-green-500"
+          className="w-4 h-4 rounded-full bg-green-400 hover:bg-green-500"
         />
         {/* Minimize Button */}
         <button
           title="Minimize"
-          className="w-6 h-6 rounded-full bg-yellow-400 hover:bg-yellow-500"
+          className="w-4 h-4 rounded-full bg-yellow-400 hover:bg-yellow-500"
         />
         {/* Close Button */}
         <button
           title="Close"
-          className="w-6 h-6 rounded-full bg-red-400 hover:bg-red-500"
+          className="w-4 h-4 rounded-full bg-red-400 hover:bg-red-500"
         />
       </div>
     </div>
