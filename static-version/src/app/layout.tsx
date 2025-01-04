@@ -1,10 +1,11 @@
 import './globals.css';
 import Footer from './components/Footer';
 import MenuBar from './components/MenuBar';
-import {Instrument_Sans} from '@next/font/google';
+import { Instrument_Sans } from 'next/font/google';
+import SideBar from './components/SideBar';
+import MainContent from './components/MainContent';
 
 const font = Instrument_Sans();
-
 
 export const metadata = {
   title: 'My Portfolio',
@@ -18,9 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`flex flex-col min-h-screen bg-gray-800 ${font.className}`}>
-        <MenuBar/>
-        <main className="flex-grow">{children}</main>
+      <body className={`flex flex-col h-screen bg-gray-800 ${font.className} overflow-hidden`}>
+        <MenuBar />
+        <div className="flex flex-grow">
+          {/* Sidebar */}
+          <SideBar/>
+
+          {/* Main Content Area */}
+          <MainContent renderingPage={children} />
+        </div>
         <Footer />
       </body>
     </html>
