@@ -61,11 +61,7 @@ const directoryStructure: DirectoryItem[] = [
     },
 ];
 
-interface SidebarProps {
-    onSelectItem: (item: string) => void; // Callback to update the selected item
-}
-
-export default function Sidebar({ onSelectItem }: SidebarProps) {
+export default function Sidebar() {
     const [openFolders, setOpenFolders] = useState<{ [key: string]: boolean }>(
         {}
     );
@@ -117,7 +113,7 @@ export default function Sidebar({ onSelectItem }: SidebarProps) {
     };
 
     return (
-        <div className="w-64 h-screen">
+        <div className="w-64">
             <h2 className="text-lg font-bold px-4 py-2 text-white">
                 EXPLORER
             </h2>
