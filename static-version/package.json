@@ -23,6 +23,13 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@iconify-json/devicon": "^1.2.11",
+    "@iconify-json/logos": "^1.2.4",
+    "@iconify-json/ri": "^1.2.5",
+    "@iconify-json/simple-icons": "^1.2.18",
+    "@iconify-json/skill-icons": "^1.2.0",
+    "@iconify-json/uil": "^1.2.3",
+    "@iconify/tailwind": "^1.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
