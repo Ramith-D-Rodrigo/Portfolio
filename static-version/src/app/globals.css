@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +20,15 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* styles.css */
+.sinhala-letter {
+  color: #ffffff;    /* Example color */
+  font-style: normal;
+}
+
+.sinhala-letter::before {
+  content: 'අ';               /* Set the content to the Sinhala letter */
+  font-family: 'Noto Sans Sinhala', sans-serif; /* Use a Sinhala-compatible font */
 }
