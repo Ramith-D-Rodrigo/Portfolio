@@ -138,7 +138,7 @@ const skills = [
 
 const SkillsPage = () => {
     return (
-        <div className="text-white font-mono">
+        <div className="text-white">
             {/* Title */}
             <div className="mb-6 text-4xl font-semibold">Skills</div>
 
@@ -162,13 +162,13 @@ const SkillsPage = () => {
                                                     <i
                                                         key={index}
                                                         className={`${sinhalaFont.className} ${clz} text-9xl`}
-                                                        style={{ color: item?.color }}
+                                                        style={{ color: item.color }}
                                                     ></i>
                                                 ))
                                             ) : (
                                                 <i
                                                     className={`${sinhalaFont.className} ${item?.class} text-9xl`}
-                                                    style={{ color: item?.color }}
+                                                    style={{ color: item.color }}
                                                 ></i>
                                             )
                                         }
