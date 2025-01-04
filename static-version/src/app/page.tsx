@@ -1,17 +1,8 @@
-"use client"
-
-import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 const HomePage = () => {
-  const [selectedItem, setSelectedItem] = useState<string>(''); // State to track selected item
-
-  const handleSelectItem = (item: string) => {
-    setSelectedItem(item); // Update the selected item
-  };
-
   return (
     <div className="prose max-w-none">
       <div>
@@ -38,7 +29,7 @@ const HomePage = () => {
             href="https://github.com/Ramith-D-Rodrigo"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-3 py-2 rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-300 ease-in-out transform hover:scale-105 transition-transform"
+            className="inline-flex items-center px-3 py-2 rounded-lg bg-black text-white hover:bg-gray-700 transition-colors duration-300 ease-in-out transform hover:scale-105 transition-transform"
           >
             <FontAwesomeIcon icon={faGithub} className="mr-2" />
             GitHub
