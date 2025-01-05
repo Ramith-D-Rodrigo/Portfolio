@@ -81,7 +81,7 @@ export default function Sidebar() {
                 return (
                     <div key={currentPath}>
                         <button
-                            className="text-left w-full px-4 py-2 hover:bg-gray-300 flex items-center space-x-2"
+                            className="text-left w-full px-4 py-2 custom-hover flex items-center space-x-2"
                             onClick={() => toggleFolder(currentPath)}
                         >
                             {/* Icon */}
@@ -105,7 +105,7 @@ export default function Sidebar() {
             }
             return (
                 <Link href={item.route as string} key={currentPath}>
-                    <div className="px-6 py-1 hover:bg-gray-100 cursor-pointer text-gray-400">
+                    <div className="px-6 py-1 custom-hover cursor-pointer text-gray-400">
                         {item.name}
                     </div>
                 </Link>

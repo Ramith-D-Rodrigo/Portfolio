@@ -19,13 +19,13 @@ export default function MenuBar() {
             Settings
           </button>
           <div
-            className={`absolute mt-2 bg-white text-gray-800 shadow rounded w-48 transition-all duration-300 ease-in-out
+            className={`absolute mt-2 bg-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.5)] rounded w-48 transition-all duration-300 ease-in-out
             ${isSettingsOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}
           >
             <ul>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Profile</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Preferences</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Logout</li>
+              <li className="px-4 py-2 custom-hover cursor-pointer">Profile</li>
+              <li className="px-4 py-2 custom-hover cursor-pointer">Preferences</li>
+              <li className="px-4 py-2 custom-hover cursor-pointer">Logout</li>
             </ul>
           </div>
         </div>
@@ -39,13 +39,13 @@ export default function MenuBar() {
             Help
           </button>
           <div
-            className={`absolute mt-2 bg-white text-gray-800 shadow rounded w-48 transition-all duration-300 ease-in-out
+            className={`absolute mt-2 bg-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.5)] rounded w-48 transition-all duration-300 ease-in-out
             ${isHelpOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}
           >
             <ul>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Documentation</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">FAQ</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Contact Support</li>
+              <li className="px-4 py-2 custom-hover cursor-pointer">Documentation</li>
+              <li className="px-4 py-2 custom-hover cursor-pointer">FAQ</li>
+              <li className="px-4 py-2 custom-hover cursor-pointer">Contact Support</li>
             </ul>
           </div>
         </div>

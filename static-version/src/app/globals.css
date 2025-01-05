@@ -32,3 +32,7 @@ body {
   content: 'අ';               /* Set the content to the Sinhala letter */
   font-family: 'Noto Sans Sinhala', sans-serif; /* Use a Sinhala-compatible font */
 }
+
+.custom-hover {
+  @apply hover:bg-gray-900 hover:text-teal-600;
+}
