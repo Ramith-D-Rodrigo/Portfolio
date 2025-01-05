@@ -18,15 +18,16 @@ export default function MenuBar() {
           >
             Settings
           </button>
-          {isSettingsOpen && (
-            <div className="absolute mt-2 bg-white text-gray-800 shadow rounded w-48">
-              <ul>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Profile</li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Preferences</li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Logout</li>
-              </ul>
-            </div>
-          )}
+          <div
+            className={`absolute mt-2 bg-white text-gray-800 shadow rounded w-48 transition-all duration-300 ease-in-out
+            ${isSettingsOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}
+          >
+            <ul>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Profile</li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Preferences</li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Logout</li>
+            </ul>
+          </div>
         </div>
 
         {/* Help Dropdown */}
@@ -37,15 +38,16 @@ export default function MenuBar() {
           >
             Help
           </button>
-          {isHelpOpen && (
-            <div className="absolute mt-2 bg-white text-gray-800 shadow rounded w-48">
-              <ul>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Documentation</li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">FAQ</li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Contact Support</li>
-              </ul>
-            </div>
-          )}
+          <div
+            className={`absolute mt-2 bg-white text-gray-800 shadow rounded w-48 transition-all duration-300 ease-in-out
+            ${isHelpOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}
+          >
+            <ul>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Documentation</li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">FAQ</li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Contact Support</li>
+            </ul>
+          </div>
         </div>
       </div>
 
