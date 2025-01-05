@@ -1,4 +1,5 @@
 import { Noto_Sans_Sinhala } from 'next/font/google';
+import PageTitle from '../components/PageTitle';
 
 const sinhalaFont = Noto_Sans_Sinhala();
 
@@ -138,9 +139,9 @@ const skills = [
 
 const SkillsPage = () => {
     return (
-        <div className="text-white">
+        <div>
             {/* Title */}
-            <div className="mb-6 text-4xl font-semibold">Skills</div>
+            <PageTitle title="Skills"/>
 
             {/* Skill Categories */}
             <div className="space-y-8">
@@ -179,7 +180,7 @@ const SkillsPage = () => {
                                         }
                                     </div>
                                     {/* Description */}
-                                    <div className="text-gray-400 text-sm">{item.description}</div>
+                                    <div className="text-gray-300 text-sm">{item.description}</div>
                                 </div>
 
                             ))}
