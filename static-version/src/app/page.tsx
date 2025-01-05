@@ -37,7 +37,7 @@ const HomePage = () => {
         </li>
         <li>
           <a
-            href="https://linkedin.com/"
+            href="https://www.linkedin.com/in/ramith-d-rodrigo/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors duration-300 ease-in-out transform hover:scale-105 transition-transform"
