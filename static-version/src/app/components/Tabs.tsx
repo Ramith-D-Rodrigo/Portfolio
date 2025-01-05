@@ -109,7 +109,7 @@ const Tabs = () => {
     };
 
     return (
-        <div className="relative">
+        <div>
             {notification && <Notification message={notification} onClose={() => setNotification(null)} />}
             <div className="flex items-center">
                 {Array.from(tabs.entries()).map(([tabName, tabPath]) => (
