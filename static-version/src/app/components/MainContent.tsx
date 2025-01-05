@@ -1,5 +1,8 @@
 // src/components/MainContent.tsx
 
+import OpenedTab from "./OpenedTab";
+import Tabs from "./Tabs";
+
 interface MainContentProps {
     renderingPage: React.ReactNode;
 }
@@ -7,11 +10,7 @@ interface MainContentProps {
 const MainContent = ({ renderingPage }: MainContentProps) => {
     return (
         <div className="flex-1 bg-gray-500 flex flex-col">
-            <div className="bg-gray-800 text-gray-300 flex items-center">
-                <div className="text-sm font-medium px-4 py-1 bg-gray-700">
-                    Sample 
-                </div>
-            </div>
+            <Tabs/>
             <div className="flex-1 p-5 overflow-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300">
                 {renderingPage}
             </div>
