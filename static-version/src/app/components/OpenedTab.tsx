@@ -11,7 +11,7 @@ interface OpenTabProps {
 
 const OpenedTab = ({ tabName, closeTab, showTab }: OpenTabProps) => {
     return (
-        <div className="bg-gray-700 text-gray-300 flex items-center">
+        <div className="text-gray-300 flex items-center">
             {/* Clickable Tab Name */}
             <div
                 className="text-sm font-medium px-4 py-1 cursor-pointer hover:underline transition-all duration-200"
