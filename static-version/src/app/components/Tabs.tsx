@@ -26,7 +26,6 @@ const Notification = ({ message, onClose }: { message: string; onClose: () => vo
     );
 };
 
-
 const Tabs = () => {
     const HOMEPAGE = "About";
 
@@ -36,6 +35,8 @@ const Tabs = () => {
     const [tabs, setTabs] = useState<Map<string, string>>(new Map([[HOMEPAGE, "/"]]));
     const [currentTab, setCurrentTab] = useState<string>(HOMEPAGE);
     const [notification, setNotification] = useState<string | null>(null);
+    const [beforePath, setBeforePath] = useState<string>('');
+    const [closedTab, setClosedTab] = useState<string>('');
 
     // Derive the current page name
     useEffect(() => {
@@ -62,15 +63,13 @@ const Tabs = () => {
     }, [pathName, HOMEPAGE]);
 
     const closeTab = (tabName: string) => {
-        let beforeTab = "";
-        let beforePath = "";
-
         if (tabName === HOMEPAGE) {
             setNotification("You cannot close this tab!");
             return;
         }
 
         setTabs((prevTabs) => {
+            let beforePathTemp = "";
             const updatedTabs = new Map(prevTabs);
             const tabsArray = Array.from(updatedTabs.keys());
 
@@ -79,28 +78,31 @@ const Tabs = () => {
 
             // Determine the tab before the closing tab (if it exists)
             if (closingTabIndex > 0) {
-                beforeTab = tabsArray[closingTabIndex - 1];
-                beforePath = updatedTabs.get(beforeTab) || "/";
+                const beforeTab = tabsArray[closingTabIndex - 1];
+                beforePathTemp = updatedTabs.get(beforeTab) || "/";
             } else if (tabsArray.length > 1) {
                 // If there is no "before" tab, try the next tab
                 const nextTab = tabsArray[closingTabIndex + 1];
-                beforePath = updatedTabs.get(nextTab) || "/";
+                beforePathTemp = updatedTabs.get(nextTab) || "/";
             } else {
                 // Fallback to the homepage if no adjacent tabs exist
-                beforePath = "/";
+                beforePathTemp = "/";
             }
-
             // Remove the closing tab from the Map
             updatedTabs.delete(tabName);
-
+            setBeforePath(beforePathTemp);
             return updatedTabs;
         });
 
-        // Redirect to the previous tab's path, or homepage if no tabs left
-        if (currentTab === tabName) {
+        setClosedTab(tabName);
+    };
+
+    useEffect(()=> {
+        if(closedTab === currentTab) {
             router.push(beforePath);
         }
-    };
+        setClosedTab('');
+    }, [tabs]);
 
     const switchTab = (tabPath: string) => {
         router.push(tabPath);
@@ -120,7 +122,6 @@ const Tabs = () => {
                 ))}
             </div>
         </div>
-
     );
 };
 
