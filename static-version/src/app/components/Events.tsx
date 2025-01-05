@@ -39,6 +39,7 @@ const EventGrid = ({ events }: { events: EventInterface[] }) => {
                         <EventButton
                             navContent={event.navContent}
                             navLink={event.nav}
+                            isDisabled={true}
                         />
                     </div>
                 </div>
