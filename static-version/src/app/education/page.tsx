@@ -25,14 +25,14 @@ const events: EventInterface[] = [
     }
 ];
 
-const ExperiencePage = () => {
+const EducationPage = () => {
     return (
         <div>
-            <PageTitle title="Experience"/>
+            <PageTitle title="Education"/>
 
             <EventGrid events={events} />
         </div>
     );
 }
 
-export default ExperiencePage;
+export default EducationPage;
