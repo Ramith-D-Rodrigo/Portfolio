@@ -40,6 +40,7 @@ const directoryStructure: DirectoryItem[] = [
         name: "PROJECTS",
         type: "folder",
         children: [
+            { name: "Summary", type: "file", route: "/projects" },
             { name: "WebApp", type: "file", route: "/projects/webapp" },
             { name: "Portfolio", type: "file", route: "/projects/portfolio" },
         ],
