@@ -30,7 +30,7 @@ const EventGrid = ({ events }: { events: EventInterface[] }) => {
                         )}
                     </div>
 
-                    <div className="bg-black p-6 shadow-xl rounded-lg w-96">
+                    <div className="bg-black rounded-lg p-4 hover:scale-105 transition-transform duration-300 w-96">
                         <h2 className="text-2xl font-semibold text-white">{event.title}</h2>
                         <p className="text-sm text-gray-400 mt-1">{event.date}</p>
                         <p className="mt-4 text-gray-300">{event.description}</p>
