@@ -9,9 +9,9 @@ interface MainContentProps {
 
 const MainContent = ({ renderingPage }: MainContentProps) => {
     return (
-        <div className="flex-1 flex flex-col text-white">
+        <div className="flex-1 flex flex-col text-white overflow-visible">
             <Tabs/>
-            <div className="flex-1 p-5 overflow-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300">
+            <div id="pageDisplayer" className="flex-1 p-5 overflow-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300">
                 {renderingPage}
             </div>
         </div>

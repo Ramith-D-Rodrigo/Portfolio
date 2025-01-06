@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface DirectoryItem {
     name: string;
@@ -67,12 +67,35 @@ export default function Sidebar() {
         {}
     );
 
+    const router = useRouter();
+    const pageDisplayingDiv = document.querySelector("#pageDisplayer");
+
     const toggleFolder = (folderName: string) => {
         setOpenFolders((prev) => ({
             ...prev,
             [folderName]: !prev[folderName],
         }));
     };
+
+    const routeToLink = (route: string | undefined) => {
+        if(!route){
+            return;
+        }
+        if (pageDisplayingDiv) {
+            // Start periodic checks for the scroll position
+            const checkScroll = setInterval(() => {
+                if (pageDisplayingDiv.scrollTop === 0) {
+                    clearInterval(checkScroll); // Stop checking
+                    router.push(route);
+                }
+            }, 50); // Check every 50ms
+    
+            // Trigger the smooth scroll
+            pageDisplayingDiv.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+            router.push(route);
+        }
+    }
 
     const renderDirectory = (items: DirectoryItem[], parentPath = "") => {
         return items.map((item) => {
@@ -104,11 +127,9 @@ export default function Sidebar() {
                 );
             }
             return (
-                <Link href={item.route as string} key={currentPath}>
-                    <div className="px-6 py-1 custom-hover cursor-pointer text-gray-400">
-                        {item.name}
-                    </div>
-                </Link>
+                <div className="px-6 py-1 custom-hover cursor-pointer text-gray-400" key={currentPath} onClick={() => routeToLink(item.route)}>
+                    {item.name}
+                </div>
             );
         });
     };

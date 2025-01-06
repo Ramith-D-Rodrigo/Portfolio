@@ -38,10 +38,18 @@ const Tabs = () => {
     const [beforePath, setBeforePath] = useState<string>('');
     const [closedTab, setClosedTab] = useState<string>('');
 
+    const pageDisplayingDiv = document.querySelector("#pageDisplayer");
+
     // Derive the current page name
     useEffect(() => {
+        let pageName = tabs.values().find(path => path === pathName);
+        if(pageName){
+            setCurrentTab(pageName);
+            return;
+        }
+
         const slashSplitArr = pathName.split("/");
-        const pageName =
+        pageName =
             slashSplitArr[1] === ""
                 ? HOMEPAGE
                 : slashSplitArr
@@ -98,26 +106,46 @@ const Tabs = () => {
     };
 
     useEffect(()=> {
+        if(closedTab === '') {
+            return;
+        }
+
         if(closedTab === currentTab) {
             router.push(beforePath);
         }
         setClosedTab('');
-    }, [tabs]);
+    }, [closedTab]);
 
-    const switchTab = (tabPath: string) => {
-        router.push(tabPath);
+    const switchTab = async (tabName: string) => {
+        if(tabName === currentTab) {
+            return;
+        }
+        if (pageDisplayingDiv) {
+            // Start periodic checks for the scroll position
+            const checkScroll = setInterval(() => {
+                if (pageDisplayingDiv.scrollTop === 0) {
+                    clearInterval(checkScroll); // Stop checking
+                    router.push(tabs.get(tabName) as string); // Navigate to the new tab
+                }
+            }, 50); // Check every 50ms
+    
+            // Trigger the smooth scroll
+            pageDisplayingDiv.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+            router.push(tabs.get(tabName) as string); // Fallback if div is not available
+        }
     };
 
     return (
         <div>
             {notification && <Notification message={notification} onClose={() => setNotification(null)} />}
-            <div className="flex items-center">
+            <div className="flex items-center position-fixed">
                 {Array.from(tabs.entries()).map(([tabName, tabPath]) => (
                     <OpenedTab
                         key={tabName}
                         tabName={tabName}
                         closeTab={() => closeTab(tabName)}
-                        showTab={() => switchTab(tabPath)}
+                        showTab={() => switchTab(tabName)}
                     />
                 ))}
             </div>
