@@ -68,7 +68,6 @@ export default function Sidebar() {
     );
 
     const router = useRouter();
-    const pageDisplayingDiv = document.querySelector("#pageDisplayer");
 
     const toggleFolder = (folderName: string) => {
         setOpenFolders((prev) => ({
@@ -81,6 +80,7 @@ export default function Sidebar() {
         if(!route){
             return;
         }
+        const pageDisplayingDiv = document.querySelector("#pageDisplayer");
         if (pageDisplayingDiv) {
             // Start periodic checks for the scroll position
             const checkScroll = setInterval(() => {
