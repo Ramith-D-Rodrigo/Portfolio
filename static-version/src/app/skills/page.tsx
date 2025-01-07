@@ -1,6 +1,7 @@
 import { Noto_Sans_Sinhala } from 'next/font/google';
 import PageTitle from '../components/PageTitle';
 import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU } from '../constants/icon-css';
+import SkillCard from '../components/SkillCard';
 
 const sinhalaFont = Noto_Sans_Sinhala();
 
@@ -170,7 +171,8 @@ const skills = [
                         name: "English", 
                         class: "icon-[ri--english-input]"
                     }, 
-                description: "Professional working proficiency, capable of effective communication in both written and spoken contexts in technical and non-technical settings." },
+                description: "Professional working proficiency, capable of effective communication in both written and spoken contexts in technical and non-technical settings." 
+            },
             { 
                 tech: {
                 name: "Sinhala", 
@@ -210,37 +212,7 @@ const SkillsPage = () => {
                         {/* Cards for each skill */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                             {category.items.map((item, idx) => (
-                                <div
-                                    key={idx}
-                                    className="bg-black rounded-lg p-4 hover:scale-105 transition-transform duration-300"
-                                >
-                                    <div className="flex items-center justify-center mb-3">
-                                        {
-                                            Array.isArray(item.class) ? (
-                                                item.tech.class.map((clz, index) => (
-                                                    <i
-                                                        key={index}
-                                                        className={`${sinhalaFont.className} ${clz} text-9xl`}
-                                                        style={{ color: item.color }}
-                                                    ></i>
-                                                ))
-                                            ) : (
-                                                <i
-                                                    className={`${sinhalaFont.className} ${item.tech.class} text-9xl`}
-                                                    style={{ color: item.color }}
-                                                ></i>
-                                            )
-                                        }
-
-
-                                        {!item.tech.class &&
-                                            <div className="text-lg font-semibold">{item.tech.name}</div>
-                                        }
-                                    </div>
-                                    {/* Description */}
-                                    <div className="text-gray-300 text-m">{item.description}</div>
-                                </div>
-
+                                <SkillCard item={item} idx={idx}/>
                             ))}
                         </div>
                     </div>
