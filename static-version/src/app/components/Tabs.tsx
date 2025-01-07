@@ -3,28 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import OpenedTab from "./OpenedTab";
-
-const Notification = ({ message, onClose }: { message: string; onClose: () => void }) => {
-    const [show, setShow] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setShow(false);
-            setTimeout(onClose, 500); // Wait for fade-out animation to finish before calling onClose
-        }, 3000); // Auto-close after 3 seconds
-
-        return () => clearTimeout(timer);
-    }, [onClose]);
-
-    return (
-        <div
-            className={`fixed top-5 right-5 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg transition-all duration-500 
-                ${show ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
-        >
-            {message}
-        </div>
-    );
-};
+import Notification from "./Notification";
 
 const Tabs = () => {
     const HOMEPAGE = "About";
@@ -37,8 +16,6 @@ const Tabs = () => {
     const [notification, setNotification] = useState<string | null>(null);
     const [beforePath, setBeforePath] = useState<string>('');
     const [closedTab, setClosedTab] = useState<string>('');
-
-    const pageDisplayingDiv = document.querySelector("#pageDisplayer");
 
     // Derive the current page name
     useEffect(() => {
@@ -120,6 +97,7 @@ const Tabs = () => {
         if(tabName === currentTab) {
             return;
         }
+        const pageDisplayingDiv = document.querySelector("#pageDisplayer");
         if (pageDisplayingDiv) {
             // Start periodic checks for the scroll position
             const checkScroll = setInterval(() => {
@@ -138,7 +116,7 @@ const Tabs = () => {
 
     return (
         <div>
-            {notification && <Notification message={notification} onClose={() => setNotification(null)} />}
+            {notification && <Notification message={notification} onClose={() => setNotification(null)} color="red" />}
             <div className="flex items-center position-fixed">
                 {Array.from(tabs.entries()).map(([tabName, tabPath]) => (
                     <OpenedTab
