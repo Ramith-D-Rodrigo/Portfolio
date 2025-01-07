@@ -9,16 +9,18 @@ const events: EventInterface[] = [
         description: "Looking for new opportunities to bring my skills to your team.",
         title: "Excited to Join Your Team!",
         iconBgColor: "green",
-        nav: "/",
+        nav: "/contact",
         navContent: "Contact",
         icon: <FontAwesomeIcon icon={faPlus} />,
+        isDisabled: false
     },
     { title: "Software Engineering Intern", 
         date: "2023 November - 2024 May", 
         description: "Gained the first industrial experience by working for the Ballerina Team of WSO2 LLC. Implemented a new feature for the Ballerina programming Language.",
         iconBgColor: "blue",
         nav: "/",
-        navContent: "Learn More"
+        navContent: "Learn More",
+        isDisabled: true
     }
 ];
 

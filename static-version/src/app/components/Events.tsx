@@ -11,6 +11,7 @@ export interface EventInterface {
     nav: string;
     navContent: string;
     icon?: React.ReactNode;
+    isDisabled: boolean;
 }
 
 const EventGrid = ({ events }: { events: EventInterface[] }) => {
@@ -45,7 +46,7 @@ const EventGrid = ({ events }: { events: EventInterface[] }) => {
                         <EventButton
                             navContent={event.navContent}
                             navLink={event.nav}
-                            isDisabled={true}
+                            isDisabled={event.isDisabled}
                         />
                     </div>
                 </div>

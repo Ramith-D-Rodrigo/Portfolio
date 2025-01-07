@@ -10,7 +10,8 @@ const events: EventInterface[] = [
         iconBgColor: "blue",
         nav: "/",
         navContent: "Learn More",
-        icon: <FontAwesomeIcon icon={faSchool} />
+        icon: <FontAwesomeIcon icon={faSchool} />,
+        isDisabled: false
     },
     { title: "High School", 
         date: "2011 January - 2019 August", 
@@ -18,7 +19,8 @@ const events: EventInterface[] = [
         iconBgColor: "blue",
         nav: "/",
         navContent: "Learn More",
-        icon: <FontAwesomeIcon icon={faSchool} />
+        icon: <FontAwesomeIcon icon={faSchool} />,
+        isDisabled: true
     },
     { title: "Primary School", 
         date: "2006 January - 2010 November", 
@@ -26,7 +28,8 @@ const events: EventInterface[] = [
         iconBgColor: "blue",
         nav: "/",
         navContent: "Learn More",
-        icon: <FontAwesomeIcon icon={faSchool} />
+        icon: <FontAwesomeIcon icon={faSchool} />,
+        isDisabled: true
     }
 ];
 
