@@ -14,6 +14,12 @@ export interface EventInterface {
 }
 
 const EventGrid = ({ events }: { events: EventInterface[] }) => {
+    const colorVariants : any = {
+        green: 'bg-green-500',
+        red: 'bg-red-500',
+        blue: 'bg-blue-500',
+    }
+    
     return (
         <div className="relative flex flex-col items-center gap-6">
             {events.map((event, idx) => (
@@ -22,7 +28,7 @@ const EventGrid = ({ events }: { events: EventInterface[] }) => {
                         <div className="absolute top-0 left-6 h-full w-px bg-gray-300 z-0"></div>
                     )}
 
-                    <div className={`relative z-10 flex-shrink-0 w-12 h-12 flex items-center justify-center bg-${event.iconBgColor}-500 text-white rounded-full`}>
+                    <div className={`relative z-10 flex-shrink-0 w-12 h-12 flex items-center justify-center ${colorVariants[event.iconBgColor]} text-white rounded-full`}>
                         {event.icon || (
                             <span className="text-xl font-bold">
                                 <FontAwesomeIcon icon={faBuilding} />

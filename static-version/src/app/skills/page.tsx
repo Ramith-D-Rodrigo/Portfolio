@@ -212,7 +212,7 @@ const SkillsPage = () => {
                         {/* Cards for each skill */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                             {category.items.map((item, idx) => (
-                                <SkillCard item={item} idx={idx}/>
+                                <SkillCard item={item} key={idx}/>
                             ))}
                         </div>
                     </div>

@@ -1,13 +1,11 @@
 
 interface SkillCardProps {
-    idx: number,
     item: any
 }
 
-const SkillCard = ({ idx, item }: SkillCardProps) => {
+const SkillCard = ({ item }: SkillCardProps) => {
     return (
         <div
-            key={idx}
             className="bg-black rounded-lg p-4 hover:scale-105 transition-transform duration-300"
         >
             <div className="flex items-center justify-center mb-3">

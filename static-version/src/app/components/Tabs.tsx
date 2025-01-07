@@ -19,11 +19,13 @@ const Tabs = () => {
 
     // Derive the current page name
     useEffect(() => {
-        let pageName = tabs.values().find(path => path === pathName);
-        if(pageName){
+        let pageName = Array.from(tabs.entries()).find(([key, value]) => value === pathName)?.[0];
+
+        if (pageName) {
             setCurrentTab(pageName);
             return;
         }
+
 
         const slashSplitArr = pathName.split("/");
         pageName =
@@ -82,19 +84,34 @@ const Tabs = () => {
         setClosedTab(tabName);
     };
 
-    useEffect(()=> {
-        if(closedTab === '') {
+    useEffect(() => {
+        if (closedTab === '') {
             return;
         }
 
-        if(closedTab === currentTab) {
-            router.push(beforePath);
+        if (closedTab === currentTab) {
+            const pageDisplayingDiv = document.querySelector("#pageDisplayer");
+            if (pageDisplayingDiv) {
+                // Start periodic checks for the scroll position
+                const checkScroll = setInterval(() => {
+                    if (pageDisplayingDiv.scrollTop === 0) {
+                        clearInterval(checkScroll); // Stop checking
+                        router.push(beforePath); // Navigate to the new tab
+                    }
+                }, 50); // Check every 50ms
+
+                // Trigger the smooth scroll
+                pageDisplayingDiv.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+                router.push(beforePath); // Fallback if div is not available
+            }
         }
         setClosedTab('');
     }, [closedTab]);
 
     const switchTab = async (tabName: string) => {
-        if(tabName === currentTab) {
+        console.log(currentTab);
+        if (tabName === currentTab) {
             return;
         }
         const pageDisplayingDiv = document.querySelector("#pageDisplayer");
@@ -106,7 +123,7 @@ const Tabs = () => {
                     router.push(tabs.get(tabName) as string); // Navigate to the new tab
                 }
             }, 50); // Check every 50ms
-    
+
             // Trigger the smooth scroll
             pageDisplayingDiv.scrollTo({ top: 0, behavior: "smooth" });
         } else {
