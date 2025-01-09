@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import PageTitle from "../components/PageTitle";
+import ImagePopupModal from "../components/ImagePopupModal";
+import ModalStyle from "../components/ImagePopupModalStyle";
 
 const Certifications = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -115,48 +117,10 @@ const Certifications = () => {
 
             {/* Image Popup Modal */}
             {selectedImage && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
-                    onClick={closeModal}
-                >
-                    <div
-                        className={`transition-transform transform ${isClosing
-                                ? "scale-100 opacity-100 animate-[popup-out_0.3s_ease-in_forwards]"
-                                : "scale-0 opacity-0 animate-[popup-in_0.3s_ease-out_forwards]"
-                            }`}
-                    >
-                        <img
-                            src={selectedImage}
-                            alt="Selected Certification"
-                            className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-lg"
-                        />
-                    </div>
-                </div>
+                <ImagePopupModal isClosing={isClosing} selectedImage={selectedImage} closeModal={closeModal}/>
             )}
 
-            <style jsx>{`
-            @keyframes popup-in {
-              from {
-                transform: scale(0.9);
-                opacity: 0;
-              }
-              to {
-                transform: scale(1);
-                opacity: 1;
-              }
-            }
-    
-            @keyframes popup-out {
-              from {
-                transform: scale(1);
-                opacity: 1;
-              }
-              to {
-                transform: scale(0.9);
-                opacity: 0;
-              }
-            }
-          `}</style>
+            <ModalStyle/>
         </div>
     );
 };
