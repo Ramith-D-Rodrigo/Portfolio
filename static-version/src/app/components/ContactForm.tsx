@@ -70,6 +70,7 @@ const ContactForm = () => {
             }
             setNotification(newNotification);
         } catch (error) {
+            console.log(error);
             newNotification.message = "An error occurred. Please check your connection and try again.";
             newNotification.color = "red";
             setNotification(newNotification);
