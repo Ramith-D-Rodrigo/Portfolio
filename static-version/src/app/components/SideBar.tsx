@@ -24,8 +24,6 @@ const directoryStructure: DirectoryItem[] = [
         type: "folder",
         children: [
             { name: "Summary", type: "file", route: "/education" },
-            { name: "Bachelor's Degree", type: "file", route: "/education/bachelor" },
-            { name: "High School", type: "file", route: "/education/high-school" },
         ],
     },
     {
@@ -33,7 +31,6 @@ const directoryStructure: DirectoryItem[] = [
         type: "folder",
         children: [
             { name: "Summary", type: "file", route: "/experience" },
-            { name: "Internship", type: "file", route: "/experience/internship" },
         ],
     },
     {
@@ -41,8 +38,6 @@ const directoryStructure: DirectoryItem[] = [
         type: "folder",
         children: [
             { name: "Summary", type: "file", route: "/projects" },
-            { name: "WebApp", type: "file", route: "/projects/webapp" },
-            { name: "Portfolio", type: "file", route: "/projects/portfolio" },
         ],
     },
     {

@@ -187,12 +187,12 @@ const skills = [
                 }, 
                 description: "Have been learning Japanese for more than 4 years. Currently JLPT N4 Certified, JLPT N3 Reading." 
             },
-            { 
-                tech:{
-                    name: "A Small Easter Egg!", 
-                },
-                description: "Did you try changing the IDE language settings? :)" 
-            }
+            // { 
+            //     tech:{
+            //         name: "A Small Easter Egg!", 
+            //     },
+            //     description: "Did you try changing the IDE language settings? :)" 
+            // }
         ],
     },
 ];
