@@ -1,6 +1,4 @@
 // src/components/MainContent.tsx
-
-import OpenedTab from "./OpenedTab";
 import Tabs from "./Tabs";
 
 interface MainContentProps {
