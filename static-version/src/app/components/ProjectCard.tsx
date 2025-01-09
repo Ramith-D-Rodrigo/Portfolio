@@ -25,7 +25,7 @@ export default function ProjectCard({ title, description, techStack, timePeriod,
                 <p className="text-gray-300 text-m mb-3">{description}</p>
 
                 {/* Flex container for the icons */}
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 pt-2 pb-2">
                     {techStack.map((tech, index) => (
                         <div key={index} className="flex items-center">
                             <i className={`${tech.class} text-gray-300 text-5xl`} /> {/* Icon using Tailwind class */}
