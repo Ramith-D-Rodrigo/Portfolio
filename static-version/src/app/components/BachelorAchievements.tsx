@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ImagePopupModal from "./ImagePopupModal";
 import ModalStyle from "./ImagePopupModalStyle";
+import Image from "next/image";
 
 interface AchievementProps {
     image: string;
@@ -31,7 +32,7 @@ const BachelorAchievements: React.FC<{ achievements: AchievementProps[] }> = ({ 
                         className="bg-black rounded-lg p-4 transition-transform duration-300 flex items-center h-full"
                     >
                         {/* Image Section */}
-                        <img
+                        <Image
                             src={achievement.image}
                             alt={achievement.title}
                             className="max-w-60 max-h-full rounded-lg cursor-pointer object-contain"
