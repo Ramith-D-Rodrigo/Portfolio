@@ -24,6 +24,7 @@ const directoryStructure: DirectoryItem[] = [
         type: "folder",
         children: [
             { name: "Summary", type: "file", route: "/education" },
+            {name: "BSc (Hons) in Computer Science", type: "file", route: "/education/bachelors"}
         ],
     },
     {
