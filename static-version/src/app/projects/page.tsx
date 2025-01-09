@@ -12,7 +12,7 @@ const projects = [
     timePeriod: "2024 June - Present",
     isExternalLink: false,
     link: "/",
-    linkContent: "Learn More",
+    linkContent: "Coming Soon",
     linkDisabled: true
   },
   {
@@ -34,10 +34,10 @@ const projects = [
       + " To enhance the experience, I integrated VR functionality, enabling seamless mapping between the VR world and the procedural world.",
     techStack: [UNITY, CSHARP, GIT],
     timePeriod: "2024 June - 2024 September",
-    isExternalLink: false,
-    link: "/",
-    linkContent: "Learn More",
-    linkDisabled: true
+    isExternalLink: true,
+    link: "https://github.com/Ramith-D-Rodrigo/ProceduralOpenWorld",
+    linkContent: "GitHub",
+    linkDisabled: false
   },
   {
     title: 'BattlePen - Video Game',
@@ -68,10 +68,10 @@ const projects = [
       + " It is developed to challenge the player's thinking with the use of minimal number of hints.",
     techStack: [UNITY, CSHARP, GIT],
     timePeriod: "2023 June - 2023 December",
-    isExternalLink: false,
-    link: "/",
-    linkContent: "Learn More",
-    linkDisabled: true
+    isExternalLink: true,
+    link: "https://github.com/Ramith-D-Rodrigo/D-Game",
+    linkContent: "GitHub",
+    linkDisabled: false
   },
   {
     title: 'Solar System',
@@ -90,10 +90,10 @@ const projects = [
       + "postgraduate degree programs in Sri Lankan universities. This application was developed as a proof-of-concept prototype to evaluate the feasibility of streamlining a such task.",
     techStack: [LARAVEL, MYSQL, REACTJS, JS, GIT, GMAIL_API, GOOGLE_DRIVE_API],
     timePeriod: "2023 June - 2023 October",
-    isExternalLink: false,
-    link: "/",
-    linkContent: "Learn More",
-    linkDisabled: true
+    isExternalLink: true,
+    link: "https://github.com/Ramith-D-Rodrigo/PGPR",
+    linkContent: "GitHub",
+    linkDisabled: false
   },
   {
     title: 'Context Free Grammar (CFG) Simplication',
@@ -113,10 +113,10 @@ const projects = [
       + "In this project, the use of frameworks and libraries were restricted and everyone equally contributed to both frontend and backend.",
     techStack: [HTML, PHP, MYSQL, JS, GIT, GMAIL_API],
     timePeriod: "2022 June - 2023 April",
-    isExternalLink: false,
-    link: "/",
-    linkContent: "Learn More",
-    linkDisabled: true
+    isExternalLink: true,
+    link: "https://github.com/Ramith-D-Rodrigo/SCS2202_Project_CS35",
+    linkContent: "GitHub",
+    linkDisabled: false
   },
   {
     title: 'Java Web Server',
