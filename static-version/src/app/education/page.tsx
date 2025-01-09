@@ -8,7 +8,7 @@ const events: EventInterface[] = [
         date: "2021 April - Present", 
         description: "I started my undergraduate academics at University of Colombo School of Computing, Sri Lanka. Currently I'm a fourth/final year undergraduate with a CGPA of 3.89/4.00.",
         iconBgColor: "blue",
-        nav: "/",
+        nav: "/education/bachelors",
         navContent: "Learn More",
         icon: <FontAwesomeIcon icon={faSchool} />,
         isDisabled: false
