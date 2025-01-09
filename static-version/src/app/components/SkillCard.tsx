@@ -1,6 +1,13 @@
 
 interface SkillCardProps {
-    item: any
+    item: {
+        tech: {
+            class: string;
+            name: string;
+        };
+        color: string;
+        description: string
+    }
 }
 
 const SkillCard = ({ item }: SkillCardProps) => {
@@ -11,7 +18,7 @@ const SkillCard = ({ item }: SkillCardProps) => {
             <div className="flex items-center justify-center mb-3">
                 {
                     Array.isArray(item.tech.class) ? (
-                        item.tech.class.map((clz, index) => (
+                        item.tech.class.map((clz: string, index: number) => (
                             <i
                                 key={index}
                                 className={`${clz} text-9xl`}
