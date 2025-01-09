@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Notification from "./Notification";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface NotificationType {
     color: string;
@@ -11,9 +12,11 @@ interface NotificationType {
 const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [notification, setNotification] = useState<NotificationType | null>(null);
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
+        subject: "",
         message: "",
     });
 
@@ -29,13 +32,17 @@ const ContactForm = () => {
         }));
     };
 
+    const onHCaptchaChange = (token: string) => {
+        setCaptchaToken(token);
+    };
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsSubmitting(true);
         setNotification(null);
 
         const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-        const json = JSON.stringify({ ...formData, access_key: accessKey });
+        const json = JSON.stringify({ ...formData, access_key: accessKey, "h-captcha-response": captchaToken });
 
         const newNotification: NotificationType = {
             color: "red",
@@ -105,6 +112,19 @@ const ContactForm = () => {
                         />
                     </div>
                     <div>
+                        <label htmlFor="subject" className="block text-sm font-medium mb-1">
+                            Subject
+                        </label>
+                        <input
+                            name="subject"
+                            id="subject"
+                            value={formData.subject}
+                            onChange={handleInputChange}
+                            required
+                            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        />
+                    </div>
+                    <div>
                         <label htmlFor="message" className="block text-sm font-medium mb-1">
                             Message
                         </label>
@@ -118,6 +138,11 @@ const ContactForm = () => {
                             className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         ></textarea>
                     </div>
+                    <HCaptcha
+                        sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+                        reCaptchaCompat={false}
+                        onVerify={onHCaptchaChange}
+                    />
                     <button
                         type="submit"
                         className={`w-full py-3 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-colors ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""
@@ -138,9 +163,6 @@ const ContactForm = () => {
                     </div>
                 </div>
             </div>
-
-
-
 
             {/* Notification */}
             {notification && (
