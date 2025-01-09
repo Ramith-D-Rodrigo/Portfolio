@@ -3,7 +3,7 @@ import PageTitle from '../components/PageTitle';
 import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU } from '../constants/icon-css';
 import SkillCard from '../components/SkillCard';
 
-const sinhalaFont = Noto_Sans_Sinhala();
+const sinhalaFont = Noto_Sans_Sinhala({ subsets: ['sinhala'] });
 
 // Sample skills data with categories
 const skills = [

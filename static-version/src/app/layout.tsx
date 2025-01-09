@@ -5,7 +5,7 @@ import { Instrument_Sans } from 'next/font/google';
 import SideBar from './components/SideBar';
 import MainContent from './components/MainContent';
 
-const font = Instrument_Sans();
+const font = Instrument_Sans({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'My Portfolio',
