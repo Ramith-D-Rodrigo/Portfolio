@@ -4,12 +4,12 @@ import { useState, useRef, useEffect } from "react";
 
 export default function MenuBar() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const settingsRef = useRef(null);
+  const settingsRef = useRef<HTMLDivElement | null>(null);
 
   // Close the dropdown when clicking outside of it
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (settingsRef.current && !settingsRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
         setIsSettingsOpen(false);
       }
     };
