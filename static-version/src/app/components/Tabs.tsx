@@ -135,7 +135,7 @@ const Tabs = () => {
         <div>
             {notification && <Notification message={notification} onClose={() => setNotification(null)} color="red" />}
             <div className="flex items-center position-fixed">
-                {Array.from(tabs.entries()).map(([tabName, tabPath]) => (
+                {Array.from(tabs.keys()).map((tabName) => (
                     <OpenedTab
                         key={tabName}
                         tabName={tabName}
