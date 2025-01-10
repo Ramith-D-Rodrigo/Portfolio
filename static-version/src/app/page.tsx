@@ -28,10 +28,10 @@ const HomePage = () => {
       </p>
 
       <blockquote className="text-xl italic text-gray-400 border-l-4 border-blue-500 pl-4 mb-6">
-        "I have been passionate about computers since I played my first video game, 
+        &quot;I have been passionate about computers since I played my first video game, 
         Need For Speed 2, at the age of four. Exploring both hardware and software during 
         my childhood fueled my passion for Computer Science. Now, I aim to apply the learned theoretical 
-        and practical concepts to real-world problems and create innovative, passionate projects."
+        and practical concepts to real-world problems and create innovative, passionate projects.&quot;
       </blockquote>
 
       {/* Links Section */}
