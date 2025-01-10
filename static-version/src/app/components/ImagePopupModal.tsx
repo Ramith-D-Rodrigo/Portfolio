@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 interface ImagePopupModalProps {
     closeModal: () => void;
     selectedImage: string;
@@ -18,7 +16,7 @@ const ImagePopupModal = ({closeModal, selectedImage, isClosing}: ImagePopupModal
                                 : "scale-0 opacity-0 animate-[popup-in_0.3s_ease-out_forwards]"
                             }`}
                     >
-                        <Image
+                        <img
                             src={selectedImage}
                             alt="Selected Certification"
                             className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-lg"
