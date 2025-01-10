@@ -20,7 +20,7 @@ const HomePage = () => {
       {/* Introduction */}
       <p className="text-lg leading-relaxed text-gray-300 mb-6">
         Final-year undergraduate at the University of Colombo School of Computing
-        with hands-on experience as a software engineer intern at a reputed company.
+        with hands-on experience as a software engineering intern at a reputed company.
         A proactive and results-driven problem solver dedicated to productivity and
         quality with a strong foundation in software engineering, full-stack
         development, and computer graphics. Presently focused on developing expertise
