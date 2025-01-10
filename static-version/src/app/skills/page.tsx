@@ -1,12 +1,17 @@
 import { Noto_Sans_Sinhala } from 'next/font/google';
 import PageTitle from '../components/PageTitle';
 import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU } from '../constants/icon-css';
-import SkillCard from '../components/SkillCard';
+import SkillCard, { SkillCardProps } from '../components/SkillCard';
 
 const sinhalaFont = Noto_Sans_Sinhala({ subsets: ['sinhala'] });
 
+interface SkillsInterface {
+    category: string,
+    items: SkillCardProps[]
+}
+
 // Sample skills data with categories
-const skills = [
+const skills : SkillsInterface[] = [
     {
         category: "Programming Languages",
         items: [
@@ -175,9 +180,9 @@ const skills = [
             },
             { 
                 tech: {
-                name: "Sinhala", 
-                class: "sinhala-letter"
-            },
+                    name: "Sinhala", 
+                    class: `sinhala-letter ${sinhalaFont.className}`
+                },
                 description: "Native proficiency in Sinhala, with fluency in both formal and colloquial speech." 
             },
             { 
@@ -212,7 +217,7 @@ const SkillsPage = () => {
                         {/* Cards for each skill */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                             {category.items.map((item, idx) => (
-                                <SkillCard item={item} key={idx}/>
+                                <SkillCard description={item.description} tech={item.tech} color={item.color} key={idx}/>
                             ))}
                         </div>
                     </div>
