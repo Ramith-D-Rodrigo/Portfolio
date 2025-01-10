@@ -1,6 +1,6 @@
 interface TechnologyWithCSSClass {
     name: string;
-    class: string;
+    class?: string;
 };
 
 const JAVA : TechnologyWithCSSClass = {
