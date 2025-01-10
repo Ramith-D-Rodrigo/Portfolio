@@ -2,6 +2,7 @@ import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import EventButton from "./EventButton";
+import { ColorVariant } from "./Notification";
 
 export interface EventInterface {
     title: string;
@@ -15,7 +16,7 @@ export interface EventInterface {
 }
 
 const EventGrid = ({ events }: { events: EventInterface[] }) => {
-    const colorVariants : any = {
+    const colorVariants : ColorVariant = {
         green: 'bg-green-500',
         red: 'bg-red-500',
         blue: 'bg-blue-500',

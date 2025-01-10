@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-interface ColorVariant {
+export interface ColorVariant {
     [x: string]: string;
 }
 
@@ -23,7 +23,7 @@ const Notification = ({ message, onClose, color }: { message: string; onClose: (
 
     return (
         <div
-            className={`fixed top-5 right-5 ${colorVariants.color} text-white px-4 py-2 rounded-md shadow-lg transition-all duration-500 
+            className={`fixed top-5 right-5 ${colorVariants[color]} text-white px-4 py-2 rounded-md shadow-lg transition-all duration-500 
                 ${show ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
         >
             {message}
