@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { switchPage } from "../utils/utilFunctions";
 
 interface EventButtonProps {
     navLink: string;
@@ -10,7 +11,8 @@ interface EventButtonProps {
 const EventButton = ({ navLink, navContent, isDisabled }: EventButtonProps) => {
     const router = useRouter();
     const onClick = () => {
-        router.push(navLink);
+        const pageDisplayingDiv = document.querySelector("#pageDisplayer");
+        switchPage(pageDisplayingDiv, router, navLink);
     }
 
     return (

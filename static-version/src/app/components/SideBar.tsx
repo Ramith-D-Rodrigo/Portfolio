@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import { useRouter } from "next/navigation";
+import { switchPage } from "../utils/utilFunctions";
 
 interface DirectoryItem {
     name: string;
@@ -77,20 +78,7 @@ export default function Sidebar() {
             return;
         }
         const pageDisplayingDiv = document.querySelector("#pageDisplayer");
-        if (pageDisplayingDiv) {
-            // Start periodic checks for the scroll position
-            const checkScroll = setInterval(() => {
-                if (pageDisplayingDiv.scrollTop === 0) {
-                    clearInterval(checkScroll); // Stop checking
-                    router.push(route);
-                }
-            }, 50); // Check every 50ms
-    
-            // Trigger the smooth scroll
-            pageDisplayingDiv.scrollTo({ top: 0, behavior: "smooth" });
-        } else {
-            router.push(route);
-        }
+        switchPage(pageDisplayingDiv, router, route);
     }
 
     const renderDirectory = (items: DirectoryItem[], parentPath = "") => {

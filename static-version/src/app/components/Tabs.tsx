@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import OpenedTab from "./OpenedTab";
 import Notification from "./Notification";
+import { switchPage } from "../utils/utilFunctions";
 
 const Tabs = () => {
     const HOMEPAGE = "About";
@@ -91,20 +92,7 @@ const Tabs = () => {
 
         if (closedTab === currentTab) {
             const pageDisplayingDiv = document.querySelector("#pageDisplayer");
-            if (pageDisplayingDiv) {
-                // Start periodic checks for the scroll position
-                const checkScroll = setInterval(() => {
-                    if (pageDisplayingDiv.scrollTop === 0) {
-                        clearInterval(checkScroll); // Stop checking
-                        router.push(beforePath); // Navigate to the new tab
-                    }
-                }, 50); // Check every 50ms
-
-                // Trigger the smooth scroll
-                pageDisplayingDiv.scrollTo({ top: 0, behavior: "smooth" });
-            } else {
-                router.push(beforePath); // Fallback if div is not available
-            }
+            switchPage(pageDisplayingDiv, router, beforePath);
         }
         setClosedTab('');
     }, [closedTab]);
