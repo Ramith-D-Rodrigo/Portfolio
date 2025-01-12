@@ -1,4 +1,4 @@
-import { BALLERINA, CPP, CSHARP, DOCKER, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MYSQL, NEXTJS, PHP, REACTJS, THREEJS, TS, UNITY, UNREAL, WASM, WEBGL, WEBGPU } from '../constants/icon-css';
+import { BALLERINA, CPP, CSHARP, DOCKER, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MYSQL, NEXTJS, PHP, REACTJS, THREEJS, TS, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WEBXR } from '../constants/icon-css';
 
 const projects = [
     {
@@ -6,7 +6,7 @@ const projects = [
         description: "The final year research project of my Bachelor's degree. Currently I am conducting this research to improve the runtime"
             + " performance of the web-based augmented reality applications with the use of new web technologies and evaluate it's performance with"
             + " suitable quantitative and qualitative metrics.",
-        techStack: [CPP, WEBGL, WEBGPU, WASM, GIT, TS],
+        techStack: [CPP, WEBGL, WEBGPU, WASM, GIT, TS, WEBXR],
         timePeriod: "2024 June - Present",
         isExternalLink: false,
         link: "/",

@@ -158,9 +158,14 @@ const HTML : TechnologyWithCSSClass = {
     class: "devicon-html5-plain-wordmark colored"
 }
 
+const WEBXR : TechnologyWithCSSClass = {
+    name: "WebXR Device API",
+    class: "webxr-logo"
+}
+
 export {
     BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA,
     JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS,
-    TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WINDOWS
+    TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WINDOWS, WEBXR
 };
 export type { TechnologyWithCSSClass };

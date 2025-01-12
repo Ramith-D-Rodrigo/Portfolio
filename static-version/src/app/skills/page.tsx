@@ -1,6 +1,6 @@
 import { Noto_Sans_Sinhala } from 'next/font/google';
 import PageTitle from '../components/PageTitle';
-import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU } from '../constants/icon-css';
+import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WEBXR } from '../constants/icon-css';
 import SkillCard, { SkillCardProps } from '../components/SkillCard';
 
 const sinhalaFont = Noto_Sans_Sinhala({ subsets: ['sinhala'] });
@@ -78,7 +78,7 @@ const skills : SkillsInterface[] = [
                 description: "Using Three.js for creating 3D graphics and interactive visualizations in web-based applications, focusing on performance and ease of use."
             },
             {
-                tech: {name:"WebXR Device API"},
+                tech: WEBXR,
                 description: "Developing immersive web applications using WebXR to create extended reality experiences, including virtual and augmented reality applications."
             },
             {
