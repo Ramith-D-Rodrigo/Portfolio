@@ -25,35 +25,32 @@ export default function ProjectCard({ title, description, techStack, timePeriod,
                 <p className="text-gray-300 text-m mb-3">{description}</p>
 
                 {/* Flex container for the icons */}
-                <div className="flex items-center space-x-3 pt-2 pb-2">
+                <div className="flex items-center flex-wrap space-x-3 pt-2 pb-2">
                     {techStack.map((tech, index) => (
-                        <div key={index} className="flex items-center">
-                            <i className={`${tech.class} text-gray-300 text-5xl`} /> {/* Icon using Tailwind class */}
-                        </div>
+                        <i key={index} className={`${tech.class} text-gray-300 text-5xl m-2`} />
                     ))}
                 </div>
             </div>
 
             {/* EventButton at the bottom */}
             <div className="mt-auto">
-                {!isExternalLink &&
+                {!isExternalLink && (
                     <EventButton navContent={linkContent} navLink={link} isDisabled={linkDisabled} />
-                }
+                )}
 
-                {isExternalLink &&
+                {isExternalLink && (
                     <a
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`inline-flex items-center px-3 py-2 rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-300 ease-in-out transform hover:scale-105 transition-transform ${linkDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
-                        style={{ pointerEvents: linkDisabled ? 'none' : 'auto' }} // Disable clicking if linkDisabled is true
+                        style={{ pointerEvents: linkDisabled ? "none" : "auto" }}
                     >
                         <FontAwesomeIcon icon={faGithub} className="mr-2" />
                         {linkContent}
                     </a>
-                }
-
+                )}
             </div>
-        </div>
+        </div>    
     );
 }
