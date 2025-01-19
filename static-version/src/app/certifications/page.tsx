@@ -57,6 +57,11 @@ const Certifications = () => {
             image: "certifications/jlpt_n4.jpg", // Replace with actual image URL
         },
         {
+            title: "Data Science: R Basics",
+            description: "I took a course provied by Harvard University in Edx to learn how R programming language is used in Data Science.",
+            image: "certifications/r_basics_data_science.png", // Replace with actual image URL
+        },
+        {
             title: "Problem Solving (Basic)",
             description: "I passed an online test that is provided by HackerRank which is used to evaluate one's problem solving capabilities.",
             image: "certifications/problem_solving_basic.png", // Replace with actual image URL
