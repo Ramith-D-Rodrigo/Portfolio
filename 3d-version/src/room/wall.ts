@@ -43,11 +43,13 @@ const createWall = (width: number, height: number,
 
 const createWallPhysics = ( mass: number,
     xPosition: number, yPosition: number, zPosition: number,
-    xRotation: number, yRotation: number, zRotation: number
+    xRotation: number, yRotation: number, zRotation: number,
+    xScale: number, yScale: number, zScale: number
 ) => {
+    const size = new CANNON.Vec3(xScale, yScale, zScale);
     const wallBody = new CANNON.Body({
         mass: mass,
-        shape: new CANNON.Plane(),
+        shape: new CANNON.Box(size),
     });
     wallBody.position.set(xPosition, yPosition, zPosition);
     wallBody.quaternion.setFromEuler(xRotation, yRotation, zRotation);

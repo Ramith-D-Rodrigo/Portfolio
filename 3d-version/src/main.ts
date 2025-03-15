@@ -14,7 +14,6 @@ const main = async () => {
     const world = new CANNON.World();
     const cannonDebugger = CannonDebugger(scene, world);
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 10, 20); // Move the camera up and back
     
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -50,8 +49,8 @@ const main = async () => {
     setupKeyControls(keysPressed);
 
     // setup the character
-    let characterStateMachine = await loadCharacter(fbxLoader, scene, camera, controls);
-
+    let characterStateMachine = await loadCharacter(fbxLoader, scene, world, camera, controls);
+    
     const clock = new THREE.Clock();
     const animate = () => {
         const delta = clock.getDelta();

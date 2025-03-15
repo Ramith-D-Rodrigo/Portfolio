@@ -9,22 +9,24 @@ import * as CANNON from 'cannon-es';
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
-    const leftWall = createWall(20, 10, -10, 5, 0, 0, Math.PI / 2, 0, textureLoader);
+    const width = 20;
+    const height = 10;
+    const leftWall = createWall(width, height, -10, 5, 0, 0, Math.PI / 2, 0, textureLoader);
     scene.add(leftWall);
 
-    const leftWallPhysics = createWallPhysics(0, -10, 5, 0, 0, Math.PI / 2, 0);
+    const leftWallPhysics = createWallPhysics(0, -10, 5, 0, 0, Math.PI / 2, 0, width/2, height/2, 0.01);
     world.addBody(leftWallPhysics);
 
-    const rightWall = createWall(20, 10, 10, 5, 0, 0, -Math.PI / 2, 0, textureLoader);
+    const rightWall = createWall(width, height, 10, 5, 0, 0, -Math.PI / 2, 0, textureLoader);
     scene.add(rightWall);
 
-    const rightWallPhysics = createWallPhysics(0, 10, 5, 0, 0, -Math.PI / 2, 0);
+    const rightWallPhysics = createWallPhysics(0, 10, 5, 0, 0, -Math.PI / 2, 0,  width/2, height/2, 0.01);
     world.addBody(rightWallPhysics);
 
-    const backWall = createWall(20, 10, 0, 5, -10, 0, 0, 0, textureLoader);
+    const backWall = createWall(width, height, 0, 5, -10, 0, 0, 0, textureLoader);
     scene.add(backWall);
 
-    const backWallPhysics = createWallPhysics(0, 0, 5, -10, 0, 0, 0);
+    const backWallPhysics = createWallPhysics(0, 0, 5, -10, 0, 0, 0,  width/2, height/2, 0.01);
     world.addBody(backWallPhysics);
 }
 
@@ -35,10 +37,12 @@ const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) =>
 }
 
 const setupFloor = (scene: THREE.Scene, world: CANNON.World) => {
-    const floor = createFloor(20, 20, 0, 0, 0, -Math.PI / 2, 0, 0, 1, 1, 1);
+    const width = 20;
+    const height = 20;
+    const floor = createFloor(width, height, 0, 0, 0, -Math.PI / 2, 0, 0, 1, 1, 1);
     scene.add(floor);
 
-    const floorPhysics = createFloorPhysics(0, 0, 0, 0, -Math.PI / 2, 0, 0);
+    const floorPhysics = createFloorPhysics(0, 0, 0, 0, -Math.PI / 2, 0, 0, width/2, height/2, 0);
     world.addBody(floorPhysics);
 }
 

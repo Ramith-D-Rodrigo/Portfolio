@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DIRECTIONS } from './controls';
 import { IDLE, WALK } from './constants';
@@ -6,6 +7,7 @@ import { IDLE, WALK } from './constants';
 class CharacterStateMachine {
     
     private model: THREE.Group;
+    private physicsBody: CANNON.Body;
     private mixer: THREE.AnimationMixer;
     private animationMap: Map<string, THREE.AnimationAction> = new Map();
     private orbitControls: OrbitControls;
@@ -14,13 +16,16 @@ class CharacterStateMachine {
 
     private rotateQuaternion = new THREE.Quaternion();
     private rotateAxis = new THREE.Vector3(0, 1, 0);
+    private cannonRotateAxis = new CANNON.Vec3(0, 1, 0);
     private walkDirection = new THREE.Vector3();
     private walkSpeed = 5;
     private cameraTarget = new THREE.Vector3();
+    private cameraOffset = new THREE.Vector3(0, 5, 5);
 
-    public constructor(model: THREE.Group, mixer: THREE.AnimationMixer, camera: THREE.PerspectiveCamera, 
+    public constructor(model: THREE.Group, physicsBody: CANNON.Body, mixer: THREE.AnimationMixer, camera: THREE.PerspectiveCamera, 
         orbitControls: OrbitControls, animationsMap: Map<string, THREE.AnimationAction>, currAction: string) {
         this.model = model;
+        this.physicsBody = physicsBody;
         this.mixer = mixer;
         this.orbitControls = orbitControls;
         this.camera = camera;
@@ -36,7 +41,7 @@ class CharacterStateMachine {
 
         //set the camera position behind the character
         const modelPosition = this.model.position;
-        this.camera.position.set(modelPosition.x, modelPosition.y + 5, modelPosition.z + 5);
+        this.camera.position.set(modelPosition.x, modelPosition.y, modelPosition.z).add(this.cameraOffset);
         this.camera.lookAt(modelPosition);
 
         this.updateCameraTarget(0, 0);
@@ -65,29 +70,54 @@ class CharacterStateMachine {
 
         this.mixer.update(delta);
 
+        const epsilon = 0.0001; // Small tolerance for floating-point comparison
+        const cameraToModelDistance = this.camera.position.distanceTo(this.model.position);
+        const cameraOffsetLength = this.cameraOffset.length();
+        
+        if (Math.abs(cameraToModelDistance - cameraOffsetLength) > epsilon) {
+            const direction = new THREE.Vector3().subVectors(this.camera.position, this.model.position).normalize();
+            // Set camera position to maintain the correct offset
+            this.camera.position.copy(this.model.position).addScaledVector(direction, cameraOffsetLength);
+        }
+
         //turning the character
-        if(this.currAction === WALK) {
+        if (this.currAction === WALK) {
             let cameraYAngle = Math.atan2(
                 this.model.position.x - this.camera.position.x,
                 this.model.position.z - this.camera.position.z
             );
             let directionOffset = this.directionOffset(keysPressed);
+            // Rotate the physics body
+            const targetQuaternion = new CANNON.Quaternion();
+            targetQuaternion.setFromAxisAngle(this.cannonRotateAxis, cameraYAngle + directionOffset);
+            // Interpolate towards the target quaternion
+            this.physicsBody.quaternion.slerp(targetQuaternion, 0.1, this.physicsBody.quaternion);
+
+            // Rotate the mesh
             this.rotateQuaternion.setFromAxisAngle(this.rotateAxis, cameraYAngle + directionOffset);
             this.model.quaternion.rotateTowards(this.rotateQuaternion, 0.1);
-
+        
+            // Update movement
             this.camera.getWorldDirection(this.walkDirection);
             this.walkDirection.y = 0;
             this.walkDirection.normalize();
             this.walkDirection.applyAxisAngle(this.rotateAxis, directionOffset);
-
+        
             const x = this.walkDirection.x * this.walkSpeed * delta;
             const z = this.walkDirection.z * this.walkSpeed * delta;
 
-            this.model.position.x += x;
-            this.model.position.z += z;
-
+            this.physicsBody.position.x += x;
+            this.physicsBody.position.z += z;
+        
+            this.model.position.x = this.physicsBody.position.x;
+            this.model.position.z = this.physicsBody.position.z;
+        
             this.updateCameraTarget(x, z);
         }
+        else if (this.currAction === IDLE) {
+            this.physicsBody.velocity.set(0, 0, 0);
+            this.physicsBody.angularVelocity.set(0, 0, 0);
+        }        
     }
 
     private updateCameraTarget(x: number, z: number) {
