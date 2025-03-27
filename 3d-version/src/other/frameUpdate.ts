@@ -1,5 +1,5 @@
 interface FrameUpdate {
-    update(): void;
+    update(delta: number): void;
 }
 
 export type {FrameUpdate};

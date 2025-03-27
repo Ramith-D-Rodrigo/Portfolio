@@ -24,6 +24,9 @@ class InteractableArea implements FrameUpdate {
             this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
         }
         this.interactions[this.currInteractionIdx].setIsVisible(true);
+        if(event.key.toLowerCase() === 'f'){
+            this.interactions[this.currInteractionIdx].interact();
+        }
     };
 
     private static textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
@@ -68,7 +71,7 @@ class InteractableArea implements FrameUpdate {
         return newArea;
     }
 
-    public update(): void {
+    public update(delta: number): void {
         this.interactions.forEach(int => int.setIsVisible(false));
         window.removeEventListener('keydown', this.interactionSwitchEvent);
     }
