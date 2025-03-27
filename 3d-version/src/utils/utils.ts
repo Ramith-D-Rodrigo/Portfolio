@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
 const customizeTexture = (texture: THREE.Texture) => {
     texture.wrapS = THREE.RepeatWrapping;
@@ -7,4 +8,12 @@ const customizeTexture = (texture: THREE.Texture) => {
     texture.offset.set(0.2, -0.2);
 };
 
-export { customizeTexture };
+class Utils {
+    private static fontLoader: FontLoader = new FontLoader();
+
+    public static async loadFont(fontLoc: string): Promise<Font> {
+        return Utils.fontLoader.loadAsync(fontLoc); 
+    }
+}
+
+export { customizeTexture, Utils };
