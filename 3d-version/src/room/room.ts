@@ -8,6 +8,8 @@ import { createObjectFromGLTF, createObjectPhysics, loadGLTFModel } from "../obj
 import * as CANNON from 'cannon-es';
 import InteractableArea from "./interactableArea";
 import Interaction from "./interaction";
+import HUD from "../other/hud";
+import { FrameUpdate } from "../other/frameUpdate";
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -128,7 +130,7 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
     console.log("added all objects");
 }
 
-const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) => {
+const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, hud: HUD): Promise<FrameUpdate[]> => {
     // add the interactable collision area
     const rackInteraction = new Interaction("Do curl");
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
@@ -141,6 +143,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
         [rackInteraction]
     );
     interactable.addToWorld(world, scene);
+    hud.addComponent(rackInteraction);
 
     // add the interactable collision area
     const barbellInteraction = new Interaction("deadlift");
@@ -154,6 +157,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
         [barbellInteraction]
     );
     interactable2.addToWorld(world, scene);
+    hud.addComponent(barbellInteraction);
 
     // add the interactable collision area
     const squatRackInteraction = new Interaction("squat");
@@ -167,9 +171,11 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
         [squatRackInteraction]
     );
     interactable3.addToWorld(world, scene);
+    hud.addComponent(squatRackInteraction);
 
     // add the interactable collision area
     const warmupInteraction = new Interaction("do warm up");
+    const warmupInteraction2 = new Interaction("do warm up 2");
     const warmupInteractionPos = new THREE.Vector3(0, 0, 0);
     const warmupInteractionRot = new THREE.Vector3(0, 0, 0);
     const warmupTextPos = new THREE.Vector3(-1.5, 1, 0);
@@ -177,18 +183,27 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
     const warmupInteractable = await InteractableArea.create(
         warmupInteractionPos, warmupInteractionRot, 2,
         "Warm Up", warmupTextPos, warmupTextRot, 
-        [warmupInteraction]
+        [warmupInteraction, warmupInteraction2]
     );
     warmupInteractable.addToWorld(world, scene);
+    hud.addComponent(warmupInteraction);
+    hud.addComponent(warmupInteraction2);
+
+    return [
+        interactable,
+        interactable2,
+        interactable3,
+        warmupInteractable,
+    ]
 }
 
-const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader, textureLoader: THREE.TextureLoader) => {
+const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader, textureLoader: THREE.TextureLoader, hud: HUD): Promise<FrameUpdate[]> => {
     setupWalls(textureLoader, scene, world);
     setupCeiling(textureLoader, scene);
     setupFloor(scene, world);
     setupMirrors(scene);
     await setupGymEquipment(scene, world, loader);
-    await setupInteractableAreas(scene, world);
+    return await setupInteractableAreas(scene, world, hud);
 }
 
 export { setupRoom };
