@@ -1,21 +1,25 @@
 import * as CANNON from "cannon-es";
 import * as THREE from "three";
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 import Interaction from "./interaction";
+import { Utils } from "../utils/utils";
 
 class InteractableArea {
     private collisionBody: CANNON.Body;
     private cameraPos: THREE.Vector3;
     private cameraOri: THREE.Vector3;
     private displayText: THREE.Mesh;
-    private interaction: Interaction;
+    private interactions: Interaction[];
+    private currInteractionIdx: number = 0;
 
-    private static fontLoader: FontLoader = new FontLoader();
+    private static textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-    private constructor(pos: THREE.Vector3, rot: THREE.Vector3, radius: number, interaction: Interaction){
-        this.interaction = interaction;
+    private static areaFont: Font | null;
+
+    private constructor(pos: THREE.Vector3, rot: THREE.Vector3, radius: number, interactions: Interaction[]){
+        this.interactions = interactions;
         this.collisionBody = new CANNON.Body({
             mass: 0,
             shape: new CANNON.Sphere(radius),
@@ -25,22 +29,25 @@ class InteractableArea {
         this.collisionBody.quaternion.setFromEuler(rot.x, rot.y, rot.z);
 
         this.collisionBody.addEventListener('collide', (event: any) => {
-            this.interaction.interact();
+            this.displayInteractions();
+            this.listenForKeyEvents();
         });
     }
 
     public static async create(pos: THREE.Vector3, rot: THREE.Vector3, radius: number, 
         displayText: string, textPos: THREE.Vector3, textRot: THREE.Vector3, 
-        interaction: Interaction): Promise<InteractableArea> {
-        const newArea = new InteractableArea(pos, rot, radius, interaction);
-        const font = await InteractableArea.fontLoader.loadAsync('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json'); 
+        interactions: Interaction[]): Promise<InteractableArea> {
+        const newArea = new InteractableArea(pos, rot, radius, interactions);
+        if(!InteractableArea.areaFont){
+            InteractableArea.areaFont = await Utils.loadFont('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json');
+        }
         const textGeometry = new TextGeometry(displayText, {
-            font: font,
+            font: InteractableArea.areaFont,
             size: 0.6,
-            height: 0.2
+            depth: 0.2
         });
 
-        const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const textMaterial = InteractableArea.textMaterial;
         newArea.displayText = new THREE.Mesh(textGeometry, textMaterial);
 
         newArea.displayText.position.set(textPos.x, textPos.y, textPos.z);
@@ -63,6 +70,27 @@ class InteractableArea {
         this.cameraOri = ori;
     }
 
+    private displayInteractions(): void {
+        if (this.interactions.length === 0) return;
+        this.interactions[0].displayInteractionText();
+    }
+
+    private hideInteractions(): void {
+        this.interactions[0].hideInteractionText();
+    }
+
+    private listenForKeyEvents(): void {
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                this.currInteractionIdx = (this.currInteractionIdx - 1 + this.interactions.length) % this.interactions.length;
+                this.displayInteractions();
+            }
+            if (event.key === 'ArrowRight') {
+                this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
+                this.displayInteractions();
+            }
+        });
+    }
 };
 
 export default InteractableArea;
