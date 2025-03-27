@@ -130,7 +130,7 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
 
 const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) => {
     // add the interactable collision area
-    const rackInteraction = new Interaction();
+    const rackInteraction = new Interaction("Do curl");
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
     const rackInteractionRot = new THREE.Vector3(0, 0, 0);
     const rackTextPos = new THREE.Vector3(-7, 1, -3);
@@ -138,12 +138,12 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
     const interactable = await InteractableArea.create(
         rackInteractionPos, rackInteractionRot, 5, 
         "Skills", rackTextPos, rackTextRot, 
-        rackInteraction
+        [rackInteraction]
     );
     interactable.addToWorld(world, scene);
 
     // add the interactable collision area
-    const barbellInteraction = new Interaction();
+    const barbellInteraction = new Interaction("deadlift");
     const barbellInteractionPos = new THREE.Vector3(7, 1, 5);
     const barbellInteractionRot = new THREE.Vector3(0, 0, 0);
     const barbellTextPos = new THREE.Vector3(5, 1, 3);
@@ -151,12 +151,12 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
     const interactable2 = await InteractableArea.create(
         barbellInteractionPos, barbellInteractionRot, 3,
         "Experience", barbellTextPos, barbellTextRot, 
-        barbellInteraction
+        [barbellInteraction]
     );
     interactable2.addToWorld(world, scene);
 
     // add the interactable collision area
-    const squatRackInteraction = new Interaction();
+    const squatRackInteraction = new Interaction("squat");
     const squatRackInteractionPos = new THREE.Vector3(-9, 1.5, 5);
     const squatRackInteractionRot = new THREE.Vector3(0, 0, 0);
     const squatRackTextPos = new THREE.Vector3(-7, 1, 7);
@@ -164,12 +164,12 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
     const interactable3 = await InteractableArea.create(
         squatRackInteractionPos, squatRackInteractionRot, 3.5, 
         "Education", squatRackTextPos, squatRackTextRot, 
-        squatRackInteraction
+        [squatRackInteraction]
     );
     interactable3.addToWorld(world, scene);
 
     // add the interactable collision area
-    const warmupInteraction = new Interaction();
+    const warmupInteraction = new Interaction("do warm up");
     const warmupInteractionPos = new THREE.Vector3(0, 0, 0);
     const warmupInteractionRot = new THREE.Vector3(0, 0, 0);
     const warmupTextPos = new THREE.Vector3(-1.5, 1, 0);
@@ -177,7 +177,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World) =
     const warmupInteractable = await InteractableArea.create(
         warmupInteractionPos, warmupInteractionRot, 2,
         "Warm Up", warmupTextPos, warmupTextRot, 
-        warmupInteraction
+        [warmupInteraction]
     );
     warmupInteractable.addToWorld(world, scene);
 }
