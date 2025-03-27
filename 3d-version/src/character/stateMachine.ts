@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { DIRECTIONS } from './controls';
+import { DIRECTIONS, setupKeyControls } from './controls';
 import { IDLE, WALK } from './constants';
+import { FrameUpdate } from '../other/frameUpdate';
 
-class CharacterStateMachine {
+class CharacterStateMachine implements FrameUpdate {
     
     private model: THREE.Group;
     private physicsBody: CANNON.Body;
@@ -14,6 +15,8 @@ class CharacterStateMachine {
     private camera: THREE.PerspectiveCamera;
     private currAction: string;
 
+    private keysPressed = new Map<string, boolean>();
+
     private rotateQuaternion = new THREE.Quaternion();
     private rotateAxis = new THREE.Vector3(0, 1, 0);
     private cannonRotateAxis = new CANNON.Vec3(0, 1, 0);
@@ -21,6 +24,13 @@ class CharacterStateMachine {
     private walkSpeed = 5;
     private cameraTarget = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3(0, 5, 5);
+
+    private isInteracting: boolean = false;
+    private interactionEvent = (event: KeyboardEvent): void => {
+        if(event.key.toLowerCase() === 'f'){
+            this.isInteracting = !this.isInteracting;
+        }
+    };
 
     public constructor(model: THREE.Group, physicsBody: CANNON.Body, mixer: THREE.AnimationMixer, camera: THREE.PerspectiveCamera, 
         orbitControls: OrbitControls, animationsMap: Map<string, THREE.AnimationAction>, currAction: string) {
@@ -45,17 +55,35 @@ class CharacterStateMachine {
         this.camera.lookAt(modelPosition);
 
         this.updateCameraTarget(0, 0);
+
+        setupKeyControls(this.keysPressed);
+        
+        this.physicsBody.addEventListener('collide', (event: any) => {
+            if(event.body.isTrigger){
+                document.addEventListener('keydown', this.interactionEvent);
+            }
+        });
+
     }
 
 
-    public update(delta: number, keysPressed: Map<string, boolean>): void {
-        const directionPressed = DIRECTIONS.some(direction => keysPressed.get(direction) == true);
+    public update(delta: number): void {
+        document.removeEventListener('keydown', this.interactionEvent);
+
         let play = '';
-        if(directionPressed) {
-            play = WALK;
+        if(this.isInteracting){
+            this.orbitControls.enabled = false;
+            play = IDLE;
         }
         else{
-            play = IDLE;
+            this.orbitControls.enabled = true;
+            const directionPressed = DIRECTIONS.some(direction => this.keysPressed.get(direction) === true);
+            if(directionPressed) {
+                play = WALK;
+            }
+            else{
+                play = IDLE;
+            }
         }
 
         if(this.currAction !== play) {
@@ -86,7 +114,7 @@ class CharacterStateMachine {
                 this.model.position.x - this.camera.position.x,
                 this.model.position.z - this.camera.position.z
             );
-            let directionOffset = this.directionOffset(keysPressed);
+            let directionOffset = this.directionOffset(this.keysPressed);
             // Rotate the physics body
             const targetQuaternion = new CANNON.Quaternion();
             targetQuaternion.setFromAxisAngle(this.cannonRotateAxis, cameraYAngle + directionOffset);

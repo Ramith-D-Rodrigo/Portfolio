@@ -45,7 +45,7 @@ const main = async () => {
     const hud = new HUD();
 
     // Setup the room
-    const frameUpdates = await setupRoom(scene, world, loader, textureLoader, hud);
+    const interactableAreas = await setupRoom(scene, world, loader, textureLoader, hud);
 
     const keysPressed = new Map<string, boolean>();
     setupKeyControls(keysPressed);
@@ -55,11 +55,11 @@ const main = async () => {
     
     const clock = new THREE.Clock();
     const animate = () => {
-        frameUpdates.forEach(obj => obj.update());
-
         const delta = clock.getDelta();
-        if(characterStateMachine) {
-            characterStateMachine.update(delta, keysPressed);
+        interactableAreas.forEach(obj => obj.update(delta));
+
+        if(characterStateMachine){
+            characterStateMachine.update(delta);
         }
 
         // Step the physics world
