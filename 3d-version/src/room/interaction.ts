@@ -21,11 +21,11 @@ class Interaction implements HUDComponent {
     }
 
     public display(): void {
-        this.domElement.style.display = 'block';
+        this.domElement.classList.add('visible');
     }
 
     public hide(): void {
-        this.domElement.style.display = 'none';
+        this.domElement.classList.remove('visible');
     }
 
     public setIsVisible(val: boolean): void{

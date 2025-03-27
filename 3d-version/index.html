@@ -18,11 +18,33 @@
                 width: 100%;
                 text-align: center;
                 z-index: 100;
-                display:none;
-                font-family:  sans-serif;
+                display: block; /* Always block, but controlled with opacity */
+                opacity: 0; /* Start as hidden */
+                transform: scale(0.8); /* Initially smaller */
+                font-family: sans-serif;
                 font-size: 1.5rem;
                 color: white;
                 pointer-events: none;
+                transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition */
+            }
+
+            /* When the message is visible, it fades in and pulses */
+            .interaction.visible {
+                opacity: 1;  /* Fully visible */
+                transform: scale(1);  /* Normal size */
+                animation: pulse 1s infinite alternate; /* Pulse animation */
+            }
+
+            /* Pulse effect for the "Press F to interact" message */
+            @keyframes pulse {
+                0% {
+                    transform: scale(0.9);  /* Slightly smaller */
+                    opacity: 0.8; /* Slightly transparent */
+                }
+                100% {
+                    transform: scale(1);    /* Normal size */
+                    opacity: 1;  /* Fully opaque */
+                }
             }
         </style>
     </head>
