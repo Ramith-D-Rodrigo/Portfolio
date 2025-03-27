@@ -65,8 +65,6 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
         world.addBody(characterPhysicsBody);
     });
 
-
-
     return new CharacterStateMachine(object, characterPhysicsBody, animationMixer, camera, controls, animationsMap, 'Idle');
 }
 
