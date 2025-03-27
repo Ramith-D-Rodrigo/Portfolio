@@ -8,6 +8,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { setupKeyControls } from './character/controls';
 import { setupRoom } from './room/room';
 import { loadCharacter } from './character/utils';
+import HUD from './other/hud';
 
 const main = async () => {
     const scene = new THREE.Scene();
@@ -41,9 +42,10 @@ const main = async () => {
     // rectLight.position.set(2.2, 8, 2.2); // Position on the ceiling
     // rectLight.rotateX(-Math.PI / 2); // Rotate the light to point down
     // scene.add(rectLight);
+    const hud = new HUD();
 
     // Setup the room
-    setupRoom(scene, world, loader, textureLoader);
+    const frameUpdates = await setupRoom(scene, world, loader, textureLoader, hud);
 
     const keysPressed = new Map<string, boolean>();
     setupKeyControls(keysPressed);
@@ -53,6 +55,8 @@ const main = async () => {
     
     const clock = new THREE.Clock();
     const animate = () => {
+        frameUpdates.forEach(obj => obj.update());
+
         const delta = clock.getDelta();
         if(characterStateMachine) {
             characterStateMachine.update(delta, keysPressed);
@@ -63,6 +67,8 @@ const main = async () => {
         cannonDebugger.update();
         controls.update(); // Required for damping to work
         renderer.render(scene, camera);
+
+        hud.display();
 
         requestAnimationFrame(animate);
     };
