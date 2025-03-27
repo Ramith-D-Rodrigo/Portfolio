@@ -5,14 +5,26 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 import Interaction from "./interaction";
 import { Utils } from "../utils/utils";
+import { FrameUpdate } from "../other/frameUpdate";
 
-class InteractableArea {
+class InteractableArea implements FrameUpdate {
     private collisionBody: CANNON.Body;
     private cameraPos: THREE.Vector3;
     private cameraOri: THREE.Vector3;
     private displayText: THREE.Mesh;
     private interactions: Interaction[];
+
     private currInteractionIdx: number = 0;
+    private interactionSwitchEvent = (event: KeyboardEvent): void => {
+        this.interactions[this.currInteractionIdx].setIsVisible(false);
+        if (event.key === 'ArrowLeft') {
+            this.currInteractionIdx = (this.currInteractionIdx - 1 + this.interactions.length) % this.interactions.length;
+        }
+        if (event.key === 'ArrowRight') {
+            this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
+        }
+        this.interactions[this.currInteractionIdx].setIsVisible(true);
+    };
 
     private static textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
@@ -27,9 +39,10 @@ class InteractableArea {
         });
         this.collisionBody.position.set(pos.x, pos.y, pos.z);
         this.collisionBody.quaternion.setFromEuler(rot.x, rot.y, rot.z);
-
+        this.currInteractionIdx = 0;
+        
         this.collisionBody.addEventListener('collide', (event: any) => {
-            this.displayInteractions();
+            this.interactions[this.currInteractionIdx].setIsVisible(true);
             this.listenForKeyEvents();
         });
     }
@@ -55,6 +68,11 @@ class InteractableArea {
         return newArea;
     }
 
+    public update(): void {
+        this.interactions.forEach(int => int.setIsVisible(false));
+        window.removeEventListener('keydown', this.interactionSwitchEvent);
+    }
+
     public addToWorld(world: CANNON.World, scene: THREE.Scene){
         world.addBody(this.collisionBody);
         scene.add(this.displayText);
@@ -70,26 +88,8 @@ class InteractableArea {
         this.cameraOri = ori;
     }
 
-    private displayInteractions(): void {
-        if (this.interactions.length === 0) return;
-        this.interactions[0].displayInteractionText();
-    }
-
-    private hideInteractions(): void {
-        this.interactions[0].hideInteractionText();
-    }
-
     private listenForKeyEvents(): void {
-        window.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowLeft') {
-                this.currInteractionIdx = (this.currInteractionIdx - 1 + this.interactions.length) % this.interactions.length;
-                this.displayInteractions();
-            }
-            if (event.key === 'ArrowRight') {
-                this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
-                this.displayInteractions();
-            }
-        });
+        window.addEventListener('keydown', this.interactionSwitchEvent);
     }
 };
 
