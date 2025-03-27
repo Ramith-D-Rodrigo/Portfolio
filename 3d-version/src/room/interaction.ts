@@ -1,27 +1,39 @@
 import * as THREE from "three";
 import { Font } from "three/examples/jsm/loaders/FontLoader";
 import { Utils } from "../utils/utils";
+import { HUDComponent } from "../other/hudComponent";
 
-class Interaction {
+class Interaction implements HUDComponent {
     private static font: Font;
     private static scene: THREE.Scene;
     private static camera: THREE.Camera;
     private textSprite: THREE.Sprite | null = null;
     private interactionText: string;
+    private isVisible: boolean = false;
+    private domElement: HTMLElement;
 
     public constructor(interactionText: string) {
         this.interactionText = interactionText;
+        this.domElement = document.createElement("div");
+        this.domElement.className = 'interaction';
+        this.domElement.innerText = this.interactionText;
+        document.body.appendChild(this.domElement);
     }
 
-    public displayInteractionText(): void {
-        const el = document.querySelector("#interaction") as HTMLElement;
-        el.innerText = this.interactionText;
-        el.style.display = 'block';
+    public display(): void {
+        this.domElement.style.display = 'block';
     }
 
-    public hideInteractionText(): void {
-        const el = document.querySelector("#interaction") as HTMLElement;
-        el.style.display = 'none';
+    public hide(): void {
+        this.domElement.style.display = 'none';
+    }
+
+    public setIsVisible(val: boolean): void{
+        this.isVisible = val;
+    }
+
+    public getIsVisible(): boolean {
+        return this.isVisible;
     }
 
     public interact(): void {
