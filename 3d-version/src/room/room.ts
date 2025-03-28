@@ -133,7 +133,7 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
 
 const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, hud: HUD): Promise<FrameUpdate[]> => {
     // add the interactable collision area
-    const rackInteraction = new Interaction("Do Bicep Curls", []);
+    const rackInteraction = new Interaction("Do Bicep Curls", [], new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97));
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
     const rackInteractionRot = new THREE.Vector3(0, 0, 0);
     const rackTextPos = new THREE.Vector3(-7, 1, -3);
@@ -147,7 +147,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(rackInteraction);
 
     // add the interactable collision area
-    const barbellInteraction = new Interaction("Flex", [FLEX]);
+    const barbellInteraction = new Interaction("Flex", [FLEX], new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49));
     const barbellInteractionPos = new THREE.Vector3(7, 1, 5);
     const barbellInteractionRot = new THREE.Vector3(0, 0, 0);
     const barbellTextPos = new THREE.Vector3(5, 1, 3);
@@ -161,7 +161,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(barbellInteraction);
 
     // add the interactable collision area
-    const squatRackInteraction = new Interaction("Squat", [START_SQUAT, SQUAT, STOP_SQUAT]);
+    const squatRackInteraction = new Interaction("Squat", [START_SQUAT, SQUAT, STOP_SQUAT], new THREE.Vector3(-2.14, 2.22, 11.30), new THREE.Quaternion(-0.09, 0.28, 0.03, 1.0));
     const squatRackInteractionPos = new THREE.Vector3(-9, 1.5, 5);
     const squatRackInteractionRot = new THREE.Vector3(0, 0, 0);
     const squatRackTextPos = new THREE.Vector3(-7, 1, 7);
@@ -175,8 +175,16 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(squatRackInteraction);
 
     // add the interactable collision area
-    const warmupInteraction = new Interaction("Do Push Ups", [START_PUSH_UP, PUSH_UP, STOP_PUSH_UP]);
-    const warmupInteraction2 = new Interaction("Do Sit Ups", [START_SITUP, SITUP, STOP_SITUP]);
+    const warmupInteraction = new Interaction("Do Push Ups", 
+        [START_PUSH_UP, PUSH_UP, STOP_PUSH_UP], 
+        new THREE.Vector3(-2.16, 4.017, -5.31), 
+        new THREE.Quaternion(0.036, 0.96, 0.23, -0.15)
+    );
+    const warmupInteraction2 = new Interaction("Do Sit Ups", 
+        [START_SITUP, SITUP, STOP_SITUP],
+        new THREE.Vector3(-2.16, 4.017, -5.31), 
+        new THREE.Quaternion(0.036, 0.96, 0.23, -0.15)
+    );
     const warmupInteractionPos = new THREE.Vector3(0, 0, 0);
     const warmupInteractionRot = new THREE.Vector3(0, 0, 0);
     const warmupTextPos = new THREE.Vector3(-1.5, 1, 0);
