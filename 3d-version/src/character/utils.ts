@@ -1,12 +1,17 @@
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import * as THREE from "three";
-import { FLEX, IDLE, PUSH_UP, SITUP, START_PUSH_UP, START_SITUP, START_WALK, STOP_PUSH_UP, STOP_SITUP, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK } from "./constants";
+import { FLEX, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, START_WALK, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK } from "./constants";
 import CharacterStateMachine from "./stateMachine";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as CANNON from 'cannon-es';
 
 
-const animations: string[] = [IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK, START_PUSH_UP, PUSH_UP, STOP_PUSH_UP, FLEX, START_SITUP, SITUP, STOP_SITUP];
+const animations: string[] = [IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK, 
+    START_PUSH_UP, PUSH_UP, STOP_PUSH_UP, 
+    FLEX, 
+    START_SITUP, SITUP, STOP_SITUP,
+    START_SQUAT, SQUAT, STOP_SQUAT
+];
 
 const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CANNON.World, camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
     const object = await fbxLoader.loadAsync(
