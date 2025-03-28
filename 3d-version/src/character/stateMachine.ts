@@ -38,7 +38,7 @@ class CharacterStateMachine implements FrameUpdate {
             if(!interaction) return;
             this.isInteracting = true;
             this.orbitControls.enabled = false;
-            interaction.interact(this.camera, this.animationMap, this.mixer, this.currAction).then(() => {
+            interaction.interact(this.camera, this.animationMap, this.mixer, this.currAction, this.model).then(() => {
                 this.isInteracting = false;
                 this.orbitControls.enabled = true;
             });
