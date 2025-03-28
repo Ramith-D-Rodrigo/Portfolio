@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DIRECTIONS, setupKeyControls } from './controls';
 import { IDLE, WALK } from './constants';
 import { FrameUpdate } from '../other/frameUpdate';
+import InteractionManager from '../room/interactionManager';
+import Interaction from '../room/interaction';
 
 class CharacterStateMachine implements FrameUpdate {
     
@@ -26,9 +28,15 @@ class CharacterStateMachine implements FrameUpdate {
     private cameraOffset = new THREE.Vector3(0, 5, 5);
 
     private isInteracting: boolean = false;
+    private interactingAnimations: string[] = [];
     private interactionEvent = (event: KeyboardEvent): void => {
-        if(event.key.toLowerCase() === 'f'){
-            this.isInteracting = !this.isInteracting;
+        if(event.key.toLowerCase() === 'f' && !this.isInteracting){
+            const interaction =  InteractionManager.getCurrContactingInteraction() as Interaction;
+            this.interactingAnimations = interaction.getAnimations();
+            interaction.interact();
+            this.playInteractionSequence().then(() => {
+                interaction.stopInteract();
+            });
         }
     };
 
@@ -68,23 +76,17 @@ class CharacterStateMachine implements FrameUpdate {
 
 
     public update(delta: number): void {
+        this.mixer.update(delta);
         document.removeEventListener('keydown', this.interactionEvent);
 
         let play = '';
         if(this.isInteracting){
-            this.orbitControls.enabled = false;
-            play = IDLE;
+            return;
         }
-        else{
-            this.orbitControls.enabled = true;
-            const directionPressed = DIRECTIONS.some(direction => this.keysPressed.get(direction) === true);
-            if(directionPressed) {
-                play = WALK;
-            }
-            else{
-                play = IDLE;
-            }
-        }
+
+        this.orbitControls.enabled = true;
+        const directionPressed = DIRECTIONS.some(direction => this.keysPressed.get(direction) === true);
+        play = directionPressed ? WALK : IDLE;
 
         if(this.currAction !== play) {
             const prevAction = this.animationMap.get(this.currAction);
@@ -95,8 +97,6 @@ class CharacterStateMachine implements FrameUpdate {
 
             this.currAction = play;
         }
-
-        this.mixer.update(delta);
 
         const epsilon = 0.0001; // Small tolerance for floating-point comparison
         const cameraToModelDistance = this.camera.position.distanceTo(this.model.position);
@@ -184,6 +184,53 @@ class CharacterStateMachine implements FrameUpdate {
 
         return directionOffset;
     }
+
+    private async playInteractionSequence(): Promise<void> {
+        if (this.interactingAnimations.length === 0) return;
+    
+        this.isInteracting = true;
+        this.orbitControls.enabled = false;
+
+        const currentAction = this.animationMap.get(this.currAction);
+        currentAction?.fadeOut(0.2);
+    
+        for (let i = 0; i < this.interactingAnimations.length; i++) {
+            if(i === 0 || i === this.interactingAnimations.length - 1){
+                await this.playAnimation(this.interactingAnimations[i], THREE.LoopOnce, 1);
+            }
+            else{
+                await this.playAnimation(this.interactingAnimations[i], THREE.LoopRepeat, 10);
+            }
+        }
+    
+        currentAction?.reset().fadeIn(0.2).play();
+        this.isInteracting = false;
+        this.orbitControls.enabled = true;
+    }
+
+    private playAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number): Promise<void> {
+        return new Promise((resolve) => {
+            const action = this.animationMap.get(animName);
+            if (!action) {
+                console.warn(`Animation '${animName}' not found`);
+                resolve();
+                return;
+            }
+            action.setLoop(mode, repetitions);
+            action.reset().fadeIn(0.2).play();
+    
+            // Listen for animation completion
+            this.mixer.addEventListener('finished', (event) => {
+                if (event.action === action) {
+                    action.fadeOut(0.2);
+                    resolve();
+                }
+            });
+    
+            action.clampWhenFinished = true;
+        });
+    }
+    
 }
 
 export default CharacterStateMachine;
