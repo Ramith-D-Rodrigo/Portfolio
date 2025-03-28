@@ -10,8 +10,6 @@ import InteractionManager from "./interactionManager";
 
 class InteractableArea implements FrameUpdate {
     private collisionBody: CANNON.Body;
-    private cameraPos: THREE.Vector3;
-    private cameraOri: THREE.Vector3;
     private displayText: THREE.Mesh;
     private interactions: Interaction[];
 
@@ -83,11 +81,6 @@ class InteractableArea implements FrameUpdate {
     public removeFromWorld(world: CANNON.World, scene: THREE.Scene){
         world.removeBody(this.collisionBody);
         scene.remove(this.displayText);
-    }
-
-    public setCameraLocation(pos:THREE.Vector3, ori: THREE.Vector3){
-        this.cameraPos = pos;
-        this.cameraOri = ori;
     }
 
     private listenForKeyEvents(): void {
