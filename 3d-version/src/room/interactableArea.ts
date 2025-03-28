@@ -6,6 +6,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import Interaction from "./interaction";
 import { Utils } from "../utils/utils";
 import { FrameUpdate } from "../other/frameUpdate";
+import InteractionManager from "./interactionManager";
 
 class InteractableArea implements FrameUpdate {
     private collisionBody: CANNON.Body;
@@ -24,9 +25,7 @@ class InteractableArea implements FrameUpdate {
             this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
         }
         this.interactions[this.currInteractionIdx].setIsVisible(true);
-        if(event.key.toLowerCase() === 'f'){
-            this.interactions[this.currInteractionIdx].interact();
-        }
+        InteractionManager.setContactingInteraction(this.interactions[this.currInteractionIdx]);
     };
 
     private static textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
