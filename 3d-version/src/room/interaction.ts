@@ -2,6 +2,13 @@ import * as THREE from "three";
 import { HUDComponent } from "../other/hudComponent";
 import gsap from "gsap";
 
+type AttachableObjectProps = {
+    object: THREE.Group,
+    position: THREE.Vector3,
+    rotation: THREE.Euler,
+    scale: THREE.Vector3
+}
+
 class Interaction implements HUDComponent {
     private interactionText: string;
     private isVisible: boolean = false;
@@ -10,6 +17,7 @@ class Interaction implements HUDComponent {
     private isInteracting: boolean = false;
     private cameraPos: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
     private cameraOri: THREE.Quaternion = new THREE.Quaternion(0, 0, 0, 1);
+    private attachableObjects: Map<string, AttachableObjectProps> = new Map();
 
     public constructor(interactionText: string, animations: string[], cameraPos: THREE.Vector3, cameraOri: THREE.Quaternion) {
         this.cameraOri = cameraOri;
@@ -41,13 +49,28 @@ class Interaction implements HUDComponent {
         return this.isVisible;
     }
 
-    public async interact(camera: THREE.Camera, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string): Promise<void> {
+    public addAttachableObject(attachingBoneName: string, modelProps: AttachableObjectProps): void {
+        this.attachableObjects.set(attachingBoneName, modelProps);
+    }
+
+    public async interact(camera: THREE.Camera, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, character: THREE.Group): Promise<void> {
         if (this.animations.length === 0) return;
 
         const currCameraPos = camera.position.clone();
         const currCameraOri = camera.quaternion.clone();
         this.isInteracting = true;
         this.hide();
+
+        // Attach the objects to the character model bone
+        this.attachableObjects.forEach((value, key) => {
+            const bone = character.getObjectByName(key);
+            if(bone){
+                bone.add(value.object);
+                value.object.position.set(value.position.x, value.position.y, value.position.z);
+                value.object.rotation.set(value.rotation.x, value.rotation.y, value.rotation.z);
+                value.object.scale.set(value.scale.x, value.scale.y, value.scale.z)
+            }
+        });
 
         await new Promise((resolve) => {
             gsap.to(camera.position, {
@@ -137,5 +160,5 @@ class Interaction implements HUDComponent {
         return this.animations;
     }
 }
-
+export type {AttachableObjectProps};
 export default Interaction;

@@ -7,10 +7,10 @@ import * as THREE from "three";
 import { createObjectFromGLTF, createObjectPhysics, loadGLTFModel } from "../objects/model";
 import * as CANNON from 'cannon-es';
 import InteractableArea from "./interactableArea";
-import Interaction from "./interaction";
+import Interaction, { AttachableObjectProps } from "./interaction";
 import HUD from "../other/hud";
 import { FrameUpdate } from "../other/frameUpdate";
-import { FLEX, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT } from "../character/constants";
+import { BICEP_CURL, FLEX, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT } from "../character/constants";
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -99,7 +99,6 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
     const barbellPhy = createObjectPhysics(0, 7, 1, 5, 0, 0, 0, 0.8, 1, 1.6);
     world.addBody(barbellPhy);
 
-
     // load barbell weights
     const barbellWeights = await loadGLTFModel('./models/gym_assets/barbell_weights/scene.gltf', loader);
     const barbellWeightsObject = createObjectFromGLTF(barbellWeights, 9, 0, 8, 0, 0, 0, 1, 1, 1);
@@ -127,13 +126,29 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
         console.log(e);
     }
 
-
     console.log("added all objects");
 }
 
-const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, hud: HUD): Promise<FrameUpdate[]> => {
+const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, hud: HUD, loader: GLTFLoader): Promise<FrameUpdate[]> => {
     // add the interactable collision area
-    const rackInteraction = new Interaction("Do Bicep Curls", [], new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97));
+    const dumbbell = await loadGLTFModel('./models/gym_assets/dumbbell/scene.gltf', loader);
+    const dumbbellObj = createObjectFromGLTF(dumbbell, 0, 0, 0, 0, 0, 0, 1, 1, 1);
+
+    const rackInteraction = new Interaction("Do Bicep Curls", [BICEP_CURL], new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97));
+    const attachableObj1: AttachableObjectProps = {
+        object: dumbbellObj,
+        position: new THREE.Vector3(0, 8, 1),
+        rotation: new THREE.Euler(0, Math.PI/2, 0),
+        scale: new THREE.Vector3(50, 50, 50)
+    }
+    rackInteraction.addAttachableObject("mixamorigLeftHand", attachableObj1);
+    const attachableObj2: AttachableObjectProps = {
+        object: dumbbellObj.clone(),
+        position: new THREE.Vector3(0, 8, -1),
+        rotation: new THREE.Euler(0, Math.PI/2, 0),
+        scale: new THREE.Vector3(50, 50, 50)
+    }
+    rackInteraction.addAttachableObject("mixamorigRightHand", attachableObj2);
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
     const rackInteractionRot = new THREE.Vector3(0, 0, 0);
     const rackTextPos = new THREE.Vector3(-7, 1, -3);
@@ -212,7 +227,7 @@ const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLo
     setupFloor(scene, world);
     setupMirrors(scene);
     await setupGymEquipment(scene, world, loader);
-    return await setupInteractableAreas(scene, world, hud);
+    return await setupInteractableAreas(scene, world, hud, loader);
 }
 
 export { setupRoom };
