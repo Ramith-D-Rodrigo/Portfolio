@@ -52,6 +52,13 @@ const main = async () => {
 
     // setup the character
     let characterStateMachine = await loadCharacter(fbxLoader, scene, world, camera, controls);
+
+    window.addEventListener('keydown', (event: KeyboardEvent) => {
+        if(event.key.toLowerCase() === 'm'){
+            console.log(camera.position);
+            console.log(camera.quaternion);
+        }
+    })
     
     const clock = new THREE.Clock();
     const animate = () => {
