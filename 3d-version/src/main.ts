@@ -57,18 +57,15 @@ const main = async () => {
     const animate = () => {
         const delta = clock.getDelta();
         interactableAreas.forEach(obj => obj.update(delta));
-
         if(characterStateMachine){
             characterStateMachine.update(delta);
         }
-
         // Step the physics world
         world.fixedStep();
         cannonDebugger.update();
         controls.update(); // Required for damping to work
-        renderer.render(scene, camera);
-
         hud.display();
+        renderer.render(scene, camera);
 
         requestAnimationFrame(animate);
     };
