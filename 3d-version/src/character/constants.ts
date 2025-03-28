@@ -8,5 +8,9 @@ const TURN_RIGHT = 'Right Turn';
 const START_PUSH_UP = 'Idle To Push Up';
 const PUSH_UP = 'Push Up';
 const STOP_PUSH_UP = 'Push Up To Idle';
+const FLEX = 'Flexing';
+const START_SITUP = 'Idle To Situp';
+const SITUP = 'Situps';
+const STOP_SITUP = 'Situp To Idle';
 
-export { IDLE, WALK, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, START_PUSH_UP, PUSH_UP, STOP_PUSH_UP };
+export { IDLE, WALK, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT, START_PUSH_UP, PUSH_UP, STOP_PUSH_UP, FLEX, START_SITUP, SITUP, STOP_SITUP };

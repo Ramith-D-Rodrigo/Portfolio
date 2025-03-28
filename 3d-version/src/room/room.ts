@@ -10,6 +10,7 @@ import InteractableArea from "./interactableArea";
 import Interaction from "./interaction";
 import HUD from "../other/hud";
 import { FrameUpdate } from "../other/frameUpdate";
+import { FLEX, IDLE, PUSH_UP, SITUP, START_PUSH_UP, START_SITUP, STOP_PUSH_UP, STOP_SITUP } from "../character/constants";
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -88,7 +89,7 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
 
     // load mattress 
     const mattress = await loadGLTFModel('./models/gym_assets/mattress/scene.gltf', loader);
-    const mattressObject = createObjectFromGLTF(mattress, -4, 0, -7, 0, Math.PI / 2, 0, 1, 1, 1);
+    const mattressObject = createObjectFromGLTF(mattress, 0, 0, 0, 0, Math.PI / 2, 0, 1, 1, 1);
     scene.add(mattressObject);
 
     // load barbell
@@ -132,7 +133,7 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
 
 const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, hud: HUD): Promise<FrameUpdate[]> => {
     // add the interactable collision area
-    const rackInteraction = new Interaction("Do curl");
+    const rackInteraction = new Interaction("Do curl", []);
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
     const rackInteractionRot = new THREE.Vector3(0, 0, 0);
     const rackTextPos = new THREE.Vector3(-7, 1, -3);
@@ -146,7 +147,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(rackInteraction);
 
     // add the interactable collision area
-    const barbellInteraction = new Interaction("deadlift");
+    const barbellInteraction = new Interaction("deadlift", [FLEX]);
     const barbellInteractionPos = new THREE.Vector3(7, 1, 5);
     const barbellInteractionRot = new THREE.Vector3(0, 0, 0);
     const barbellTextPos = new THREE.Vector3(5, 1, 3);
@@ -160,7 +161,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(barbellInteraction);
 
     // add the interactable collision area
-    const squatRackInteraction = new Interaction("squat");
+    const squatRackInteraction = new Interaction("squat", []);
     const squatRackInteractionPos = new THREE.Vector3(-9, 1.5, 5);
     const squatRackInteractionRot = new THREE.Vector3(0, 0, 0);
     const squatRackTextPos = new THREE.Vector3(-7, 1, 7);
@@ -174,8 +175,8 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(squatRackInteraction);
 
     // add the interactable collision area
-    const warmupInteraction = new Interaction("do warm up");
-    const warmupInteraction2 = new Interaction("do warm up 2");
+    const warmupInteraction = new Interaction("do warm up", [START_PUSH_UP, PUSH_UP, STOP_PUSH_UP]);
+    const warmupInteraction2 = new Interaction("do warm up 2", [START_SITUP, SITUP, STOP_SITUP]);
     const warmupInteractionPos = new THREE.Vector3(0, 0, 0);
     const warmupInteractionRot = new THREE.Vector3(0, 0, 0);
     const warmupTextPos = new THREE.Vector3(-1.5, 1, 0);
