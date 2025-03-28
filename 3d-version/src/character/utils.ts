@@ -1,6 +1,6 @@
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import * as THREE from "three";
-import { FLEX, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, START_WALK, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK } from "./constants";
+import { BICEP_CURL, FLEX, FRONT_RAISE, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, START_WALK, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT, STOP_WALK, TURN_LEFT, TURN_RIGHT, WALK } from "./constants";
 import CharacterStateMachine from "./stateMachine";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as CANNON from 'cannon-es';
@@ -10,7 +10,8 @@ const animations: string[] = [IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT
     START_PUSH_UP, PUSH_UP, STOP_PUSH_UP, 
     FLEX, 
     START_SITUP, SITUP, STOP_SITUP,
-    START_SQUAT, SQUAT, STOP_SQUAT
+    START_SQUAT, SQUAT, STOP_SQUAT,
+    FRONT_RAISE, BICEP_CURL
 ];
 
 const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CANNON.World, camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
@@ -30,6 +31,7 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     object.rotation.set(0, Math.PI, 0);
     object.position.set(position.x, position.y, position.z);
     object.scale.set(0.025, 0.025, 0.025);
+    console.log(object);
     const animationMixer = new THREE.AnimationMixer(object);
     scene.add(object);
 
