@@ -11,11 +11,13 @@ class CharacterStateMachine implements FrameUpdate {
     
     private model: THREE.Group;
     private physicsBody: CANNON.Body;
+
     private mixer: THREE.AnimationMixer;
     private animationMap: Map<string, THREE.AnimationAction> = new Map();
+    private currAction: string;
+
     private orbitControls: OrbitControls;
     private camera: THREE.PerspectiveCamera;
-    private currAction: string;
 
     private keysPressed = new Map<string, boolean>();
 
@@ -24,18 +26,21 @@ class CharacterStateMachine implements FrameUpdate {
     private cannonRotateAxis = new CANNON.Vec3(0, 1, 0);
     private walkDirection = new THREE.Vector3();
     private walkSpeed = 5;
+
     private cameraTarget = new THREE.Vector3();
     private cameraOffset = new THREE.Vector3(0, 5, 5);
 
     private isInteracting: boolean = false;
-    private interactingAnimations: string[] = [];
+
     private interactionEvent = (event: KeyboardEvent): void => {
         if(event.key.toLowerCase() === 'f' && !this.isInteracting){
-            const interaction =  InteractionManager.getCurrContactingInteraction() as Interaction;
-            this.interactingAnimations = interaction.getAnimations();
-            interaction.interact();
-            this.playInteractionSequence().then(() => {
-                interaction.stopInteract();
+            const interaction =  InteractionManager.getCurrContactingInteraction();
+            if(!interaction) return;
+            this.isInteracting = true;
+            this.orbitControls.enabled = false;
+            interaction.interact(this.camera, this.animationMap, this.mixer, this.currAction).then(() => {
+                this.isInteracting = false;
+                this.orbitControls.enabled = true;
             });
         }
     };
@@ -49,11 +54,7 @@ class CharacterStateMachine implements FrameUpdate {
         this.camera = camera;
         this.currAction = currAction;
         this.animationMap = animationsMap;
-        this.animationMap.forEach((action, key) => {
-            if(key == this.currAction) {
-                action.play();
-            }
-        });  
+        this.animationMap.get(this.currAction)?.play();  
         this.orbitControls.enablePan = false;
         this.orbitControls.enableZoom = false;
 
@@ -184,53 +185,6 @@ class CharacterStateMachine implements FrameUpdate {
 
         return directionOffset;
     }
-
-    private async playInteractionSequence(): Promise<void> {
-        if (this.interactingAnimations.length === 0) return;
-    
-        this.isInteracting = true;
-        this.orbitControls.enabled = false;
-
-        const currentAction = this.animationMap.get(this.currAction);
-        currentAction?.fadeOut(0.2);
-    
-        for (let i = 0; i < this.interactingAnimations.length; i++) {
-            if(i === 0 || i === this.interactingAnimations.length - 1){
-                await this.playAnimation(this.interactingAnimations[i], THREE.LoopOnce, 1);
-            }
-            else{
-                await this.playAnimation(this.interactingAnimations[i], THREE.LoopRepeat, 10);
-            }
-        }
-    
-        currentAction?.reset().fadeIn(0.2).play();
-        this.isInteracting = false;
-        this.orbitControls.enabled = true;
-    }
-
-    private playAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number): Promise<void> {
-        return new Promise((resolve) => {
-            const action = this.animationMap.get(animName);
-            if (!action) {
-                console.warn(`Animation '${animName}' not found`);
-                resolve();
-                return;
-            }
-            action.setLoop(mode, repetitions);
-            action.reset().fadeIn(0.2).play();
-    
-            // Listen for animation completion
-            this.mixer.addEventListener('finished', (event) => {
-                if (event.action === action) {
-                    action.fadeOut(0.2);
-                    resolve();
-                }
-            });
-    
-            action.clampWhenFinished = true;
-        });
-    }
-    
 }
 
 export default CharacterStateMachine;
