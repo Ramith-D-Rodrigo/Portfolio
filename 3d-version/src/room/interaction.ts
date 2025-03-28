@@ -1,14 +1,8 @@
 import * as THREE from "three";
-import { Font } from "three/examples/jsm/loaders/FontLoader";
-import { Utils } from "../utils/utils";
 import { HUDComponent } from "../other/hudComponent";
 import gsap from "gsap";
 
 class Interaction implements HUDComponent {
-    private static font: Font;
-    private static scene: THREE.Scene;
-    private static camera: THREE.Camera;
-    private textSprite: THREE.Sprite | null = null;
     private interactionText: string;
     private isVisible: boolean = false;
     private domElement: HTMLElement;
@@ -17,7 +11,9 @@ class Interaction implements HUDComponent {
     private cameraPos: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
     private cameraOri: THREE.Quaternion = new THREE.Quaternion(0, 0, 0, 1);
 
-    public constructor(interactionText: string, animations: string[]) {
+    public constructor(interactionText: string, animations: string[], cameraPos: THREE.Vector3, cameraOri: THREE.Quaternion) {
+        this.cameraOri = cameraOri;
+        this.cameraPos = cameraPos;
         this.interactionText = interactionText;
         this.animations = animations;
         this.domElement = document.createElement("div");
