@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import { AttachableObjectProps, InteractionAnimProps } from "./interactionBuilder";
 
 class FlexInteractionSequence extends BaseInteractionSequence{
-    public override async playSequence(camera: THREE.Camera, intCameraPos: THREE.Vector3, intCameraQuat: THREE.Quaternion, 
+    public override async playSequence(characterPos: THREE.Vector3, characterRot: THREE.Quaternion, 
+        camera: THREE.Camera, intCameraPos: THREE.Vector3, intCameraQuat: THREE.Quaternion, 
         destCameraPos: THREE.Vector3, destCameraQuat: THREE.Quaternion, attachableObjects: Map<string, AttachableObjectProps>, 
         character: THREE.Group, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, animations: InteractionAnimProps[]
     ): Promise<void> {
