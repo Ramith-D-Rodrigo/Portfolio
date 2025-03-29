@@ -31,7 +31,6 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     object.rotation.set(0, Math.PI, 0);
     object.position.set(position.x, position.y, position.z);
     object.scale.set(0.025, 0.025, 0.025);
-    console.log(object);
     const animationMixer = new THREE.AnimationMixer(object);
     scene.add(object);
 
@@ -56,23 +55,7 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     const characterPhysicsBody = createCharacterPhysicsBody(1, position.x, position.y + 2, position.z, 0, Math.PI, 0, 0.7, 2, 0.5);
     world.addBody(characterPhysicsBody);
 
-    characterPhysicsBody.addEventListener('collide', (event: any) => {
-        world.removeBody(characterPhysicsBody);
-
-        const pos = characterPhysicsBody.position;
-        const threeQuat = new THREE.Quaternion(
-            characterPhysicsBody.quaternion.x, 
-            characterPhysicsBody.quaternion.y, 
-            characterPhysicsBody.quaternion.z, 
-            characterPhysicsBody.quaternion.w
-        );
-        object.position.set(pos.x , object.position.y, pos.z);
-        object.rotation.setFromQuaternion(threeQuat);
-
-        world.addBody(characterPhysicsBody);
-    });
-
-    return new CharacterStateMachine(object, characterPhysicsBody, animationMixer, camera, controls, animationsMap, 'Idle');
+    return new CharacterStateMachine(object, characterPhysicsBody, animationMixer, camera, controls, animationsMap, 'Idle', world);
 }
 
 const createCharacterPhysicsBody = (mass: number,
