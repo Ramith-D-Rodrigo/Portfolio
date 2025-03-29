@@ -6,12 +6,14 @@ import { createWall, createWallPhysics } from "./wall";
 import * as THREE from "three";
 import { createObjectFromGLTF, createObjectPhysics, loadGLTFModel } from "../objects/model";
 import * as CANNON from 'cannon-es';
-import InteractableArea from "./interactableArea";
-import Interaction, { AttachableObjectProps } from "./interaction";
+import InteractableArea from "../interaction/interactableArea";
+import { AttachableObjectProps } from "../interaction/interactionBuilder";
 import HUD from "../other/hud";
 import { FrameUpdate } from "../other/frameUpdate";
 import { BICEP_CURL, FLEX, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT } from "../character/constants";
-import InteractionBuilder from "../other/interactionBuilder";
+import InteractionBuilder from "../interaction/interactionBuilder";
+import CurlInteractionSequence from "../interaction/curlInteractionSequence";
+import FlexInteractionSequence from "../interaction/flexInteractionSequence";
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -150,11 +152,14 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     }
     const rackInteraction = rackInteractionBuilder
         .setDisplayText("Do Bicep Curls")
-        .setAnimations([BICEP_CURL])
+        .setAnimations([
+            {animName: BICEP_CURL, loop: THREE.LoopRepeat, repeatCount: 8}, 
+        ])
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
         .addAttachableObject("mixamorigLeftHand", attachableObj1)
         .addAttachableObject("mixamorigRightHand", attachableObj2)
+        .setInteractionSequence(new CurlInteractionSequence())
         .build();
 
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
@@ -173,9 +178,12 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const barbellInteractionBuilder = new InteractionBuilder();
     const barbellInteraction = barbellInteractionBuilder
         .setDisplayText("Flex")
-        .setAnimations([FLEX])
+        .setAnimations([
+            {animName: FLEX, loop: THREE.LoopRepeat, repeatCount: 5}, 
+        ])
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49))
+        .setInteractionSequence(new FlexInteractionSequence())
         .build();
 
     const barbellInteractionPos = new THREE.Vector3(7, 1, 5);
@@ -191,12 +199,26 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(barbellInteraction);
 
     // add the interactable collision area
+    const barbell = await loadGLTFModel('./models/gym_assets/barbell/scene.gltf', loader);
+    const barbellObject = createObjectFromGLTF(barbell, 7, 0, 5, 0, 0, 0, 1, 1, 1);
+    const barbellObj: AttachableObjectProps = {
+        object: barbellObject,
+        position: new THREE.Vector3(0, 0, 0),
+        rotation: new THREE.Euler(0, Math.PI/2, 0),
+        scale: new THREE.Vector3(35, 35, 35)
+    }
+
     const squatRackInteractionBuilder = new InteractionBuilder();
     const squatRackInteraction = squatRackInteractionBuilder
         .setDisplayText("Squat")
-        .setAnimations([START_SQUAT, SQUAT, STOP_SQUAT])
+        .setAnimations([
+            {animName: START_SQUAT, loop: THREE.LoopOnce, repeatCount: 0}, 
+            {animName: SQUAT, loop: THREE.LoopRepeat, repeatCount: 8}, 
+            {animName: STOP_SQUAT, loop: THREE.LoopOnce, repeatCount: 0}
+        ])
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-2.14, 2.22, 11.30), new THREE.Quaternion(-0.09, 0.28, 0.03, 1.0))
+        .addAttachableObject("mixamorigLeftHand",barbellObj)
         .build();
 
     const squatRackInteractionPos = new THREE.Vector3(-9, 1.5, 5);
@@ -215,7 +237,11 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const warmupInteractionBuilder = new InteractionBuilder();
     const warmupInteraction = warmupInteractionBuilder
         .setDisplayText("Do Push Ups")
-        .setAnimations([START_PUSH_UP, PUSH_UP, STOP_PUSH_UP])
+        .setAnimations([
+            {animName: START_PUSH_UP, loop: THREE.LoopOnce, repeatCount: 0}, 
+            {animName: PUSH_UP, loop: THREE.LoopRepeat, repeatCount: 8}, 
+            {animName: STOP_PUSH_UP, loop: THREE.LoopOnce, repeatCount: 0}
+        ])
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-2.16, 4.017, -5.31), new THREE.Quaternion(0.036, 0.96, 0.23, -0.15))
         .build();
@@ -224,7 +250,11 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const warmupInteraction2Builder = new InteractionBuilder();
     const warmupInteraction2 = warmupInteraction2Builder
         .setDisplayText("Do Sit Ups")
-        .setAnimations([START_SITUP, SITUP, STOP_SITUP])
+        .setAnimations([            
+            {animName: START_SITUP, loop: THREE.LoopOnce, repeatCount: 0}, 
+            {animName: SITUP, loop: THREE.LoopRepeat, repeatCount: 8}, 
+            {animName: STOP_SITUP, loop: THREE.LoopOnce, repeatCount: 0}
+        ])
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-2.16, 4.017, -5.31), new THREE.Quaternion(0.036, 0.96, 0.23, -0.15))
         .build();
