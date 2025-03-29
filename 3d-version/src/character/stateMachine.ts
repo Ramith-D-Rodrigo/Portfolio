@@ -4,8 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DIRECTIONS, setupKeyControls } from './controls';
 import { IDLE, WALK } from './constants';
 import { FrameUpdate } from '../other/frameUpdate';
-import InteractionManager from '../room/interactionManager';
-import Interaction from '../room/interaction';
+import InteractionManager from '../interaction/interactionManager';
+import Interaction from '../interaction/interaction';
 
 class CharacterStateMachine implements FrameUpdate {
     

@@ -1,13 +1,20 @@
 // builder class for building the interactions
 import * as THREE from 'three';
 
-import Interaction from "../room/interaction";
+import Interaction from "./interaction";
+import BaseInteractionSequence from './baseInteractionSequence';
 
 type AttachableObjectProps = {
     object: THREE.Group,
     position: THREE.Vector3,
     rotation: THREE.Euler,
     scale: THREE.Vector3
+}
+
+type InteractionAnimProps = {
+    animName: string,
+    loop: THREE.AnimationActionLoopStyles,
+    repeatCount: number
 }
 
 class InteractionBuilder{
@@ -32,8 +39,13 @@ class InteractionBuilder{
         return this;
     }
 
-    public setAnimations(animations: string[]): InteractionBuilder {
+    public setAnimations(animations: InteractionAnimProps[]): InteractionBuilder {
         this.interaction.setAnimations(animations);
+        return this;
+    }
+
+    public setInteractionSequence(intSequence: BaseInteractionSequence): InteractionBuilder {
+        this.interaction.setInteractionSequence(intSequence);
         return this;
     }
 
@@ -47,5 +59,5 @@ class InteractionBuilder{
     }
 }
 
-export type {AttachableObjectProps};
+export type {AttachableObjectProps, InteractionAnimProps};
 export default InteractionBuilder;
