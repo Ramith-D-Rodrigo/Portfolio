@@ -58,6 +58,10 @@ const main = async () => {
             console.log(camera.position);
             console.log(camera.quaternion);
         }
+        if(event.key.toLowerCase() === 'n'){
+            console.log(characterStateMachine.getModel().position);
+            console.log(characterStateMachine.getModel().quaternion);
+        }
     })
     
     const clock = new THREE.Clock();
