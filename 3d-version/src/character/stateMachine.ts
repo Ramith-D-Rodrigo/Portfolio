@@ -46,7 +46,7 @@ class CharacterStateMachine implements FrameUpdate {
     };
 
     public constructor(model: THREE.Group, physicsBody: CANNON.Body, mixer: THREE.AnimationMixer, camera: THREE.PerspectiveCamera, 
-        orbitControls: OrbitControls, animationsMap: Map<string, THREE.AnimationAction>, currAction: string) {
+        orbitControls: OrbitControls, animationsMap: Map<string, THREE.AnimationAction>, currAction: string, world: CANNON.World) {
         this.model = model;
         this.physicsBody = physicsBody;
         this.mixer = mixer;
@@ -68,11 +68,23 @@ class CharacterStateMachine implements FrameUpdate {
         setupKeyControls(this.keysPressed);
         
         this.physicsBody.addEventListener('collide', (event: any) => {
+            world.removeBody(this.physicsBody);
             if(event.body.isTrigger){
                 document.addEventListener('keydown', this.interactionEvent);
             }
+            else{
+                const pos = this.physicsBody.position;
+                const threeQuat = new THREE.Quaternion(
+                    this.physicsBody.quaternion.x, 
+                    this.physicsBody.quaternion.y, 
+                    this.physicsBody.quaternion.z, 
+                    this.physicsBody.quaternion.w
+                );
+                this.model.position.set(pos.x , this.model.position.y, pos.z);
+                this.model.rotation.setFromQuaternion(threeQuat);
+            }    
+            world.addBody(this.physicsBody);
         });
-
     }
 
 
@@ -184,6 +196,10 @@ class CharacterStateMachine implements FrameUpdate {
         }
 
         return directionOffset;
+    }
+
+    public getModel(): THREE.Group {
+        return this.model;
     }
 }
 
