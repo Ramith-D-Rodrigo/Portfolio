@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import { AttachableObjectProps, InteractionAnimProps } from "./interactionBuilder";
 
 class CurlInteractionSequence extends BaseInteractionSequence {
-    public override async playSequence(camera: THREE.Camera, intCameraPos: THREE.Vector3, intCameraQuat: THREE.Quaternion, 
+    public override async playSequence(characterPos: THREE.Vector3, characterRot: THREE.Quaternion, 
+        camera: THREE.Camera, intCameraPos: THREE.Vector3, intCameraQuat: THREE.Quaternion, 
         destCameraPos: THREE.Vector3, destCameraQuat: THREE.Quaternion, attachableObjects: Map<string, AttachableObjectProps>, 
         character: THREE.Group, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, animations: InteractionAnimProps[]
     ): Promise<void> {
@@ -15,9 +16,9 @@ class CurlInteractionSequence extends BaseInteractionSequence {
             const bone = character.getObjectByName(key);
             if(bone){
                 bone.add(value.object);
-                value.object.position.set(value.position.x, value.position.y, value.position.z);
-                value.object.rotation.set(value.rotation.x, value.rotation.y, value.rotation.z);
-                value.object.scale.set(value.scale.x, value.scale.y, value.scale.z);
+                value.object.position.copy(value.position);
+                value.object.rotation.copy(value.rotation);
+                value.object.scale.copy(value.scale);
             }
         });
 
