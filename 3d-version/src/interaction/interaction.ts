@@ -16,6 +16,9 @@ class Interaction implements HUDComponent {
     private destCameraPos: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
     private destCameraOri: THREE.Quaternion = new THREE.Quaternion(0, 0, 0, 1);
 
+    private characterPos: THREE.Vector3;
+    private characterRot: THREE.Quaternion;
+
     private attachableObjects: Map<string, AttachableObjectProps> = new Map();
 
     public constructor() {
@@ -33,6 +36,11 @@ class Interaction implements HUDComponent {
     public setDestCameraTransform(destCameraPos: THREE.Vector3, destCameraRot: THREE.Quaternion): void {
         this.destCameraPos = destCameraPos;
         this.destCameraOri = destCameraRot;
+    }
+
+    public setCharacterTransfrom(characterPos: THREE.Vector3, characterRot: THREE.Quaternion): void {
+        this.characterPos = characterPos;
+        this.characterRot = characterRot;
     }
 
     public setDisplayText(displayText: string): void{
@@ -77,7 +85,9 @@ class Interaction implements HUDComponent {
         this.isInteracting = true;
         this.hide();
 
-        await this.interactionSequence.playSequence(camera, 
+        await this.interactionSequence.playSequence(
+            this.characterPos, this.characterRot,
+            camera, 
             this.intermediateCameraPos, this.intermediateCameraRot, 
             this.destCameraPos, this.destCameraOri, 
             this.attachableObjects, 
