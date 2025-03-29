@@ -34,6 +34,11 @@ class InteractionBuilder{
         return this;
     }
 
+    public setCharacterTransform(characterPos: THREE.Vector3, characterRot: THREE.Quaternion): InteractionBuilder{
+        this.interaction.setCharacterTransfrom(characterPos, characterRot);
+        return this;
+    }
+
     public setDisplayText(displayText: string): InteractionBuilder{
         this.interaction.setDisplayText(displayText);
         return this;
