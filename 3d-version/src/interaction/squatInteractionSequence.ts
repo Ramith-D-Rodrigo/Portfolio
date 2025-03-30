@@ -14,17 +14,7 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         this.attachableObjs = attachableObjects;
         this.character = character;
 
-        const currCameraPos = camera.position.clone();
-        const currCameraOri = camera.quaternion.clone();
-
-        const currCharacterPos = character.position.clone();
-        const currCharacterOri = character.quaternion.clone();  
-        
-
-        await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
-
-        character.position.copy(characterPos);
-        character.quaternion.copy(characterRot);
+        await this.setupForCharacterAndCamera(camera, intCameraPos, intCameraQuat, character, characterPos, characterRot);
 
         this.attachableObjs.forEach((value, key) => {
             character.parent?.add(value.object);
@@ -67,10 +57,7 @@ class SquatInteractionSequence extends BaseInteractionSequence {
             character.parent?.remove(value.object);
         });
 
-        character.position.copy(currCharacterPos);
-        character.quaternion.copy(currCharacterOri);
-
-        await this.interpolateCamera(camera, currCameraPos, currCameraOri);
+        await this.resetCharacterAndCamera(camera, character);
     }
 
     private playAttachingAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 

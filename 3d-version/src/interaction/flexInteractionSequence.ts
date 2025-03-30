@@ -8,9 +8,7 @@ class FlexInteractionSequence extends BaseInteractionSequence{
         destCameraPos: THREE.Vector3, destCameraQuat: THREE.Quaternion, attachableObjects: Map<string, AttachableObjectProps>, 
         character: THREE.Group, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, animations: InteractionAnimProps[]
     ): Promise<void> {
-        const currCameraPos = camera.position.clone();
-        const currCameraOri = camera.quaternion.clone();
-        await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
+        await this.setupForCharacterAndCamera(camera, intCameraPos, intCameraQuat, character, characterPos, characterRot);
         await this.interpolateCamera(camera, destCameraPos, destCameraQuat);
 
         const currentAction = animationMap.get(currAction);
@@ -28,7 +26,7 @@ class FlexInteractionSequence extends BaseInteractionSequence{
         currentAction?.reset().fadeIn(0.2).play();
 
         await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
-        await this.interpolateCamera(camera, currCameraPos, currCameraOri);
+        await this.resetCharacterAndCamera(camera, character);
     }
 
     protected override playAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 

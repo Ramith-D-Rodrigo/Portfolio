@@ -4,6 +4,11 @@ import { AttachableObjectProps, InteractionAnimProps } from './interactionBuilde
 import gsap from "gsap";
 
 abstract class BaseInteractionSequence {
+    private currCameraPos: THREE.Vector3;
+    private currCameraOri: THREE.Quaternion;
+    private currCharacterPos: THREE.Vector3;
+    private currCharacterOri: THREE.Quaternion;
+
     protected async interpolateCamera(camera: THREE.Camera, destPos: THREE.Vector3, destQuat: THREE.Quaternion): Promise<void> {
         await new Promise((resolve) => {
             gsap.to(camera.position, {
@@ -23,6 +28,28 @@ abstract class BaseInteractionSequence {
                 onComplete: resolve,
             });
         });
+    }
+
+    protected async setupForCharacterAndCamera(camera: THREE.Camera, intCameraPos: THREE.Vector3, intCameraQuat: THREE.Quaternion,
+        character: THREE.Group,  characterPos: THREE.Vector3, characterRot:THREE.Quaternion): Promise<void> {
+        this.currCameraPos = camera.position.clone();
+        this.currCameraOri = camera.quaternion.clone();
+
+        this.currCharacterPos = character.position.clone();
+        this.currCharacterOri = character.quaternion.clone();  
+        
+
+        await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
+
+        character.position.copy(characterPos);
+        character.quaternion.copy(characterRot);
+    }
+
+    protected async resetCharacterAndCamera(camera: THREE.Camera, character: THREE.Group): Promise<void> {
+        character.position.copy(this.currCharacterPos);
+        character.quaternion.copy(this.currCharacterOri);
+
+        await this.interpolateCamera(camera, this.currCameraPos, this.currCameraOri);
     }
 
     public abstract playSequence(characterPos: THREE.Vector3, characterRot: THREE.Quaternion, camera: THREE.Camera, 

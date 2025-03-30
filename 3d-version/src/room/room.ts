@@ -158,6 +158,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         .setAnimations([
             {animName: BICEP_CURL, loop: THREE.LoopRepeat, repeatCount: 8}, 
         ])
+        .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
         .addAttachableObject("mixamorigLeftHand", attachableObj1)
@@ -171,6 +172,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     .setAnimations([
         {animName: FRONT_RAISE, loop: THREE.LoopRepeat, repeatCount: 8}, 
     ])
+    .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
     .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
     .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
     .addAttachableObject("mixamorigLeftHand", attachableObj1)
@@ -198,6 +200,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         .setAnimations([
             {animName: FLEX, loop: THREE.LoopRepeat, repeatCount: 5}, 
         ])
+        .setCharacterTransform(new THREE.Vector3(4.97, 0, 4.90), new THREE.Quaternion(0, 0.7, 0, 0.72))
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49))
         .setInteractionSequence(new FlexInteractionSequence())
@@ -263,6 +266,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
             {animName: PUSH_UP, loop: THREE.LoopRepeat, repeatCount: 8}, 
             {animName: STOP_PUSH_UP, loop: THREE.LoopOnce, repeatCount: 0}
         ])
+        .setCharacterTransform(new THREE.Vector3(0, 0, 0), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, THREE.MathUtils.degToRad(180), 0)))
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-2.16, 4.017, -5.31), new THREE.Quaternion(0.036, 0.96, 0.23, -0.15))
         .setInteractionSequence(new WarmupInteractionSequence())
@@ -277,6 +281,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
             {animName: SITUP, loop: THREE.LoopRepeat, repeatCount: 8}, 
             {animName: STOP_SITUP, loop: THREE.LoopOnce, repeatCount: 0}
         ])
+        .setCharacterTransform(new THREE.Vector3(0, 0, 0), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, THREE.MathUtils.degToRad(180), 0)))
         .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
         .setDestCameraTransform(new THREE.Vector3(-2.16, 4.017, -5.31), new THREE.Quaternion(0.036, 0.96, 0.23, -0.15))
         .setInteractionSequence(new WarmupInteractionSequence())
