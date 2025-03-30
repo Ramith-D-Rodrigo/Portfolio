@@ -3,11 +3,11 @@ import { HUDComponent } from "../other/hudComponent";
 import { AttachableObjectProps, InteractionAnimProps } from "./interactionBuilder";
 import BaseInteractionSequence from "./baseInteractionSequence";
 
-class Interaction implements HUDComponent {
+class Interaction {
     private isVisible: boolean = false;
-    private domElement: HTMLElement;
     private animations: InteractionAnimProps[];
     private isInteracting: boolean = false;
+    private displayText: string;
     private interactionSequence: BaseInteractionSequence;
 
     private intermediateCameraPos: THREE.Vector3 = new THREE.Vector3(0, 0, 0);;
@@ -22,10 +22,6 @@ class Interaction implements HUDComponent {
     private attachableObjects: Map<string, AttachableObjectProps> = new Map();
 
     public constructor() {
-        this.domElement = document.createElement("div");
-        this.domElement.className = 'interaction';
-
-        document.body.appendChild(this.domElement);
     }
 
     public setIntermediateCameraTransform(intCameraPos: THREE.Vector3, intCameraRot: THREE.Quaternion): void {
@@ -44,19 +40,15 @@ class Interaction implements HUDComponent {
     }
 
     public setDisplayText(displayText: string): void{
-        this.domElement.innerText = "Press F to " + displayText;
+        this.displayText = displayText;
+    }
+
+    public getDisplayText(): string {
+        return this.displayText;
     }
 
     public setAnimations(animations: InteractionAnimProps[]): void{
         this.animations = animations;
-    }
-
-    public setIsVisible(val: boolean): void{
-        this.isVisible = val;
-    }
-
-    public getIsVisible(): boolean {
-        return this.isVisible;
     }
 
     public addAttachableObject(attachingBoneName: string, modelProps: AttachableObjectProps): void {
@@ -67,23 +59,11 @@ class Interaction implements HUDComponent {
         this.interactionSequence = intSequence;
     }
 
-    public display(): void {
-        if(this.isInteracting){
-            return;
-        }
-        this.domElement.classList.add('visible');
-    }
-
-    public hide(): void {
-        this.domElement.classList.remove('visible');
-    }
-
     public async interact(camera: THREE.Camera, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, character: THREE.Group): Promise<void> {
         if (this.animations.length === 0) return;
         if(!this.interactionSequence) return;
 
         this.isInteracting = true;
-        this.hide();
 
         await this.interactionSequence.playSequence(
             this.characterPos, this.characterRot,
@@ -100,7 +80,6 @@ class Interaction implements HUDComponent {
 
     public stopInteract(): void {
         this.isInteracting = false;
-        this.display();
     }
 }
 

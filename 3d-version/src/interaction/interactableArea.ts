@@ -7,24 +7,40 @@ import Interaction from "./interaction";
 import { Utils } from "../utils/utils";
 import { FrameUpdate } from "../other/frameUpdate";
 import InteractionManager from "./interactionManager";
+import { HUDComponent } from "../other/hudComponent";
 
-class InteractableArea implements FrameUpdate {
+class InteractableArea implements FrameUpdate, HUDComponent {
     private collisionBody: CANNON.Body;
     private displayText: THREE.Mesh;
+
+    private interactionDomElement: HTMLElement;
+    private isInteractionTextVisible: boolean = false;
+    private isInteracting: boolean = false;
+
     private interactions: Interaction[];
 
     private currInteractionIdx: number = 0;
     private interactionSwitchEvent = (event: KeyboardEvent): void => {
-        this.interactions[this.currInteractionIdx].setIsVisible(false);
-        if (event.key === 'ArrowLeft') {
-            this.currInteractionIdx = (this.currInteractionIdx - 1 + this.interactions.length) % this.interactions.length;
+        if (this.interactions.length > 1) {
+            if (event.key === 'ArrowLeft') {
+                this.currInteractionIdx = (this.currInteractionIdx - 1 + this.interactions.length) % this.interactions.length;
+            }
+            if (event.key === 'ArrowRight') {
+                this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
+            }
+    
+            this.interactionDomElement.innerHTML = `
+                <span class="arrow">⬅️</span> 
+                <b>Press F to <span class="interaction-text">${this.interactions[this.currInteractionIdx].getDisplayText()}</span></b> 
+                <span class="arrow">➡️</span>
+            `;
+        } else {
+            this.interactionDomElement.innerHTML = `
+                <b>Press F to <span class="interaction-text">${this.interactions[this.currInteractionIdx].getDisplayText()}</span></b>
+            `;
         }
-        if (event.key === 'ArrowRight') {
-            this.currInteractionIdx = (this.currInteractionIdx + 1) % this.interactions.length;
-        }
-        this.interactions[this.currInteractionIdx].setIsVisible(true);
-        InteractionManager.setContactingInteraction(this.interactions[this.currInteractionIdx]);
     };
+    
 
     private static textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
@@ -42,9 +58,39 @@ class InteractableArea implements FrameUpdate {
         this.currInteractionIdx = 0;
         
         this.collisionBody.addEventListener('collide', (event: any) => {
-            this.interactions[this.currInteractionIdx].setIsVisible(true);
+            if(this.isInteracting) return;
+            this.isInteractionTextVisible = true;
+            InteractionManager.setContactingInteractableArea(this);
             this.listenForKeyEvents();
         });
+
+        this.interactionDomElement = document.createElement("div");
+        this.interactionDomElement.className = 'interaction';
+
+        document.body.appendChild(this.interactionDomElement);
+    }
+    public display(): void {
+        if(this.isInteractionTextVisible){
+            this.interactionDomElement.classList.add('visible');
+        }
+    }
+    public hide(): void {
+        this.interactionDomElement.classList.remove('visible');
+    }
+    public setIsVisible(val: boolean): void {
+        this.isInteractionTextVisible = val;
+    }
+    public getIsVisible(): boolean {
+        return this.isInteractionTextVisible;
+    }
+
+    public setInteract(val: boolean): void {
+        this.isInteracting = val;
+        this.isInteractionTextVisible = !this.isInteracting;
+    }
+
+    public getCurrInteraction(): Interaction {
+        return this.interactions[this.currInteractionIdx];
     }
 
     public static async create(pos: THREE.Vector3, rot: THREE.Vector3, radius: number, 
@@ -69,7 +115,8 @@ class InteractableArea implements FrameUpdate {
     }
 
     public update(delta: number): void {
-        this.interactions.forEach(int => int.setIsVisible(false));
+        this.isInteractionTextVisible = false;
+        InteractionManager.removeContactingInteractableArea();
         window.removeEventListener('keydown', this.interactionSwitchEvent);
     }
 

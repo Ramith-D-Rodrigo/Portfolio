@@ -1,18 +1,19 @@
+import InteractableArea from "./interactableArea";
 import Interaction from "./interaction";
 
 class InteractionManager {
-    private static currContactingInteraction: Interaction | null = null;
+    private static currContactingArea: InteractableArea | null = null;
 
-    public static setContactingInteraction(interaction: Interaction): void {
-        InteractionManager.currContactingInteraction = interaction;
+    public static setContactingInteractableArea(area: InteractableArea): void {
+        InteractionManager.currContactingArea = area;
     }
 
-    public static removeContactingInteraction(): void {
-        InteractionManager.currContactingInteraction = null;
+    public static removeContactingInteractableArea(): void {
+        InteractionManager.currContactingArea = null;
     }
 
-    public static getCurrContactingInteraction(): Interaction | null{
-        return InteractionManager.currContactingInteraction;
+    public static getCurrContactingInteractableArea(): InteractableArea | null{
+        return InteractionManager.currContactingArea;
     }
 }
 

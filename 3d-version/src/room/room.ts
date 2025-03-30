@@ -190,8 +190,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         [rackInteraction, rackInteraction2]
     );
     interactable.addToWorld(world, scene);
-    hud.addComponent(rackInteraction);
-    hud.addComponent(rackInteraction2);
+    hud.addComponent(interactable);
 
     // add the interactable collision area
     const barbellInteractionBuilder = new InteractionBuilder();
@@ -216,7 +215,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         [barbellInteraction]
     );
     interactable2.addToWorld(world, scene);
-    hud.addComponent(barbellInteraction);
+    hud.addComponent(interactable2);
 
     // add the interactable collision area
     const barbell = await loadGLTFModel('./models/gym_assets/barbell/scene.gltf', loader);
@@ -255,7 +254,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         [squatRackInteraction]
     );
     interactable3.addToWorld(world, scene);
-    hud.addComponent(squatRackInteraction);
+    hud.addComponent(interactable3);
 
     // add the interactable collision area
     const warmupInteractionBuilder = new InteractionBuilder();
@@ -297,8 +296,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         [warmupInteraction, warmupInteraction2]
     );
     warmupInteractable.addToWorld(world, scene);
-    hud.addComponent(warmupInteraction);
-    hud.addComponent(warmupInteraction2);
+    hud.addComponent(warmupInteractable);
 
     return [
         interactable,

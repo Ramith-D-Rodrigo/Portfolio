@@ -34,13 +34,15 @@ class CharacterStateMachine implements FrameUpdate {
 
     private interactionEvent = (event: KeyboardEvent): void => {
         if(event.key.toLowerCase() === 'f' && !this.isInteracting){
-            const interaction =  InteractionManager.getCurrContactingInteraction();
-            if(!interaction) return;
+            const area =  InteractionManager.getCurrContactingInteractableArea();
+            if(!area) return;
+            area.setInteract(true);
             this.isInteracting = true;
             this.orbitControls.enabled = false;
-            interaction.interact(this.camera, this.animationMap, this.mixer, this.currAction, this.model).then(() => {
+            area.getCurrInteraction().interact(this.camera, this.animationMap, this.mixer, this.currAction, this.model).then(() => {
                 this.isInteracting = false;
                 this.orbitControls.enabled = true;
+                area.setInteract(false);
             });
         }
     };
