@@ -10,12 +10,13 @@ import InteractableArea from "../interaction/interactableArea";
 import { AttachableObjectProps } from "../interaction/interactionBuilder";
 import HUD from "../other/hud";
 import { FrameUpdate } from "../other/frameUpdate";
-import { BICEP_CURL, FLEX, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT } from "../character/constants";
+import { BICEP_CURL, FLEX, FRONT_RAISE, IDLE, PUSH_UP, SITUP, SQUAT, START_PUSH_UP, START_SITUP, START_SQUAT, STOP_PUSH_UP, STOP_SITUP, STOP_SQUAT } from "../character/constants";
 import InteractionBuilder from "../interaction/interactionBuilder";
 import CurlInteractionSequence from "../interaction/curlInteractionSequence";
 import FlexInteractionSequence from "../interaction/flexInteractionSequence";
 import WarmupInteractionSequence from "../interaction/warmupInteractionSequence";
 import SquatInteractionSequence from "../interaction/squatInteractionSequence";
+import FrontRaiseInteractionSequence from "../interaction/frontRaiseInteractionSequence";
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -164,6 +165,19 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         .setInteractionSequence(new CurlInteractionSequence())
         .build();
 
+    const rackInteraction2Builder = new InteractionBuilder();
+    const rackInteraction2 = rackInteraction2Builder
+    .setDisplayText("Do Front Raises")
+    .setAnimations([
+        {animName: FRONT_RAISE, loop: THREE.LoopRepeat, repeatCount: 8}, 
+    ])
+    .setIntermediateCameraTransform(new THREE.Vector3(1, 1, 1), new THREE.Quaternion(0, 0, 0, 1))
+    .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
+    .addAttachableObject("mixamorigLeftHand", attachableObj1)
+    .addAttachableObject("mixamorigRightHand", attachableObj2)
+    .setInteractionSequence(new FrontRaiseInteractionSequence())
+    .build();
+
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
     const rackInteractionRot = new THREE.Vector3(0, 0, 0);
     const rackTextPos = new THREE.Vector3(-7, 1, -3);
@@ -171,10 +185,11 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const interactable = await InteractableArea.create(
         rackInteractionPos, rackInteractionRot, 5, 
         "Skills", rackTextPos, rackTextRot, 
-        [rackInteraction]
+        [rackInteraction, rackInteraction2]
     );
     interactable.addToWorld(world, scene);
     hud.addComponent(rackInteraction);
+    hud.addComponent(rackInteraction2);
 
     // add the interactable collision area
     const barbellInteractionBuilder = new InteractionBuilder();
