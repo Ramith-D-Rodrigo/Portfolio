@@ -20,10 +20,18 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         const currCharacterPos = character.position.clone();
         const currCharacterOri = character.quaternion.clone();  
         
+
+        await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
+
         character.position.copy(characterPos);
         character.quaternion.copy(characterRot);
 
-        await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
+        this.attachableObjs.forEach((value, key) => {
+            character.parent?.add(value.object);
+            value.object.position.set(-4.9, 0, 5.1);
+            value.object.rotation.set(0, 0, 0);
+            value.object.scale.set(1,1,1);
+        });
 
         await this.interpolateCamera(camera, destCameraPos, destCameraQuat);
 
@@ -54,6 +62,10 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         currentAction?.reset().fadeIn(0.2).play();
 
         await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
+
+        this.attachableObjs.forEach((value, key) => {
+            character.parent?.remove(value.object);
+        });
 
         character.position.copy(currCharacterPos);
         character.quaternion.copy(currCharacterOri);
@@ -134,6 +146,10 @@ class SquatInteractionSequence extends BaseInteractionSequence {
                         const bone = this.character.getObjectByName(key);
                         if (bone) {
                             bone.remove(value.object);
+                            this.character.parent?.add(value.object);
+                            value.object.position.set(-4.9, 0, 5.1);
+                            value.object.rotation.set(0, 0, 0);
+                            value.object.scale.set(1,1,1);
                         }
                     });
                     clearInterval(interval); // Stop checking after attachment

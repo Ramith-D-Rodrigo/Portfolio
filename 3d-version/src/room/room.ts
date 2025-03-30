@@ -203,15 +203,12 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     // add the interactable collision area
     const barbell = await loadGLTFModel('./models/gym_assets/barbell/scene.gltf', loader);
     const barbellObject = createObjectFromGLTF(barbell, 0, 0, 0, 0, 0, 0, 1, 1, 1);
-    const temp = barbellObject.clone();
-    temp.position.set(-6, 0, 5);
-    scene.add(temp);
 
     const barbellObj: AttachableObjectProps = {
         object: barbellObject,
-        position: new THREE.Vector3(35, -10, 5),
+        position: new THREE.Vector3(35, -17.5, 0),
         rotation: new THREE.Euler(0, THREE.MathUtils.degToRad(90), 0),
-        scale: new THREE.Vector3(38, 38, 38)
+        scale: new THREE.Vector3(40, 40, 40)
     }
 
     const squatRackInteractionBuilder = new InteractionBuilder();
@@ -219,7 +216,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         .setDisplayText("Squat")
         .setAnimations([
             {animName: START_SQUAT, loop: THREE.LoopOnce, repeatCount: 0}, 
-            {animName: SQUAT, loop: THREE.LoopRepeat, repeatCount: 8}, 
+            {animName: SQUAT, loop: THREE.LoopRepeat, repeatCount: 1}, 
             {animName: STOP_SQUAT, loop: THREE.LoopOnce, repeatCount: 0}
         ])
         .setCharacterTransform(new THREE.Vector3(-4.73, 0, 5.1), new THREE.Quaternion(0, -0.70, 0, 0.71))
