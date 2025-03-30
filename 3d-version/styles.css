@@ -38,7 +38,6 @@ canvas {
 .interaction.visible {
     opacity: 1;
     transform: scale(1);
-    animation: pulse 0.8s infinite alternate ease-in-out;
 }
 
 /* Pulse effect for subtle movement */
