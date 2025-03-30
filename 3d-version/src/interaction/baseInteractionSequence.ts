@@ -11,19 +11,19 @@ abstract class BaseInteractionSequence {
 
     protected async interpolateCamera(camera: THREE.Camera, destPos: THREE.Vector3, destQuat: THREE.Quaternion): Promise<void> {
         await new Promise((resolve) => {
-            gsap.to(camera.position, {
-                x: destPos.x,
-                y: destPos.y,
-                z: destPos.z,
-                duration: 0.5,
-                ease: "power2.inOut",
-            });
             gsap.to(camera.quaternion, {
                 x: destQuat.x,
                 y: destQuat.y,
                 z: destQuat.z,
                 w: destQuat.w,
-                duration: 0.5,
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
+            gsap.to(camera.position, {
+                x: destPos.x,
+                y: destPos.y,
+                z: destPos.z,
+                duration: 1.5,
                 ease: "power2.inOut",
                 onComplete: resolve,
             });

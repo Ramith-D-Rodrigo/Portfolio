@@ -74,7 +74,8 @@ const main = async () => {
         // Step the physics world
         world.fixedStep();
         cannonDebugger.update();
-        controls.update(); // Required for damping to work
+        if(controls.enabled)
+            controls.update(); // Required for damping to work
         hud.display();
         renderer.render(scene, camera);
 
