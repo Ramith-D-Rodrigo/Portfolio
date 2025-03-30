@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+canvas {
+    display: block;
+}
+
+.interaction {
+    position: absolute;
+    bottom: 8rem;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+    display: block;
+    opacity: 0;
+    transform: scale(0.8);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+/* Outline for better readability */
+.interaction b {
+    text-shadow: 
+        -2px -2px 0 #000, 
+        2px -2px 0 #000, 
+        -2px 2px 0 #000, 
+        2px 2px 0 #000;
+}
+
+/* When visible, the text pops in and pulses */
+.interaction.visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: pulse 0.8s infinite alternate ease-in-out;
+}
+
+/* Pulse effect for subtle movement */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* Styling for the interaction text (e.g., 'Start Bench Press') */
+.interaction-text {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Styling for the arrow indicators */
+.arrow {
+    color: #ccc;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 10px;
+    text-shadow: 
+        -2px -2px 0 #000, 
+        2px -2px 0 #000, 
+        -2px 2px 0 #000, 
+        2px 2px 0 #000;
+}
