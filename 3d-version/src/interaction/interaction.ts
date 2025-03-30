@@ -10,9 +10,6 @@ class Interaction {
     private displayText: string;
     private interactionSequence: BaseInteractionSequence;
 
-    private intermediateCameraPos: THREE.Vector3 = new THREE.Vector3(0, 0, 0);;
-    private intermediateCameraRot: THREE.Quaternion = new THREE.Quaternion(0, 0, 0, 1);
-
     private destCameraPos: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
     private destCameraOri: THREE.Quaternion = new THREE.Quaternion(0, 0, 0, 1);
 
@@ -22,11 +19,6 @@ class Interaction {
     private attachableObjects: Map<string, AttachableObjectProps> = new Map();
 
     public constructor() {
-    }
-
-    public setIntermediateCameraTransform(intCameraPos: THREE.Vector3, intCameraRot: THREE.Quaternion): void {
-        this.intermediateCameraPos = intCameraPos;
-        this.intermediateCameraRot = intCameraRot;
     }
 
     public setDestCameraTransform(destCameraPos: THREE.Vector3, destCameraRot: THREE.Quaternion): void {
@@ -67,9 +59,7 @@ class Interaction {
 
         await this.interactionSequence.playSequence(
             this.characterPos, this.characterRot,
-            camera, 
-            this.intermediateCameraPos, this.intermediateCameraRot, 
-            this.destCameraPos, this.destCameraOri, 
+            camera, this.destCameraPos, this.destCameraOri, 
             this.attachableObjects, 
             character, animationMap, mixer, currAction, this.animations
         );

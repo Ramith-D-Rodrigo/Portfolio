@@ -4,11 +4,10 @@ import { AttachableObjectProps, InteractionAnimProps } from "./interactionBuilde
 
 class CurlInteractionSequence extends BaseInteractionSequence {
     public override async playSequence(characterPos: THREE.Vector3, characterRot: THREE.Quaternion, 
-        camera: THREE.Camera, intCameraPos: THREE.Vector3, intCameraQuat: THREE.Quaternion, 
-        destCameraPos: THREE.Vector3, destCameraQuat: THREE.Quaternion, attachableObjects: Map<string, AttachableObjectProps>, 
+        camera: THREE.Camera, destCameraPos: THREE.Vector3, destCameraQuat: THREE.Quaternion, attachableObjects: Map<string, AttachableObjectProps>, 
         character: THREE.Group, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, animations: InteractionAnimProps[]
     ): Promise<void> {
-        await this.setupForCharacterAndCamera(camera, intCameraPos, intCameraQuat, character, characterPos, characterRot);
+        await this.setupForCharacterAndCamera(camera, destCameraPos, destCameraQuat, character, characterPos, characterRot);
 
         attachableObjects.forEach((value, key) => {
             const bone = character.getObjectByName(key);
@@ -20,7 +19,7 @@ class CurlInteractionSequence extends BaseInteractionSequence {
             }
         });
 
-        await this.interpolateCamera(camera, destCameraPos, destCameraQuat);
+        await this.fadeOut();
 
         const currentAction = animationMap.get(currAction);
         currentAction?.fadeOut(0.2);
@@ -36,7 +35,7 @@ class CurlInteractionSequence extends BaseInteractionSequence {
 
         currentAction?.reset().fadeIn(0.2).play();
 
-        await this.interpolateCamera(camera, intCameraPos, intCameraQuat);
+        await this.fadeIn();
 
         attachableObjects.forEach((value, key) => {
             const bone = character.getObjectByName(key);

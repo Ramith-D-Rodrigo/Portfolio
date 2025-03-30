@@ -24,11 +24,6 @@ class InteractionBuilder{
         this.interaction = new Interaction();
     }
 
-    public setIntermediateCameraTransform(intCameraPos: THREE.Vector3, intCameraRot: THREE.Quaternion): InteractionBuilder {
-        this.interaction.setIntermediateCameraTransform(intCameraPos, intCameraRot);
-        return this;
-    }
-
     public setDestCameraTransform(destCameraPos: THREE.Vector3, destCameraRot: THREE.Quaternion): InteractionBuilder {
         this.interaction.setDestCameraTransform(destCameraPos, destCameraRot);
         return this;
