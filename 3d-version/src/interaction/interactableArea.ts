@@ -11,13 +11,15 @@ import { HUDComponent } from "../other/hudComponent";
 
 class InteractableArea implements FrameUpdate, HUDComponent {
     private collisionBody: CANNON.Body;
-    private displayText: THREE.Mesh;
+    private displayText: THREE.Group;
 
     private interactionDomElement: HTMLElement;
     private isInteractionTextVisible: boolean = false;
     private isInteracting: boolean = false;
 
     private interactions: Interaction[];
+
+    private lastDelta: number = 0;
 
     private currInteractionIdx: number = 0;
     private interactionSwitchEvent = (event: KeyboardEvent): void => {
@@ -97,18 +99,33 @@ class InteractableArea implements FrameUpdate, HUDComponent {
         displayText: string, textPos: THREE.Vector3, textRot: THREE.Vector3, 
         interactions: Interaction[]): Promise<InteractableArea> {
         const newArea = new InteractableArea(pos, rot, radius, interactions);
-        if(!InteractableArea.areaFont){
+        if (!InteractableArea.areaFont) {
             InteractableArea.areaFont = await Utils.loadFont('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json');
         }
+        
         const textGeometry = new TextGeometry(displayText, {
             font: InteractableArea.areaFont,
             size: 0.6,
-            depth: 0.2
+            depth: 0.2, // Depth makes it more 3D
+            bevelEnabled: true, // Adds beveling for a premium look
+            bevelThickness: 0.02,
+            bevelSize: 0.02,
+            bevelSegments: 4
         });
-
-        const textMaterial = InteractableArea.textMaterial;
-        newArea.displayText = new THREE.Mesh(textGeometry, textMaterial);
-
+        
+        const textMaterial = new THREE.MeshStandardMaterial({
+            color: 0xffcc00, // Bright yellow (fitness game style)
+            metalness: 0.5,  // Gives a slightly metallic finish
+            roughness: 0.3,  // Adds a polished feel
+            emissive: 0xff6600, // Slight glow effect (orange light)
+            emissiveIntensity: 0.3,
+        });
+        
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);        
+        const textGroup = new THREE.Group();
+        textGroup.add(textMesh);
+        
+        newArea.displayText = textGroup;  // Assign it to your area        
         newArea.displayText.position.set(textPos.x, textPos.y, textPos.z);
         newArea.displayText.rotation.set(textRot.x, textRot.y, textRot.z);
         return newArea;
@@ -118,6 +135,10 @@ class InteractableArea implements FrameUpdate, HUDComponent {
         this.isInteractionTextVisible = false;
         InteractionManager.removeContactingInteractableArea();
         window.removeEventListener('keydown', this.interactionSwitchEvent);
+
+        this.lastDelta += delta * 1.5; // Accumulate delta
+        const yOffset = Math.sin(this.lastDelta) * 0.2; // Amplitude of 0.2 units
+        this.displayText.position.y = 1 + yOffset; // Base height + oscillation
     }
 
     public addToWorld(world: CANNON.World, scene: THREE.Scene){
