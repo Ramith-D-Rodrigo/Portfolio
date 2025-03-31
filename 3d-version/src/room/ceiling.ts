@@ -27,7 +27,7 @@ const createCeiling = (xPos: number, yPos: number, zPos: number,
         map: ceilingAlbedoTexture,
         aoMap: ceilingAoTexture,
         emissiveMap: ceilingEmissiveTexture,
-        emissiveIntensity: 1.0,
+        emissiveIntensity: 5.0,
         emissive: 0xffffff,
         metalnessMap: ceilingMetallicTexture,
         normalMap: ceilingNormalTexture,
@@ -49,4 +49,27 @@ const createCeiling = (xPos: number, yPos: number, zPos: number,
     return ceiling;
 }
 
-export { createCeiling };
+const addCeilingLights = (scene: THREE.Scene) => {
+    const rows = 4;
+    const cols = 4;
+    const width = 20;
+    const height = 20;
+    const spacingX = width / (cols + 0.08);
+    const spacingZ = height / (rows + 0.08);
+    const xOffset = -2.4;
+    const zOffset = -2.4;
+
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            const x = -width / 2 + (j + 1) * spacingX + xOffset;
+            const z = -height / 2 + (i + 1) * spacingZ + zOffset;
+            
+            const pointLight = new THREE.PointLight(0xffffff, 4, 10); // White light, medium intensity
+            //pointLight.castShadow = true;
+            pointLight.position.set(x, 9.8, z); // Slightly below the ceiling
+            scene.add(pointLight);
+        }
+    }
+}
+
+export { createCeiling, addCeilingLights };
