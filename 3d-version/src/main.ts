@@ -13,13 +13,12 @@ import HUD from './other/hud';
 const main = async () => {
     const scene = new THREE.Scene();
     const world = new CANNON.World();
-    const cannonDebugger = CannonDebugger(scene, world);
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
-    renderer.setClearColor(0xffffff, 1); // White color, fully opaque
     
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true; // Smooth movement
@@ -32,16 +31,34 @@ const main = async () => {
     const loader = new GLTFLoader();
     // Create a FBX loader
     const fbxLoader = new FBXLoader();
-    
     // Create the light
     const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 10, 7.5);
+    light.position.set(0, 9.8, 0);
+    light.target.position.set(0, 0, 0);
+    light.castShadow = true;
+    
+    // Fix pixelation: Increase shadow resolution
+    light.shadow.mapSize.width = 2048; // ⬆️ Higher resolution for smoother shadows
+    light.shadow.mapSize.height = 2048;
+    
+    // Reduce shadow artifacts
+    light.shadow.bias = -0.002; // 🔧 Helps prevent shadow acne
+    light.shadow.radius = 4; // 🔥 Softens shadow edges
+    
+    // Adjust shadow camera size for better coverage
+    light.shadow.camera.top = 10;
+    light.shadow.camera.bottom = -10;
+    light.shadow.camera.left = -10;
+    light.shadow.camera.right = 10;
+    light.shadow.camera.near = 1;
+    light.shadow.camera.far = 50;
+
+    // Ambient Light (soft general brightness)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
     scene.add(light);
-    // // Create the light
-    // const rectLight = new THREE.RectAreaLight(0xffffff, 50, 2, 2); // Color, Intensity, Width, Height
-    // rectLight.position.set(2.2, 8, 2.2); // Position on the ceiling
-    // rectLight.rotateX(-Math.PI / 2); // Rotate the light to point down
-    // scene.add(rectLight);
+
     const hud = new HUD();
 
     // Setup the room
@@ -73,7 +90,6 @@ const main = async () => {
         }
         // Step the physics world
         world.fixedStep();
-        cannonDebugger.update();
         if(controls.enabled)
             controls.update(); // Required for damping to work
         hud.display();
