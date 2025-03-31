@@ -7,6 +7,10 @@ const loadGLTFModel = async (path: string, gltfLoader: GLTFLoader) => {
             console.log((xhr.loaded / xhr.total) * 100 + '% loaded'); // Loading progress
         }
     );
+
+    gltf.scene.traverse((obj)=> {
+        if ( obj.isObject3D ) obj.castShadow = true;
+    })
     return gltf;
 }
 
