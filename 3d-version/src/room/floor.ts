@@ -6,8 +6,10 @@ const createFloor = (width: number, height: number,
     xRot: number, yRot: number, zRot: number,
     xScale: number, yScale: number, zScale: number) => {
     const floorGeometry = new THREE.PlaneGeometry(width, height);
-    const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x808080, side: THREE.DoubleSide });
+    const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x808080, side: THREE.DoubleSide, });
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    floor.castShadow = true;
+    floor.receiveShadow = true;
     floor.position.x = xPos;
     floor.position.y = yPos;
     floor.position.z = zPos;
