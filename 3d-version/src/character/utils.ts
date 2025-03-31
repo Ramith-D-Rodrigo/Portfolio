@@ -32,6 +32,14 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     object.position.set(position.x, position.y, position.z);
     object.scale.set(0.025, 0.025, 0.025);
     const animationMixer = new THREE.AnimationMixer(object);
+
+    object.traverse(obj => {
+        if(obj.isObject3D){
+            obj.castShadow = true;
+            obj.receiveShadow = true;
+        }
+    })
+
     scene.add(object);
 
     const animationsMap: Map<string, THREE.AnimationAction> = new Map();
