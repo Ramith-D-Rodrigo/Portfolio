@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { createMirror } from "../objects/mirror";
-import { createCeiling } from "./ceiling";
+import { addCeilingLights, createCeiling } from "./ceiling";
 import { createFloor, createFloorPhysics } from "./floor";
 import { createWall, createWallPhysics } from "./wall";
 import * as THREE from "three";
@@ -45,6 +45,8 @@ const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) =>
     // Create a ceiling
     const ceiling = createCeiling(0, 10, 0, -Math.PI / 2, 0, 0, textureLoader);
     scene.add(ceiling);
+
+    addCeilingLights(scene);
 }
 
 const setupFloor = (scene: THREE.Scene, world: CANNON.World) => {
