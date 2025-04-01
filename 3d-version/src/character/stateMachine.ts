@@ -28,7 +28,7 @@ class CharacterStateMachine implements FrameUpdate {
     private walkSpeed = 5;
 
     private cameraTarget = new THREE.Vector3();
-    private cameraOffset = new THREE.Vector3(0, 5, 5);
+    private cameraOffset = new THREE.Vector3(0, 3.5, 4);
 
     private isInteracting: boolean = false;
 
@@ -167,9 +167,7 @@ class CharacterStateMachine implements FrameUpdate {
         this.camera.position.x += x;
         this.camera.position.z += z;
 
-        this.cameraTarget.x = this.model.position.x;
-        this.cameraTarget.z = this.model.position.z;
-        this.cameraTarget.y = this.model.position.y + 1;
+        this.cameraTarget.copy(this.model.position).add(new THREE.Vector3(0, 3.5, 0));
 
         this.orbitControls.target = this.cameraTarget;
     }

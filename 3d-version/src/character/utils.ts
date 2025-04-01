@@ -25,7 +25,7 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     const position = {
         x: 0,
         y: 0,
-        z: 7
+        z: 5.5
     };
 
     object.rotation.set(0, Math.PI, 0);
