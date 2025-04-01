@@ -39,6 +39,12 @@ const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, worl
 
     const backWallPhysics = createWallPhysics(0, 0, 5, -10, 0, 0, 0,  width/2, height/2, 0.01);
     world.addBody(backWallPhysics);
+
+    const frontWall = createWall(width, height, 0, 5, 10, 0, -Math.PI, 0, textureLoader);
+    scene.add(frontWall);
+
+    const frontWallPhysics = createWallPhysics(0, 0, 5, 10, 0, -Math.PI, 0,  width/2, height/2, 0.01);
+    world.addBody(frontWallPhysics);
 }
 
 const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
