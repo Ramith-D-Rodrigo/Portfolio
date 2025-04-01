@@ -2,33 +2,13 @@
 import * as THREE from 'three';
 import { AttachableObjectProps, InteractionAnimProps } from './interactionBuilder';
 import gsap from "gsap";
+import InteractionDescHUD from './interactionDesHUD';
 
 abstract class BaseInteractionSequence {
     private currCameraPos: THREE.Vector3;
     private currCameraOri: THREE.Quaternion;
     private currCharacterPos: THREE.Vector3;
     private currCharacterOri: THREE.Quaternion;
-
-    protected async interpolateCamera(camera: THREE.Camera, destPos: THREE.Vector3, destQuat: THREE.Quaternion): Promise<void> {
-        await new Promise((resolve) => {
-            gsap.to(camera.quaternion, {
-                x: destQuat.x,
-                y: destQuat.y,
-                z: destQuat.z,
-                w: destQuat.w,
-                duration: 1.5,
-                ease: "power2.inOut"
-            });
-            gsap.to(camera.position, {
-                x: destPos.x,
-                y: destPos.y,
-                z: destPos.z,
-                duration: 1.5,
-                ease: "power2.inOut",
-                onComplete: resolve,
-            });
-        });
-    }
 
     protected async fadeIn(): Promise<void> {
         const el = document.querySelector('#fadeOverlay') as HTMLElement;
@@ -59,9 +39,15 @@ abstract class BaseInteractionSequence {
 
         camera.position.copy(intCameraPos);
         camera.quaternion.copy(intCameraQuat);
+
+        InteractionDescHUD.getInstance().clearDisplayText();
+        InteractionDescHUD.getInstance().setIsVisible(true);
     }
 
     protected async resetCharacterAndCamera(camera: THREE.Camera, character: THREE.Group): Promise<void> {
+        InteractionDescHUD.getInstance().setIsVisible(false);
+        InteractionDescHUD.getInstance().clearDisplayText();
+
         character.position.copy(this.currCharacterPos);
         character.quaternion.copy(this.currCharacterOri);
         camera.position.copy(this.currCameraPos);
@@ -75,8 +61,7 @@ abstract class BaseInteractionSequence {
         character: THREE.Group, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, animations: InteractionAnimProps[]
     ): Promise<void>;
 
-    protected abstract playAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 
-            animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer,): Promise<void>;
+    protected abstract playAnimation(animProps: InteractionAnimProps, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void>;
 }
 
 export default BaseInteractionSequence;
