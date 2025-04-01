@@ -1,6 +1,7 @@
 import BaseInteractionSequence from "./baseInteractionSequence";
 import * as THREE from 'three';
 import { AttachableObjectProps, InteractionAnimProps } from "./interactionBuilder";
+import InteractionDescHUD from "./interactionDesHUD";
 
 class SquatInteractionSequence extends BaseInteractionSequence {
     private attachableObjs:  Map<string, AttachableObjectProps>;
@@ -28,23 +29,17 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         currentAction?.fadeOut(0.2);
 
         await this.playAttachingAnimation(
-            animations[0].animName, 
-            animations[0].loop, 
-            animations[0].repeatCount, 
+            animations[0],
             animationMap, mixer
         );
 
         await this.playAnimation(
-            animations[1].animName, 
-            animations[1].loop, 
-            animations[1].repeatCount, 
+            animations[1], 
             animationMap, mixer
         );
 
         await this.playDetachingAnimation(
-            animations[2].animName, 
-            animations[2].loop, 
-            animations[2].repeatCount, 
+            animations[2], 
             animationMap, mixer
         );
 
@@ -59,16 +54,21 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         await this.resetCharacterAndCamera(camera, character);
     }
 
-    private playAttachingAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 
-        animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
+    private playAttachingAnimation(animProps: InteractionAnimProps, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
         return new Promise((resolve) => {
-            const action = animationMap.get(animName);
+            const action = animationMap.get(animProps.animName);
             if (!action) {
-                console.warn(`Animation '${animName}' not found`);
+                console.warn(`Animation '${animProps.animName}' not found`);
                 resolve();
                 return;
             }
-            action.setLoop(mode, repetitions);
+            let repetitions = animProps.displayTextList.length;
+            if(repetitions > 1){
+                action.setLoop(THREE.LoopRepeat, repetitions);
+            }
+            else{
+                action.setLoop(THREE.LoopOnce, 0);
+            }
             action.reset().fadeIn(0.2).play();
 
             const getFrameIndex = (action: THREE.AnimationAction, frameCount: number) => {
@@ -106,16 +106,21 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         });
     }
 
-    private playDetachingAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 
-        animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
+    private playDetachingAnimation(animProps: InteractionAnimProps, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
         return new Promise((resolve) => {
-            const action = animationMap.get(animName);
+            const action = animationMap.get(animProps.animName);
             if (!action) {
-                console.warn(`Animation '${animName}' not found`);
+                console.warn(`Animation '${animProps.animName}' not found`);
                 resolve();
                 return;
             }
-            action.setLoop(mode, repetitions);
+            let repetitions = animProps.displayTextList.length;
+            if(repetitions > 1){
+                action.setLoop(THREE.LoopRepeat, repetitions);
+            }
+            else{
+                action.setLoop(THREE.LoopOnce, 0);
+            }
             action.reset().fadeIn(0.2).play();
 
             const getFrameIndex = (action: THREE.AnimationAction, frameCount: number) => {
@@ -123,7 +128,7 @@ class SquatInteractionSequence extends BaseInteractionSequence {
             
                 return Math.round(animationTime / action.getClip().duration * frameCount)
             }
-
+    
             const interval = setInterval(() => {
                 const currentFrame = getFrameIndex(action, 300);
                 
@@ -154,21 +159,44 @@ class SquatInteractionSequence extends BaseInteractionSequence {
         });
     }
 
-    protected override playAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 
-        animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
+    protected override playAnimation(animProps: InteractionAnimProps, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
         return new Promise((resolve) => {
-            const action = animationMap.get(animName);
+            const action = animationMap.get(animProps.animName);
             if (!action) {
-                console.warn(`Animation '${animName}' not found`);
+                console.warn(`Animation '${animProps.animName}' not found`);
                 resolve();
                 return;
             }
-            action.setLoop(mode, repetitions);
+
+            let displayIdx = 0;
+            const loopFunc = () => {
+                InteractionDescHUD.getInstance().setDisplayText(animProps.displayTextList[displayIdx++], animProps.displayTextDur);
+            }
+
+            loopFunc();
+
+            let repetitions = animProps.displayTextList.length;
+            if(repetitions > 1){
+                action.setLoop(THREE.LoopRepeat, repetitions);
+                mixer.addEventListener('loop',loopFunc);
+            }
+            else{
+                action.setLoop(THREE.LoopOnce, 0);
+            }
             action.reset().fadeIn(0.2).play();
+
+            
+            if(repetitions > 1){
+                mixer.addEventListener('loop',loopFunc);
+            }
     
             // Listen for animation completion
             mixer.addEventListener('finished', (event) => {
                 if (event.action === action) {
+                    if(repetitions > 1){
+                        mixer.removeEventListener('loop', loopFunc);
+                    }
+
                     action.fadeOut(0.2);
                     resolve();
                 }
