@@ -44,7 +44,7 @@ canvas {
         2px 2px 0 #000;
 }
 
-/* When visible, the text pops in and pulses */
+/* When visible, the text pops in */
 .interaction.visible {
     opacity: 1;
     transform: scale(1);
@@ -77,4 +77,59 @@ canvas {
         2px -2px 0 #000, 
         -2px 2px 0 #000, 
         2px 2px 0 #000;
+}
+
+@keyframes interactionFloat {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: scale(1) translateY(-10px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1) translateY(-15px);
+    }
+}
+
+.hud-container {
+    position: absolute;
+    top: 30rem;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Ensures all messages are aligned to the right */
+    width: 50rem; /* Adjust width as needed */
+    pointer-events: none;
+}
+
+.interaction-seq-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    font-weight: bolder;
+    text-shadow: 
+        -2px -2px 0 #000, 
+        2px -2px 0 #000, 
+        -2px 2px 0 #000, 
+        2px 2px 0 #000;
+    opacity: 0;
+    white-space: pre-line; /* Ensures line breaks are preserved */
+    background: rgba(0, 0, 0, 0.6); /* Optional: Background for readability */
+    padding: 5px 10px;
+    border-radius: 5px;
+    max-width: 100%; /* Prevent overflow */
+    text-align: left; /* Ensures text formatting remains correct */
+}
+
+.interaction-seq-text.visible {
+    animation: interactionFloat 1.2s ease-out forwards;
 }
