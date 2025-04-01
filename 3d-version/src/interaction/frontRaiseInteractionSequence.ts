@@ -1,6 +1,7 @@
 import BaseInteractionSequence from "./baseInteractionSequence";
 import * as THREE from 'three';
 import { AttachableObjectProps, InteractionAnimProps } from "./interactionBuilder";
+import InteractionDescHUD from "./interactionDesHUD";
 
 class FrontRaiseInteractionSequence extends BaseInteractionSequence {
     public override async playSequence(characterPos: THREE.Vector3, characterRot: THREE.Quaternion, 
@@ -26,9 +27,7 @@ class FrontRaiseInteractionSequence extends BaseInteractionSequence {
 
         for (let i = 0; i < animations.length; i++) {
             await this.playAnimation(
-                animations[i].animName, 
-                animations[i].loop, 
-                animations[i].repeatCount, 
+                animations[i],
                 animationMap, mixer
             );
         }
@@ -47,21 +46,37 @@ class FrontRaiseInteractionSequence extends BaseInteractionSequence {
         await this.resetCharacterAndCamera(camera, character);
     }
 
-    protected override playAnimation(animName: string, mode: THREE.AnimationActionLoopStyles, repetitions: number, 
-        animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer,): Promise<void> {
+    protected override playAnimation(animProps: InteractionAnimProps, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer): Promise<void> {
         return new Promise((resolve) => {
-            const action = animationMap.get(animName);
+            const action = animationMap.get(animProps.animName);
             if (!action) {
-                console.warn(`Animation '${animName}' not found`);
+                console.warn(`Animation '${animProps.animName}' not found`);
                 resolve();
                 return;
             }
-            action.setLoop(mode, repetitions);
+            let displayIdx = 0;
+            const loopFunc = () => {
+                InteractionDescHUD.getInstance().setDisplayText(animProps.displayTextList[displayIdx++]);
+            }
+            loopFunc();
+
+            let repetitions = animProps.displayTextList.length;
+            if(repetitions > 1){
+                action.setLoop(THREE.LoopRepeat, repetitions);
+                mixer.addEventListener('loop',loopFunc);
+            }
+            else{
+                action.setLoop(THREE.LoopOnce, 0);
+            }
             action.reset().fadeIn(0.2).play();
     
             // Listen for animation completion
             mixer.addEventListener('finished', (event) => {
                 if (event.action === action) {
+                    if(repetitions > 1){
+                        mixer.removeEventListener('loop', loopFunc);
+                    }
+
                     action.fadeOut(0.2);
                     resolve();
                 }
