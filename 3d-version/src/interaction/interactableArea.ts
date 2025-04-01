@@ -43,9 +43,6 @@ class InteractableArea implements FrameUpdate, HUDComponent {
         }
     };
     
-
-    private static textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
     private static areaFont: Font | null;
 
     private constructor(pos: THREE.Vector3, rot: THREE.Vector3, radius: number, interactions: Interaction[]){
@@ -68,7 +65,6 @@ class InteractableArea implements FrameUpdate, HUDComponent {
 
         this.interactionDomElement = document.createElement("div");
         this.interactionDomElement.className = 'interaction';
-
         document.body.appendChild(this.interactionDomElement);
     }
     public display(): void {
