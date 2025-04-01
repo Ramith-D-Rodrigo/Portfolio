@@ -17,6 +17,10 @@ import FlexInteractionSequence from "../interaction/flexInteractionSequence";
 import WarmupInteractionSequence from "../interaction/warmupInteractionSequence";
 import SquatInteractionSequence from "../interaction/squatInteractionSequence";
 import FrontRaiseInteractionSequence from "../interaction/frontRaiseInteractionSequence";
+import FUNDAMENTALS from "../interaction/constants/fundamentals";
+import InteractionDescHUD from "../interaction/interactionDesHUD";
+import EXPERIENCE from "../interaction/constants/experience";
+import EDUCATION from "../interaction/constants/education";
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -164,7 +168,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const rackInteraction = rackInteractionBuilder
         .setDisplayText("Do Bicep Curls")
         .setAnimations([
-            {animName: BICEP_CURL, loop: THREE.LoopRepeat, repeatCount: 8}, 
+            {animName: BICEP_CURL, displayTextList: [], displayTextDur: 2}, 
         ])
         .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
         .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
@@ -177,7 +181,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const rackInteraction2 = rackInteraction2Builder
     .setDisplayText("Do Front Raises")
     .setAnimations([
-        {animName: FRONT_RAISE, loop: THREE.LoopRepeat, repeatCount: 8}, 
+        {animName: FRONT_RAISE, displayTextList: [], displayTextDur: 2}, 
     ])
     .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
     .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
@@ -203,7 +207,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const barbellInteraction = barbellInteractionBuilder
         .setDisplayText("Flex")
         .setAnimations([
-            {animName: FLEX, loop: THREE.LoopRepeat, repeatCount: 5}, 
+            {animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 4}, 
         ])
         .setCharacterTransform(new THREE.Vector3(4.97, 0, 4.90), new THREE.Quaternion(0, 0.7, 0, 0.72))
         .setDestCameraTransform(new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49))
@@ -237,9 +241,9 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const squatRackInteraction = squatRackInteractionBuilder
         .setDisplayText("Squat")
         .setAnimations([
-            {animName: START_SQUAT, loop: THREE.LoopOnce, repeatCount: 0}, 
-            {animName: SQUAT, loop: THREE.LoopRepeat, repeatCount: 1}, 
-            {animName: STOP_SQUAT, loop: THREE.LoopOnce, repeatCount: 0}
+            {animName: START_SQUAT, displayTextList: [], displayTextDur: 0}, 
+            {animName: SQUAT, displayTextList: EDUCATION, displayTextDur: 2.5}, 
+            {animName: STOP_SQUAT, displayTextList: [], displayTextDur: 0}
         ])
         .setCharacterTransform(new THREE.Vector3(-4.73, 0, 5.1), new THREE.Quaternion(0, -0.70, 0, 0.71))
         .setDestCameraTransform(new THREE.Vector3(-1.63, 4.12, -0.55), new THREE.Quaternion(-0.06, 0.94, 0.24, 0.25))
@@ -264,9 +268,9 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const warmupInteraction = warmupInteractionBuilder
         .setDisplayText("Do Push Ups")
         .setAnimations([
-            {animName: START_PUSH_UP, loop: THREE.LoopOnce, repeatCount: 0}, 
-            {animName: PUSH_UP, loop: THREE.LoopRepeat, repeatCount: 8}, 
-            {animName: STOP_PUSH_UP, loop: THREE.LoopOnce, repeatCount: 0}
+            {animName: START_PUSH_UP, displayTextList: [], displayTextDur: 0}, 
+            {animName: PUSH_UP, displayTextList: FUNDAMENTALS, displayTextDur: 1.5}, 
+            {animName: STOP_PUSH_UP, displayTextList: [], displayTextDur: 0}
         ])
         .setCharacterTransform(new THREE.Vector3(0, 0, 0), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, THREE.MathUtils.degToRad(180), 0)))
         .setDestCameraTransform(new THREE.Vector3(-2.16, 4.017, -5.31), new THREE.Quaternion(0.036, 0.96, 0.23, -0.15))
@@ -278,9 +282,9 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const warmupInteraction2 = warmupInteraction2Builder
         .setDisplayText("Do Sit Ups")
         .setAnimations([            
-            {animName: START_SITUP, loop: THREE.LoopOnce, repeatCount: 0}, 
-            {animName: SITUP, loop: THREE.LoopRepeat, repeatCount: 8}, 
-            {animName: STOP_SITUP, loop: THREE.LoopOnce, repeatCount: 0}
+            {animName: START_SITUP, displayTextList: [], displayTextDur: 0}, 
+            {animName: SITUP, displayTextList: FUNDAMENTALS, displayTextDur: 2}, 
+            {animName: STOP_SITUP, displayTextList: [], displayTextDur: 0}
         ])
         .setCharacterTransform(new THREE.Vector3(0, 0, 0), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, THREE.MathUtils.degToRad(180), 0)))
         .setDestCameraTransform(new THREE.Vector3(-2.16, 4.017, -5.31), new THREE.Quaternion(0.036, 0.96, 0.23, -0.15))
@@ -298,6 +302,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     );
     warmupInteractable.addToWorld(world, scene);
     hud.addComponent(warmupInteractable);
+    hud.addComponent(InteractionDescHUD.getInstance());
 
     return [
         interactable,
