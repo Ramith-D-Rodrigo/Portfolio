@@ -13,8 +13,8 @@ type AttachableObjectProps = {
 
 type InteractionAnimProps = {
     animName: string,
-    loop: THREE.AnimationActionLoopStyles,
-    repeatCount: number
+    displayTextList: string[], //we infer the loop and repeat count from this list's length
+    displayTextDur: number
 }
 
 class InteractionBuilder{
