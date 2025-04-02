@@ -47,7 +47,7 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
         const animationFbx = await fbxLoader.loadAsync(
             `./models/character/animations/${animations[i]}.fbx`,
             (xhr) => {
-                console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+                //console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
             }
         );
 
