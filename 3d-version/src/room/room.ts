@@ -26,7 +26,7 @@ import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { Utils } from "../utils/utils";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import SKILLS from "../character/skills";
-import SkillViewInteractionSequence from "../interaction/skillViewInteractionSequence";
+import SkillViewInteractionSequence, { SkillTransform } from "../interaction/skillViewInteractionSequence";
 
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
@@ -458,4 +458,197 @@ const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLo
     return await setupInteractableAreas(scene, world, hud, loader);
 }
 
-export { setupRoom };
+const addSkills = (skillObjs: THREE.Group[], scene: THREE.Scene, loader: GLTFLoader) => {
+    const skills: SkillTransform[] = [
+        {
+            name: 'c',
+            position: new THREE.Vector3(-8.8, 2.7, 0.72),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.08, 0.08, 0.08),
+        },
+        {
+            name: 'php',
+            position: new THREE.Vector3(-8.8, 2.75, 0.36),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.08, 0.08, 0.08),
+        },
+        {
+            name: 'csharp',
+            position: new THREE.Vector3(-8.8, 2.8, 0),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'javascript',
+            position: new THREE.Vector3(-8.8, 2.8, -0.4),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'scala',
+            position: new THREE.Vector3(-8.8, 2.8, -0.8),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'python',
+            position: new THREE.Vector3(-8.8, 2.85, -1.25),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'java',
+            position: new THREE.Vector3(-8.8, 2.85, -1.72),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'typescript',
+            position: new THREE.Vector3(-8.8, 2.9, -2.2),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'cpp',
+            position: new THREE.Vector3(-8.8, 3, -2.75),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'opengl',
+            position: new THREE.Vector3(-8.8, 2.9, -3.35),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.15, 0.15, 0.15),
+        },
+        {
+            name: 'webgl',
+            position: new THREE.Vector3(-8.8, 2.9, -3.9),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.15, 0.15, 0.15),
+        },
+        {
+            name: 'webgpu',
+            position: new THREE.Vector3(-8.8, 2.9, -4.5),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'react',
+            position: new THREE.Vector3(-8.8, 2.9, -5.1),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'threejs',
+            position: new THREE.Vector3(-8.8, 2.9, -5.7),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'webxr',
+            position: new THREE.Vector3(-8.8, 2.8, -6.2),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'mysql',
+            position: new THREE.Vector3(-8.8, 2.8, -6.7),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.11, 0.11, 0.11),
+        },
+        {
+            name: 'mongodb',
+            position: new THREE.Vector3(-8.8, 2.8, -7.15),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'postgresql',
+            position: new THREE.Vector3(-8.8, 2.8, -7.57),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'webassembly',
+            position: new THREE.Vector3(-8.8, 2.8, -8),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.09, 0.09, 0.09),
+        },
+        {
+            name: 'docker',
+            position: new THREE.Vector3(-8.8, 2.8, -8.4),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'git',
+            position: new THREE.Vector3(-8.8, 2.8, -8.8),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'unity',
+            position: new THREE.Vector3(-8.2, 1.9, 0.72),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'unreal',
+            position: new THREE.Vector3(-8.2, 1.9, 0.12),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'laravel',
+            position: new THREE.Vector3(-8.2, 1.9, -0.50),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'nextjs',
+            position: new THREE.Vector3(-8.2, 1.9, -1.1),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+        {
+            name: 'spring_boot',
+            position: new THREE.Vector3(-8.2, 1.9, -1.6),
+            rotation:new THREE.Euler(Math.PI/2, 0, -Math.PI/2),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1),
+        },
+    ];
+
+    skills.forEach(async (skill) => {
+        const model = await loadGLTFModel(`logos/skills/${skill.name}.glb`, loader);
+        const obj = createObjectFromGLTF(model, 0, 0, 0, 0, 0, 0, 1, 1, 1);
+        obj.traverse(o =>{
+            o.castShadow = false;
+            o.receiveShadow = false;
+            
+            if (o instanceof THREE.Mesh) {  // Ensure we modify only meshes
+                const material = o.material;
+                if (material && material.color) {
+                    // Increase emissive color to make colors more vibrant
+                    material.emissive = material.color.clone().multiplyScalar(0.3);
+                    material.emissiveIntensity = 1.5;
+        
+                    // Optional: Increase saturation by modifying HSL
+                    const hsl = material.color.getHSL({ h: 0, s: 0, l: 0 });
+                    material.color.setHSL(hsl.h, Math.min(3 * hsl.s, 1), hsl.l);
+        
+                    material.needsUpdate = true;
+                }
+            }
+
+        })
+        obj.position.copy(skill.position);
+        obj.rotation.copy(skill.rotation);
+        obj.scale.copy(skill.scale);
+        scene.add(obj);
+        obj.userData.originalScale = obj.scale.clone(); // Store original scale
+
+        skillObjs.push(obj);
+    });
+}
+
+export { setupRoom, addSkills };
