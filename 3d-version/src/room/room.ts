@@ -25,6 +25,7 @@ import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { Utils } from "../utils/utils";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+import SKILLS from "../character/skills";
 
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
@@ -204,10 +205,10 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const rackInteraction = rackInteractionBuilder
         .setDisplayText("Do Bicep Curls")
         .setAnimations([
-            {animName: BICEP_CURL, displayTextList: [], displayTextDur: 2}, 
+            {animName: BICEP_CURL, displayTextList: SKILLS, displayTextDur: 5}, 
         ])
         .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
-        .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
+        .setDestCameraTransform(new THREE.Vector3(-5.12, 3.01, 0.56), new THREE.Quaternion(0.05, -0.023, 0.01, 0.99))
         .addAttachableObject("mixamorigLeftHand", attachableObj1)
         .addAttachableObject("mixamorigRightHand", attachableObj2)
         .setInteractionSequence(new CurlInteractionSequence())
@@ -220,7 +221,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         {animName: FRONT_RAISE, displayTextList: [], displayTextDur: 2}, 
     ])
     .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
-    .setDestCameraTransform(new THREE.Vector3(-5.77, 4.19, 2.22), new THREE.Quaternion(-0.25, -0.026, -0.01, 0.97))
+    .setDestCameraTransform(new THREE.Vector3(-5.12, 3.01, 0.56), new THREE.Quaternion(0.05, -0.023, 0.01, 0.99))
     .addAttachableObject("mixamorigLeftHand", attachableObj1)
     .addAttachableObject("mixamorigRightHand", attachableObj2)
     .setInteractionSequence(new FrontRaiseInteractionSequence())
