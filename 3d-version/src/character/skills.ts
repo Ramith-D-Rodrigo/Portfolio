@@ -1,5 +1,6 @@
 const SKILLS = [
-    `Programming Languages
+    `Programming 
+    Languages
     
     C
     C++
@@ -40,7 +41,15 @@ const SKILLS = [
     `Other
     
     Docker
-    WebAssembly`
+    WebAssembly
+    Git
+    Ubuntu`,
+
+    `Languages Spoken
+    
+    Sinhala  (Native)
+    English  (Professional)
+    Japanese (JLPT N3)`
 ];
 
 export default SKILLS;
