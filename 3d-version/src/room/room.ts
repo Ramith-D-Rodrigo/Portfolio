@@ -25,7 +25,7 @@ import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { Utils } from "../utils/utils";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import SKILLS from "../character/skills";
+import SKILLS from "../interaction/constants/skills";
 import SkillViewInteractionSequence, { SkillTransform } from "../interaction/skillViewInteractionSequence";
 
 
