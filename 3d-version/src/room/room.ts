@@ -26,6 +26,7 @@ import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { Utils } from "../utils/utils";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import SKILLS from "../character/skills";
+import SkillViewInteractionSequence from "../interaction/skillViewInteractionSequence";
 
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
@@ -55,37 +56,6 @@ const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, worl
 
     const frontWallPhysics = createWallPhysics(0, 0, 5, 10, 0, -Math.PI, 0,  width/2, height/2, 0.01);
     world.addBody(frontWallPhysics);
-
-//     const svgLoader = new SVGLoader();
-//     svgLoader.load('logos/github_logo.svg', (data) => {
-//         const paths = data.paths;
-//         const group = new THREE.Group();
-    
-//         paths.forEach((path) => {
-//             const shapes = SVGLoader.createShapes(path);
-            
-//             shapes.forEach((shape) => {
-//                 const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-//                     depth: 10, // Thickness
-//                     bevelEnabled: false,
-                    
-//                 };
-    
-//                 const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    
-//                 const material = new THREE.MeshBasicMaterial({
-//                     color: path.color,
-//                     side: THREE.DoubleSide,
-//                 });
-//                 const mesh = new THREE.Mesh(geometry, material);
-//                 group.add(mesh);
-//             });
-//         });
-    
-//         group.scale.set(0.025, -0.025, 0.025); // Adjust the size
-//         group.position.set(-8, 8, -9.8);
-//         scene.add(group);
-//     });
 }
 
 const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
@@ -107,11 +77,7 @@ const setupFloor = (scene: THREE.Scene, world: CANNON.World, textureLoader: THRE
 }
 
 const setupMirrors = (scene: THREE.Scene) => {
-    const reflector = createMirror(4, 6, new THREE.Vector3(9.999, 3, -7), new THREE.Euler(0, -Math.PI / 2, 0), 0xffffff);
-    const reflector2 = createMirror(4, 6, new THREE.Vector3(9.999, 3, -2), new THREE.Euler(0, -Math.PI / 2, 0), 0xffffff);
-    const longMirror = createMirror(6, 6, new THREE.Vector3(9.999, 3, 5), new THREE.Euler(0, -Math.PI / 2, 0), 0xffffff);
-    scene.add(reflector);
-    scene.add(reflector2);
+    const longMirror = createMirror(18, 6, new THREE.Vector3(9.999, 3, 0), new THREE.Euler(0, -Math.PI / 2, 0), 0xffffff);
     scene.add(longMirror);
 }
 
@@ -218,13 +184,22 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const rackInteraction2 = rackInteraction2Builder
     .setDisplayText("Do Front Raises")
     .setAnimations([
-        {animName: FRONT_RAISE, displayTextList: [], displayTextDur: 2}, 
+        {animName: FRONT_RAISE, displayTextList: SKILLS, displayTextDur: 5}, 
     ])
     .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
     .setDestCameraTransform(new THREE.Vector3(-5.12, 3.01, 0.56), new THREE.Quaternion(0.05, -0.023, 0.01, 0.99))
     .addAttachableObject("mixamorigLeftHand", attachableObj1)
     .addAttachableObject("mixamorigRightHand", attachableObj2)
     .setInteractionSequence(new FrontRaiseInteractionSequence())
+    .build();
+
+    const rackInteraction3Builder = new InteractionBuilder();
+    const rackInteraction3 = rackInteraction3Builder
+    .setDisplayText("To Take a Closer Look")
+    .setAnimations([])
+    .setCharacterTransform(new THREE.Vector3(-5.40, 0, -3.89), new THREE.Quaternion(-0, -0.71, -0, 0.71))
+    .setDestCameraTransform(new THREE.Vector3(-3.36, 3, -4.02), new THREE.Quaternion(0.04, 0.7,-0.04, 0.71))
+    .setInteractionSequence(new SkillViewInteractionSequence())
     .build();
 
     const rackInteractionPos = new THREE.Vector3(-9, 0, -4);
@@ -234,7 +209,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const interactable = await InteractableArea.create(
         rackInteractionPos, rackInteractionRot, 5, 
         "Skills", rackTextPos, rackTextRot, 
-        [rackInteraction, rackInteraction2]
+        [rackInteraction, rackInteraction2, rackInteraction3]
     );
     interactable.addToWorld(world, scene);
     hud.addComponent(interactable);
