@@ -396,7 +396,7 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
         color: 0x5a74cc,
         metalness: 0.5,  // Gives a slightly metallic finish
         roughness: 0.8,  // Adds a polished feel
-        emissive: 0x5a74cc, // Slight glow effect (orange light)
+        emissive: 0x5a74cc, // Slight glow effect
         emissiveIntensity: 1.5,
     });
 
@@ -421,9 +421,47 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
     textGroup.add(textMesh);
     textGroup.scale.set(1.08, 1.08, 1.08);
     textGroup.position.set(-6, 7.5, -10);
-    textMesh.castShadow = true;
-    textMesh.receiveShadow = true;
     scene.add(textGroup);
+
+    const title = "Software Engineer";
+    const titleTextGeometry = new TextGeometry(title, {
+        font: font,
+        size: 0.8,
+        depth: 0.2, // Depth makes it more 3D
+        curveSegments: 12,
+        bevelEnabled: false
+    });
+    
+    const titleTextMaterial = new THREE.MeshStandardMaterial({
+        color: 0x68c3ed,
+        metalness: 0.5,  // Gives a slightly metallic finish
+        roughness: 0.8,  // Adds a polished feel
+        emissive: 0x68c3ed, // Slight glow effect
+        emissiveIntensity: 1.5,
+    });
+
+    const titleOuterGeometry = new TextGeometry(title, {
+        font: font,
+        size: 0.8,
+        depth: 0.15,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0,
+        bevelSize: 0.05, // size of border
+        bevelOffset: 0,
+        bevelSegments: 1
+    });
+
+    const titleBorderTextMesh = new THREE.Mesh(titleOuterGeometry, new THREE.MeshBasicMaterial({color:0x253363}));
+    
+    const titleTextMesh = new THREE.Mesh(titleTextGeometry, titleTextMaterial);        
+    const titleTextGroup = new THREE.Group();
+
+    titleTextGroup.add(titleBorderTextMesh);
+    titleTextGroup.add(titleTextMesh);
+    titleTextGroup.scale.set(1, 1, 1);
+    titleTextGroup.position.set(-4.5, 6, -10);
+    scene.add(titleTextGroup);
 }
 
 const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader, textureLoader: THREE.TextureLoader, hud: HUD): Promise<FrameUpdate[]> => {
