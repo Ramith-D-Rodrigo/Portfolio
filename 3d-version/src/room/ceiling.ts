@@ -15,12 +15,12 @@ const createCeiling = (xPos: number, yPos: number, zPos: number,
     const ceilingRoughnessTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'Roughness.jpg');
 
     // Customize the ceiling textures
-    customizeTexture(ceilingAoTexture);
-    customizeTexture(ceilingAlbedoTexture);
-    customizeTexture(ceilingEmissiveTexture);
-    customizeTexture(ceilingMetallicTexture);
-    customizeTexture(ceilingNormalTexture);
-    customizeTexture(ceilingRoughnessTexture);
+    customizeCeilingTexture(ceilingAoTexture);
+    customizeCeilingTexture(ceilingAlbedoTexture);
+    customizeCeilingTexture(ceilingEmissiveTexture);
+    customizeCeilingTexture(ceilingMetallicTexture);
+    customizeCeilingTexture(ceilingNormalTexture);
+    customizeCeilingTexture(ceilingRoughnessTexture);
 
     const ceilingGeometry = new THREE.PlaneGeometry(20, 20);
     const ceilingMaterial = new THREE.MeshStandardMaterial({
@@ -47,6 +47,10 @@ const createCeiling = (xPos: number, yPos: number, zPos: number,
     ceiling.rotation.z = zRot;
 
     return ceiling;
+}
+
+const customizeCeilingTexture = (texture: THREE.Texture) => {
+    customizeTexture(texture, THREE.RepeatWrapping, THREE.RepeatWrapping, 2, 2, 0.18, -0.19);
 }
 
 const addCeilingLights = (scene: THREE.Scene) => {

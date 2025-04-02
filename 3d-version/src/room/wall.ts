@@ -1,32 +1,34 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
+import { customizeTexture } from "../utils/utils";
 
 // Load the textures
-const STRING_PREFIX = 'vinyl-siding_';
+const STRING_PREFIX = './textures/wall_new/fiber-textured-wall1_';
 
 const createWall = (width: number, height: number, 
     xPos: number, yPos: number, zPos: number,
     xRot: number, yRot: number, zRot: number,
     textureLoader: THREE.TextureLoader
     ) => {
-    const albedoTexture = textureLoader.load('./textures/wall/' + STRING_PREFIX + 'albedo.png');
-    const aoTexture = textureLoader.load('./textures/wall/' + STRING_PREFIX + 'ao.png');
-    const heightTexture = textureLoader.load('./textures/wall/' + STRING_PREFIX + 'height.png');
-    const metallicTexture = textureLoader.load('./textures/wall/' + STRING_PREFIX + 'metallic.png');
-    const normalTexture = textureLoader.load('./textures/wall/' + STRING_PREFIX + 'normal-ogl.png');
+    const albedoTexture = textureLoader.load(STRING_PREFIX + 'albedo.png');
+    const aoTexture = textureLoader.load(STRING_PREFIX + 'ao.png');
+    const heightTexture = textureLoader.load(STRING_PREFIX + 'height.png');
+    const normalTexture = textureLoader.load(STRING_PREFIX + 'normal-ogl.png');
     normalTexture.flipY = false;  // Inverts the Y-axis, making it compatible with OpenGL
-    const roughnessTexture = textureLoader.load('./textures/wall/' + STRING_PREFIX + 'roughness.png');
+
+    customizeWallTexture(albedoTexture);
+    customizeWallTexture(aoTexture);
+    customizeWallTexture(heightTexture);
+    customizeWallTexture(normalTexture);
     
     // Create the material
     const wallMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf7f1e1,
         map: albedoTexture,              // Albedo (Base Color)
         aoMap: aoTexture,                // Ambient Occlusion
-        metalnessMap: metallicTexture,   // Metallic
         normalMap: normalTexture,        // Normal Map
-        roughnessMap: roughnessTexture,  // Roughness
         side: THREE.DoubleSide,          // If the wall has two sides
-        metalness: 1.0,                  // Optional: Adjust overall metallic level
-        roughness: 0.5,                  // Optional: Adjust overall roughness level
+        bumpMap: heightTexture
     });
 
     const wallGeometry = new THREE.PlaneGeometry(width, height);
@@ -39,6 +41,10 @@ const createWall = (width: number, height: number,
     leftWall.rotation.z = zRot;
 
     return leftWall;
+}
+
+const customizeWallTexture = (texture: THREE.Texture) => {
+    customizeTexture(texture, THREE.RepeatWrapping, THREE.RepeatWrapping, 15, 15, 0, 0);
 }
 
 const createWallPhysics = ( mass: number,

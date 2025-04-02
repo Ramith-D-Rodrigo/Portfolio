@@ -96,10 +96,10 @@ const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) =>
     addCeilingLights(scene);
 }
 
-const setupFloor = (scene: THREE.Scene, world: CANNON.World) => {
+const setupFloor = (scene: THREE.Scene, world: CANNON.World, textureLoader: THREE.TextureLoader) => {
     const width = 20;
     const height = 20;
-    const floor = createFloor(width, height, 0, 0, 0, -Math.PI / 2, 0, 0, 1, 1, 1);
+    const floor = createFloor(width, height, 0, 0, 0, -Math.PI / 2, 0, 0, 1, 1, 1, textureLoader);
     scene.add(floor);
 
     const floorPhysics = createFloorPhysics(0, 0, 0, 0, -Math.PI / 2, 0, 0, width/2, height/2, 0);
@@ -469,7 +469,7 @@ const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLo
     setupWalls(textureLoader, scene, world);
     await addMainText(textureLoader, scene);
     setupCeiling(textureLoader, scene);
-    setupFloor(scene, world);
+    setupFloor(scene, world, textureLoader);
     setupMirrors(scene);
     await setupGymEquipment(scene, world, loader);
     return await setupInteractableAreas(scene, world, hud, loader);

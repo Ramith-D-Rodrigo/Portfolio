@@ -1,12 +1,33 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
+import { customizeTexture } from '../utils/utils';
+
+const STRING_PREFIX = './textures/floor/carpet1-';
 
 const createFloor = (width: number, height: number, 
     xPos: number, yPos: number, zPos: number,
     xRot: number, yRot: number, zRot: number,
-    xScale: number, yScale: number, zScale: number) => {
+    xScale: number, yScale: number, zScale: number,
+    textureLoader: THREE.TextureLoader) => {
+    const albedoTexture = textureLoader.load(STRING_PREFIX + 'albedo.png');
+    const aoTexture = textureLoader.load(STRING_PREFIX + 'ao.png');
+    const heightTexture = textureLoader.load(STRING_PREFIX + 'Height.png');
+    const normalTexture = textureLoader.load(STRING_PREFIX + 'Normal-ogl.png');
+    normalTexture.flipY = false;  // Inverts the Y-axis, making it compatible with OpenGL
+
+    customizeFloorTexture(albedoTexture);
+    customizeFloorTexture(aoTexture);
+    customizeFloorTexture(heightTexture);
+    customizeFloorTexture(normalTexture);
+
     const floorGeometry = new THREE.PlaneGeometry(width, height);
-    const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x808080, side: THREE.DoubleSide, });
+    const floorMaterial = new THREE.MeshPhongMaterial({ 
+        map: albedoTexture,              // Albedo (Base Color)
+        aoMap: aoTexture,                // Ambient Occlusion
+        normalMap: normalTexture,        // Normal Map
+        side: THREE.DoubleSide,          // If the wall has two sides
+        bumpMap: heightTexture
+    });
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.castShadow = true;
     floor.receiveShadow = true;
@@ -19,6 +40,10 @@ const createFloor = (width: number, height: number,
     floor.scale.set(xScale, yScale, zScale);
 
     return floor;
+}
+
+const customizeFloorTexture = (texture: THREE.Texture) => {
+    customizeTexture(texture, THREE.RepeatWrapping, THREE.RepeatWrapping, 15, 15, 0, 0);
 }
 
 const createFloorPhysics = (mass: number,

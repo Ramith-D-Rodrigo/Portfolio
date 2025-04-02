@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
-const customizeTexture = (texture: THREE.Texture) => {
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(2, 2);
-    texture.offset.set(0.18, -0.19);
+const customizeTexture = (texture: THREE.Texture, wrapS: THREE.Wrapping, wrapT: THREE.Wrapping, repeatU: number, repeatV: number, offsetX: number, offsetY: number) => {
+    texture.wrapS = wrapS;
+    texture.wrapT = wrapT;
+    texture.repeat.set(repeatU, repeatV);
+    texture.offset.set(offsetX, offsetY);
 };
 
 class Utils {
