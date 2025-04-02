@@ -4,7 +4,7 @@ import * as CANNON from "cannon-es";
 const loadGLTFModel = async (path: string, gltfLoader: GLTFLoader) => {
     const gltf = await gltfLoader.loadAsync(path,
         (xhr) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded'); // Loading progress
+            //console.log((xhr.loaded / xhr.total) * 100 + '% loaded'); // Loading progress
         }
     );
 

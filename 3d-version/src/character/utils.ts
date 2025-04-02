@@ -18,7 +18,7 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     const object = await fbxLoader.loadAsync(
         './models/character/character.fbx',
         (xhr) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+            //console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
         }
     );
 
