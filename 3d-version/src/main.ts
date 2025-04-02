@@ -8,6 +8,8 @@ import { setupKeyControls } from './character/controls';
 import { addSkills, setupRoom } from './room/room';
 import { loadCharacter } from './character/utils';
 import HUD from './other/hud';
+import SettingsPanel from './other/settingsPanel';
+import { HUDComponent } from './other/hudComponent';
 
 const showLoadingScreen = () => {
     const loadingScreen = document.createElement('div');
@@ -26,8 +28,8 @@ const showLoadingScreen = () => {
     loadingScreen.style.flexDirection = 'column';
     
     const text = document.createElement('p');
+    text.style.fontFamily = 'Poppins';
     text.innerText = 'Loading...';
-    text.style.font = 'sans-serif';
     
     const progressBarContainer = document.createElement('div');
     progressBarContainer.style.width = '50%';
@@ -144,6 +146,8 @@ const main = async () => {
     updateProgressBar(100);
     
     await hideLoadingScreenWithDelay(500);
+
+    const settingsPanel: HUDComponent = SettingsPanel.getInstance();
     
     const clock = new THREE.Clock();
     let lastDelta = 0;
