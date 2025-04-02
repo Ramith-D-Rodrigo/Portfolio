@@ -9,7 +9,10 @@ const loadGLTFModel = async (path: string, gltfLoader: GLTFLoader) => {
     );
 
     gltf.scene.traverse((obj)=> {
-        if ( obj.isObject3D ) obj.castShadow = true;
+        if ( obj.isObject3D ){
+            obj.castShadow = true;
+            obj.receiveShadow = true;
+        }
     })
     return gltf;
 }
