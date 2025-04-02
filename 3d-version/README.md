@@ -8,9 +8,11 @@ Link: https://www.cgtrader.com/free-3d-models/sports/equipment/bench-squat-racks
 
 This work is based on "LowPoly Gym Assets" (https://sketchfab.com/3d-models/lowpoly-gym-assets-3d5fe540cccc4610bce1d0b696a88bab) by Matrixxy (https://sketchfab.com/matrixxy) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 
-Textures:
+"Door with frame" (https://skfb.ly/6VKAQ) by witnessk is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 
-https://freepbr.com/product/vinyl-siding-pbr/
+Textures are from the following sites:
+
+https://freepbr.com/
 
 Created using Office Ceiling 002 from ambientCG.com,
 licensed under the Creative Commons CC0 1.0 Universal License.

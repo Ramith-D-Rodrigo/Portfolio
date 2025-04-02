@@ -465,12 +465,20 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
     scene.add(titleTextGroup);
 }
 
+const addDoor = async (loader:GLTFLoader, scene: THREE.Scene): Promise<void> => {
+    const barbell = await loadGLTFModel('./models/door/scene.gltf', loader);
+    const barbellObject = createObjectFromGLTF(barbell, 0, 0, 10.25, 0, Math.PI, 0, 0.028, 0.028, 0.028);
+    scene.add(barbellObject);
+    return;
+}
+
 const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader, textureLoader: THREE.TextureLoader, hud: HUD): Promise<FrameUpdate[]> => {
     setupWalls(textureLoader, scene, world);
     await addMainText(textureLoader, scene);
     setupCeiling(textureLoader, scene);
     setupFloor(scene, world, textureLoader);
     setupMirrors(scene);
+    await addDoor(loader, scene);
     await setupGymEquipment(scene, world, loader);
     return await setupInteractableAreas(scene, world, hud, loader);
 }

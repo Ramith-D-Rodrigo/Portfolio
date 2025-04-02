@@ -111,21 +111,16 @@ canvas {
 }
 
 .interaction-seq-text {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: sans-serif;
     font-size: 1.5rem;
     color: #ffffff;
     letter-spacing: 1px;
     font-weight: bolder;
-    text-shadow: 
-        -2px -2px 0 #000, 
-        2px -2px 0 #000, 
-        -2px 2px 0 #000, 
-        2px 2px 0 #000;
     opacity: 0;
     white-space: pre-line; /* Ensures line breaks are preserved */
     background: rgba(0, 0, 0, 0.6); /* Optional: Background for readability */
     padding: 0.5rem 1rem;
-    border-radius: 5px;
+    border-radius: 1rem;
     max-width: 100%; /* Prevent overflow */
     text-align: left; /* Ensures text formatting remains correct */
 }
