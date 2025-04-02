@@ -103,10 +103,8 @@ class InteractableArea implements FrameUpdate, HUDComponent {
             font: InteractableArea.areaFont,
             size: 0.6,
             depth: 0.2, // Depth makes it more 3D
-            bevelEnabled: true, // Adds beveling for a premium look
-            bevelThickness: 0.02,
-            bevelSize: 0.02,
-            bevelSegments: 4
+            curveSegments: 12,
+            bevelEnabled: false,
         });
         
         const textMaterial = new THREE.MeshStandardMaterial({
@@ -116,9 +114,24 @@ class InteractableArea implements FrameUpdate, HUDComponent {
             emissive: 0x00f9ff, // Slight glow effect (orange light)
             emissiveIntensity: 0.8,
         });
+
+        const outerGeometry = new TextGeometry(displayText, {
+                font: InteractableArea.areaFont,
+                size: 0.6,
+                depth: 0.19,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0,
+                bevelSize: 0.05, // size of border
+                bevelOffset: 0,
+                bevelSegments: 1
+            });
         
+        const borderTextMesh = new THREE.Mesh(outerGeometry, new THREE.MeshBasicMaterial({color:0x253363}));
+        borderTextMesh.position.z = 0.005;
         const textMesh = new THREE.Mesh(textGeometry, textMaterial);        
         const textGroup = new THREE.Group();
+        textGroup.add(borderTextMesh);
         textGroup.add(textMesh);
         
         newArea.displayText = textGroup;  // Assign it to your area        
