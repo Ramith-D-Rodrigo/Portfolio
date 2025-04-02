@@ -114,8 +114,6 @@ canvas {
     font-family: 'Poppins',sans-serif;
     font-size: 1.5rem;
     color: #ffffff;
-    letter-spacing: 1px;
-    font-weight: bolder;
     opacity: 0;
     white-space: pre-line; /* Ensures line breaks are preserved */
     background: rgba(0, 0, 0, 0.6); /* Optional: Background for readability */
