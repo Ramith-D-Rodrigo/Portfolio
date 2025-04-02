@@ -133,6 +133,8 @@ class InteractableArea implements FrameUpdate, HUDComponent {
         const textGroup = new THREE.Group();
         textGroup.add(borderTextMesh);
         textGroup.add(textMesh);
+        textMesh.layers.set(1);
+        borderTextMesh.layers.set(1);
         
         newArea.displayText = textGroup;  // Assign it to your area        
         newArea.displayText.position.set(textPos.x, textPos.y, textPos.z);

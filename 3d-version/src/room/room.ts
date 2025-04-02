@@ -624,7 +624,7 @@ const addSkills = (skillObjs: THREE.Group[], scene: THREE.Scene, loader: GLTFLoa
         obj.traverse(o =>{
             o.castShadow = false;
             o.receiveShadow = false;
-            
+            o.layers.set(1);
             if (o instanceof THREE.Mesh) {  // Ensure we modify only meshes
                 const material = o.material;
                 if (material && material.color) {
