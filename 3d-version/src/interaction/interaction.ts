@@ -52,7 +52,6 @@ class Interaction {
     }
 
     public async interact(camera: THREE.Camera, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, character: THREE.Group): Promise<void> {
-        if (this.animations.length === 0) return;
         if(!this.interactionSequence) return;
 
         this.isInteracting = true;
