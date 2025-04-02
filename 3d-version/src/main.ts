@@ -1,16 +1,95 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
-import CannonDebugger from 'cannon-es-debugger';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { setupKeyControls } from './character/controls';
-import { setupRoom } from './room/room';
+import { addSkills, setupRoom } from './room/room';
 import { loadCharacter } from './character/utils';
 import HUD from './other/hud';
 
+const showLoadingScreen = () => {
+    const loadingScreen = document.createElement('div');
+    loadingScreen.id = 'loading-screen';
+    loadingScreen.style.position = 'fixed';
+    loadingScreen.style.top = '0';
+    loadingScreen.style.left = '0';
+    loadingScreen.style.width = '100%';
+    loadingScreen.style.height = '100%';
+    loadingScreen.style.background = 'black';
+    loadingScreen.style.display = 'flex';
+    loadingScreen.style.justifyContent = 'center';
+    loadingScreen.style.alignItems = 'center';
+    loadingScreen.style.color = 'white';
+    loadingScreen.style.fontSize = '5rem';
+    loadingScreen.style.flexDirection = 'column';
+    
+    const text = document.createElement('p');
+    text.innerText = 'Loading...';
+    text.style.font = 'sans-serif';
+    
+    const progressBarContainer = document.createElement('div');
+    progressBarContainer.style.width = '50%';
+    progressBarContainer.style.height = '2rem';
+    progressBarContainer.style.background = 'gray';
+    progressBarContainer.style.marginTop = '2rem';
+    
+    const progressBar = document.createElement('div');
+    progressBar.id = 'progress-bar';
+    progressBar.style.width = '0%';
+    progressBar.style.height = '100%';
+    progressBar.style.background = 'white';
+    
+    progressBarContainer.appendChild(progressBar);
+    loadingScreen.appendChild(text);
+    loadingScreen.appendChild(progressBarContainer);
+    document.body.appendChild(loadingScreen);
+};
+
+const updateProgressBar = (targetPercentage: number) => {
+    const progressBar = document.getElementById('progress-bar');
+    if (!progressBar) return;
+
+    let currentPercentage = parseFloat(progressBar.style.width) || 0;
+    let animationFrameId: number;
+
+    const animate = () => {
+        if (Math.abs(targetPercentage - currentPercentage) < 0.5) { 
+            progressBar.style.width = `${targetPercentage}%`; // Ensure final value
+            cancelAnimationFrame(animationFrameId); // Cancel any remaining frames
+            return;
+        }
+
+        currentPercentage += (targetPercentage - currentPercentage) * 0.1; // Adjust speed here
+        progressBar.style.width = `${currentPercentage.toFixed(2)}%`;
+
+        animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+};
+
+const hideLoadingScreenWithDelay = (delay: number) => {
+    return new Promise<void>((resolve) => {
+        setTimeout(() => {
+            hideLoadingScreen();
+            resolve();
+        }, delay);
+    });
+};
+
+const hideLoadingScreen = () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+    }
+};
+
 const main = async () => {
+    showLoadingScreen();
+    let progress = 0;
+    
     const scene = new THREE.Scene();
     const world = new CANNON.World();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -21,85 +100,77 @@ const main = async () => {
     document.body.appendChild(renderer.domElement);
     
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; // Smooth movement
-    controls.dampingFactor = 0.05; // Damping factor
-    controls.target.set(0, 0, 0);  // Focus point
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.target.set(0, 0, 0);
     
-    // Create a texture loader
     const textureLoader = new THREE.TextureLoader();
-    // Create a GLTF loader
     const loader = new GLTFLoader();
-    // Create a FBX loader
     const fbxLoader = new FBXLoader();
-    // Create the light
+    
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(0, 9.8, 0);
     light.target.position.set(0, 0, 0);
     light.castShadow = true;
-    
-    // Fix pixelation: Increase shadow resolution
-    light.shadow.mapSize.width = 2048; // ⬆️ Higher resolution for smoother shadows
+    light.shadow.mapSize.width = 2048;
     light.shadow.mapSize.height = 2048;
-    
-    // Reduce shadow artifacts
-    light.shadow.bias = -0.002; // 🔧 Helps prevent shadow acne
-    light.shadow.radius = 4; // 🔥 Softens shadow edges
-    
-    // Adjust shadow camera size for better coverage
+    light.shadow.bias = -0.002;
+    light.shadow.radius = 4;
     light.shadow.camera.top = 10;
     light.shadow.camera.bottom = -10;
     light.shadow.camera.left = -10;
     light.shadow.camera.right = 10;
     light.shadow.camera.near = 1;
     light.shadow.camera.far = 50;
-
-    // Ambient Light (soft general brightness)
+    
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
-
     scene.add(light);
 
+    updateProgressBar(progress += 10);
+    
     const hud = new HUD();
-
-    // Setup the room
     const interactableAreas = await setupRoom(scene, world, loader, textureLoader, hud);
-
+    updateProgressBar(progress += 30);
+    
     const keysPressed = new Map<string, boolean>();
     setupKeyControls(keysPressed);
-
-    // setup the character
+    
     let characterStateMachine = await loadCharacter(fbxLoader, scene, world, camera, controls);
-
-    window.addEventListener('keydown', (event: KeyboardEvent) => {
-        if(event.key.toLowerCase() === 'm'){
-            console.log(camera.position);
-            console.log(camera.quaternion);
-        }
-        if(event.key.toLowerCase() === 'n'){
-            console.log(characterStateMachine.getModel().position);
-            console.log(characterStateMachine.getModel().quaternion);
-        }
-    })
+    updateProgressBar(progress += 30);
+    
+    const skillObjs: THREE.Group[] = [];
+    addSkills(skillObjs, scene, loader);
+    updateProgressBar(100);
+    
+    await hideLoadingScreenWithDelay(500);
     
     const clock = new THREE.Clock();
+    let lastDelta = 0;
+
     const animate = () => {
         const delta = clock.getDelta();
         interactableAreas.forEach(obj => obj.update(delta));
-        if(characterStateMachine){
+
+        skillObjs.forEach(obj => {
+            lastDelta += delta * 0.1;
+            const scaleFactor = 1 + Math.sin(lastDelta) * 0.15;
+            obj.scale.copy(obj.userData.originalScale.clone().multiplyScalar(scaleFactor));
+        });
+
+        if (characterStateMachine) {
             characterStateMachine.update(delta);
         }
-        // Step the physics world
+
         world.fixedStep();
-        if(controls.enabled)
-            controls.update(); // Required for damping to work
+        if (controls.enabled) controls.update();
         hud.display();
         renderer.render(scene, camera);
 
         requestAnimationFrame(animate);
     };
-
     
     animate();
-}
+};
 
 main();
