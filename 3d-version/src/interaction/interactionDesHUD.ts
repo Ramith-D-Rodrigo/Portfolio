@@ -34,6 +34,16 @@ class InteractionDescHUD implements HUDComponent{
         return this.isVisible;
     }
 
+    public setContainerStyle(topRem: number, leftRem: number, alignItems: string): void {
+        this.hudContainer.style.top = `${topRem}rem`;
+        this.hudContainer.style.left = `${leftRem}rem`;
+        this.hudContainer.style.alignItems = alignItems;
+    }
+
+    public resetContainerStyle(): void{
+        this.hudContainer.style = "";
+    }
+
     public setDisplayText(txt: string, dur: number): void{
         const message = document.createElement("div");
         message.className = "interaction-seq-text";

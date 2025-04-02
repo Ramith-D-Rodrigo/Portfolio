@@ -42,6 +42,7 @@ abstract class BaseInteractionSequence {
 
         InteractionDescHUD.getInstance().clearDisplayText();
         InteractionDescHUD.getInstance().setIsVisible(true);
+        InteractionDescHUD.getInstance().resetContainerStyle();
     }
 
     protected async resetCharacterAndCamera(camera: THREE.Camera, character: THREE.Group): Promise<void> {
