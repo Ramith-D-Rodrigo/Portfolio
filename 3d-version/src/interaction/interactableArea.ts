@@ -112,9 +112,9 @@ class InteractableArea implements FrameUpdate, HUDComponent {
         const textMaterial = new THREE.MeshStandardMaterial({
             color: 0xffcc00, // Bright yellow (fitness game style)
             metalness: 0.5,  // Gives a slightly metallic finish
-            roughness: 0.3,  // Adds a polished feel
-            emissive: 0xff6600, // Slight glow effect (orange light)
-            emissiveIntensity: 0.3,
+            roughness: 0.8,  // Adds a polished feel
+            emissive: 0x00f9ff, // Slight glow effect (orange light)
+            emissiveIntensity: 0.8,
         });
         
         const textMesh = new THREE.Mesh(textGeometry, textMaterial);        
