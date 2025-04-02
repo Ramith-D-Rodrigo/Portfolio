@@ -160,7 +160,15 @@ class CharacterStateMachine implements FrameUpdate {
         else if (this.currAction === IDLE) {
             this.physicsBody.velocity.set(0, 0, 0);
             this.physicsBody.angularVelocity.set(0, 0, 0);
-        }        
+        }
+        
+        const newX = this.camera.position.x;
+        const newZ = this.camera.position.z;
+        const newY = this.camera.position.y;
+        if(newX > 10 || newX < -10 || newZ > 10 || newZ < -10 || newY < 0 || newY > 10){
+            const offset = this.walkDirection.clone().multiplyScalar(-3); // Move back 3 units
+            this.camera.position.copy(this.model.position).add(offset).add(new THREE.Vector3(0, 2, 0));
+        }
     }
 
     private updateCameraTarget(x: number, z: number) {
