@@ -21,6 +21,11 @@ import FUNDAMENTALS from "../interaction/constants/fundamentals";
 import InteractionDescHUD from "../interaction/interactionDesHUD";
 import EXPERIENCE from "../interaction/constants/experience";
 import EDUCATION from "../interaction/constants/education";
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
+import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils';
+import { Utils } from "../utils/utils";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
     // 3 Walls (left, right, back)
@@ -49,6 +54,37 @@ const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, worl
 
     const frontWallPhysics = createWallPhysics(0, 0, 5, 10, 0, -Math.PI, 0,  width/2, height/2, 0.01);
     world.addBody(frontWallPhysics);
+
+//     const svgLoader = new SVGLoader();
+//     svgLoader.load('logos/github_logo.svg', (data) => {
+//         const paths = data.paths;
+//         const group = new THREE.Group();
+    
+//         paths.forEach((path) => {
+//             const shapes = SVGLoader.createShapes(path);
+            
+//             shapes.forEach((shape) => {
+//                 const extrudeSettings: THREE.ExtrudeGeometryOptions = {
+//                     depth: 10, // Thickness
+//                     bevelEnabled: false,
+                    
+//                 };
+    
+//                 const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+    
+//                 const material = new THREE.MeshBasicMaterial({
+//                     color: path.color,
+//                     side: THREE.DoubleSide,
+//                 });
+//                 const mesh = new THREE.Mesh(geometry, material);
+//                 group.add(mesh);
+//             });
+//         });
+    
+//         group.scale.set(0.025, -0.025, 0.025); // Adjust the size
+//         group.position.set(-8, 8, -9.8);
+//         scene.add(group);
+//     });
 }
 
 const setupCeiling = (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
@@ -312,8 +348,87 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     ]
 }
 
+const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
+    textureLoader.load('logos/linkedin_logo.png', (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;   
+        texture.wrapS = THREE.RepeatWrapping;     
+        // Create extruded geometry
+        const geometry = new THREE.PlaneGeometry(1,1);
+    
+        // Materials
+        const frontMaterial = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+    
+        // Create mesh with different materials for front and sides
+        const mesh = new THREE.Mesh(geometry, frontMaterial);
+        mesh.position.set(-7, 8, -9.9);
+        mesh.scale.set(2,2,2);
+        scene.add(mesh);
+    });
+
+    textureLoader.load('logos/github_logo.png', (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;   
+        texture.wrapS = THREE.RepeatWrapping;     
+        // Create extruded geometry
+        const geometry = new THREE.PlaneGeometry(1,1);
+    
+        // Materials
+        const frontMaterial = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+    
+        // Create mesh with different materials for front and sides
+        const mesh = new THREE.Mesh(geometry, frontMaterial);
+        mesh.position.set(7, 8, -9.9);
+        mesh.scale.set(2,2,2);
+        scene.add(mesh);
+    });
+
+    const font = await Utils.loadFont('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json');
+
+    const name = "Ramith-D-Rodrigo";
+    const textGeometry = new TextGeometry(name, {
+        font: font,
+        size: 1,
+        depth: 0.2, // Depth makes it more 3D
+        curveSegments: 12,
+        bevelEnabled: false
+    });
+    
+    const textMaterial = new THREE.MeshStandardMaterial({
+        color: 0x5a74cc,
+        metalness: 0.5,  // Gives a slightly metallic finish
+        roughness: 0.8,  // Adds a polished feel
+        emissive: 0x5a74cc, // Slight glow effect (orange light)
+        emissiveIntensity: 1.5,
+    });
+
+    const outerGeometry = new TextGeometry(name, {
+        font: font,
+        size: 1,
+        depth: 0.15,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0,
+        bevelSize: 0.05, // size of border
+        bevelOffset: 0,
+        bevelSegments: 1
+    });
+
+    const borderTextMesh = new THREE.Mesh(outerGeometry, new THREE.MeshBasicMaterial({color:0x253363}));
+    
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);        
+    const textGroup = new THREE.Group();
+
+    textGroup.add(borderTextMesh);
+    textGroup.add(textMesh);
+    textGroup.scale.set(1.08, 1.08, 1.08);
+    textGroup.position.set(-6, 7.5, -10);
+    textMesh.castShadow = true;
+    textMesh.receiveShadow = true;
+    scene.add(textGroup);
+}
+
 const setupRoom = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader, textureLoader: THREE.TextureLoader, hud: HUD): Promise<FrameUpdate[]> => {
     setupWalls(textureLoader, scene, world);
+    await addMainText(textureLoader, scene);
     setupCeiling(textureLoader, scene);
     setupFloor(scene, world);
     setupMirrors(scene);
