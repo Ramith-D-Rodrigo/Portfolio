@@ -4,6 +4,7 @@ import MenuBar from './components/MenuBar';
 import { Instrument_Sans } from 'next/font/google';
 import SideBar from './components/SideBar';
 import MainContent from './components/MainContent';
+import Game from './interactive/page';
 
 const font = Instrument_Sans({ subsets: ['latin'] });
 
@@ -20,15 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`flex flex-col h-screen bg-gray-800 ${font.className}`}>
-        <MenuBar />
-        <div className="flex flex-grow overflow-hidden">
-          {/* Sidebar */}
-          <SideBar />
-
-          {/* Main Content Area */}
-          <MainContent renderingPage={children} />
-        </div>
-        <Footer />
+        <Game/>
       </body>
     </html>
   );
