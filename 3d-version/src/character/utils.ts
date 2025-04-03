@@ -16,7 +16,7 @@ const animations: string[] = [IDLE, START_WALK, STOP_WALK, TURN_LEFT, TURN_RIGHT
 
 const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CANNON.World, camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
     const object = await fbxLoader.loadAsync(
-        './models/character/character.fbx',
+        'assets/models/character/character.fbx',
         (xhr) => {
             //console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
         }
@@ -45,7 +45,7 @@ const loadCharacter = async (fbxLoader: FBXLoader, scene: THREE.Scene, world: CA
     const animationsMap: Map<string, THREE.AnimationAction> = new Map();
     for(let i = 0; i < animations.length; i++) {
         const animationFbx = await fbxLoader.loadAsync(
-            `./models/character/animations/${animations[i]}.fbx`,
+            `assets/models/character/animations/${animations[i]}.fbx`,
             (xhr) => {
                 //console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
             }
