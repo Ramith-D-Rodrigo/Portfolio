@@ -27,6 +27,7 @@ import { Utils } from "../utils/utils";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import SKILLS from "../interaction/constants/skills";
 import SkillViewInteractionSequence, { SkillTransform } from "../interaction/skillViewInteractionSequence";
+import PROJECT_EXPERIENCE from "../interaction/constants/project_experience";
 
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
@@ -217,9 +218,20 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     // add the interactable collision area
     const barbellInteractionBuilder = new InteractionBuilder();
     const barbellInteraction = barbellInteractionBuilder
-        .setDisplayText("Flex")
+        .setDisplayText("Flex (Industry Experience)")
         .setAnimations([
             {animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 8}, 
+        ])
+        .setCharacterTransform(new THREE.Vector3(4.97, 0, 4.90), new THREE.Quaternion(0, 0.7, 0, 0.72))
+        .setDestCameraTransform(new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49))
+        .setInteractionSequence(new FlexInteractionSequence())
+        .build();
+
+    const barbellInteractionBuilder2 = new InteractionBuilder();
+    const barbellInteraction2 = barbellInteractionBuilder2
+        .setDisplayText("Flex (Projects)")
+        .setAnimations([
+            {animName: FLEX, displayTextList: PROJECT_EXPERIENCE, displayTextDur: 8}, 
         ])
         .setCharacterTransform(new THREE.Vector3(4.97, 0, 4.90), new THREE.Quaternion(0, 0.7, 0, 0.72))
         .setDestCameraTransform(new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49))
@@ -233,7 +245,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const interactable2 = await InteractableArea.create(
         barbellInteractionPos, barbellInteractionRot, 3,
         "Experience", barbellTextPos, barbellTextRot, 
-        [barbellInteraction]
+        [barbellInteraction, barbellInteraction2]
     );
     interactable2.addToWorld(world, scene);
     hud.addComponent(interactable2);
