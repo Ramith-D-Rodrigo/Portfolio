@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import { customizeTexture } from '../utils/utils';
 
-const STRING_PREFIX = './textures/floor/carpet1-';
+const STRING_PREFIX = 'assets/textures/floor/carpet1-';
 
 const createFloor = (width: number, height: number, 
     xPos: number, yPos: number, zPos: number,
