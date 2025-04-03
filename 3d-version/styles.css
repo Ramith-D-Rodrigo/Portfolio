@@ -111,21 +111,52 @@ canvas {
 }
 
 .interaction-seq-text {
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
     color: #ffffff;
     opacity: 0;
-    white-space: pre-line; /* Ensures line breaks are preserved */
-    background: rgba(0, 0, 0, 0.6); /* Optional: Background for readability */
-    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.8); /* Darker for better readability */
+    padding: 1rem;
     border-radius: 1rem;
-    max-width: 100%; /* Prevent overflow */
-    text-align: left; /* Ensures text formatting remains correct */
+    max-width: 45rem;
+    text-align: left;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Title Styling */
+.interaction-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffcc00; /* Highlighted color */
+    margin-bottom: 0.3rem;
+    text-align: center;
+    white-space: pre-line;
+}
+
+/* Description Styling */
+.interaction-description {
+    font-size: 1.4rem;
+    color: #ddd;
+    margin-bottom: 0.2rem;
+    white-space: pre-line;
+}
+
+/* Points List Styling */
+.interaction-points {
+    padding-left: 1.5rem;
+    font-size: 1.3rem;
+    color: #bbb;
+}
+
+.interaction-points li {
+    margin-bottom: 0.3rem;
+}
+
+/* Floating Animation */
 .interaction-seq-text.visible {
     animation: interactionFloat 1.2s ease-out forwards;
 }
+
 
 .settings-icon-container{
     position: absolute;

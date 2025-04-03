@@ -9,7 +9,7 @@ class CurlInteractionSequence extends BaseInteractionSequence {
         character: THREE.Group, animationMap: Map<string, THREE.AnimationAction>, mixer: THREE.AnimationMixer, currAction: string, animations: InteractionAnimProps[]
     ): Promise<void> {
         await this.setupForCharacterAndCamera(camera, destCameraPos, destCameraQuat, character, characterPos, characterRot);
-        InteractionDescHUD.getInstance().setContainerStyle(30, 65, 'flex-start');
+        InteractionDescHUD.getInstance().setContainerStyle(25, 65, 'flex-start');
         attachableObjects.forEach((value, key) => {
             const bone = character.getObjectByName(key);
             if(bone){
@@ -56,7 +56,15 @@ class CurlInteractionSequence extends BaseInteractionSequence {
             }
             let displayIdx = 0;
             const loopFunc = () => {
-                InteractionDescHUD.getInstance().setDisplayText(animProps.displayTextList[displayIdx++], animProps.displayTextDur);
+                const { title, description, list } = animProps.displayTextList[displayIdx++];
+                const formattedText = `
+                <div class="interaction-title">${title}</div>
+                ${description === undefined ? "" : `<div class="interaction-description">${description}</div>`}
+                <ul class="interaction-points">
+                    ${list?.map((point: string) => `<li>${point}</li>`).join('')}
+                </ul>
+                `;
+                InteractionDescHUD.getInstance().setDisplayText(formattedText, animProps.displayTextDur);
             }
             loopFunc();
 

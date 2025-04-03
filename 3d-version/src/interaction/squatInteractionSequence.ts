@@ -27,6 +27,7 @@ class SquatInteractionSequence extends BaseInteractionSequence {
 
         const currentAction = animationMap.get(currAction);
         currentAction?.fadeOut(0.2);
+        InteractionDescHUD.getInstance().setContainerStyle(20, 2, 'flex-end');
 
         await this.playAttachingAnimation(
             animations[0],
@@ -170,13 +171,22 @@ class SquatInteractionSequence extends BaseInteractionSequence {
 
             let displayIdx = 0;
             const loopFunc = () => {
-                InteractionDescHUD.getInstance().setDisplayText(animProps.displayTextList[displayIdx++], animProps.displayTextDur);
-            }
+                const { title, description, list } = animProps.displayTextList[displayIdx++];
+                if(title === "") return;
 
-            loopFunc();
+                const formattedText = `
+                <div class="interaction-title">${title}</div>
+                ${description === undefined ? "" : `<div class="interaction-description">${description}</div>`}
+                ${list === undefined ? "" : `<ul class="interaction-points">
+                    ${list?.map((point: string) => `<li>${point}</li>`).join('')}
+                </ul>`}
+                `;
+                InteractionDescHUD.getInstance().setDisplayText(formattedText, animProps.displayTextDur);
+            }
 
             let repetitions = animProps.displayTextList.length;
             if(repetitions > 1){
+                loopFunc();
                 action.setLoop(THREE.LoopRepeat, repetitions);
                 mixer.addEventListener('loop',loopFunc);
             }

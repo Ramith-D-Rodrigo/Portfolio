@@ -10,6 +10,7 @@ class FlexInteractionSequence extends BaseInteractionSequence{
     ): Promise<void> {
         await this.setupForCharacterAndCamera(camera, destCameraPos, destCameraQuat, character, characterPos, characterRot);
         await this.fadeOut();
+        InteractionDescHUD.getInstance().setContainerStyle(15, 3, 'flex-start');
 
         const currentAction = animationMap.get(currAction);
         currentAction?.fadeOut(0.2);
@@ -37,7 +38,19 @@ class FlexInteractionSequence extends BaseInteractionSequence{
             }
             let displayIdx = 0;
             const loopFunc = () => {
-                InteractionDescHUD.getInstance().setDisplayText(animProps.displayTextList[displayIdx++], animProps.displayTextDur);
+                const { title, description, list } = animProps.displayTextList[displayIdx++];
+                if(title === "") return;
+
+                const formattedText = `
+                <div class="interaction-title">${title}</div>
+                ${description === undefined ? "" : `<div class="interaction-description">${description}</div>`}
+                
+                Technologies:
+                <ul class="interaction-points">
+                    ${list?.map((point: string) => `<li>${point}</li>`).join('')}
+                </ul>
+                `;
+                InteractionDescHUD.getInstance().setDisplayText(formattedText, animProps.displayTextDur);
             }
             loopFunc();
 

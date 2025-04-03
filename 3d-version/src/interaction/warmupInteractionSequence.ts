@@ -38,12 +38,16 @@ class WarmupInteractionSequence extends BaseInteractionSequence {
 
             let displayIdx = 0;
             const loopFunc = () => {
-                InteractionDescHUD.getInstance().setDisplayText(animProps.displayTextList[displayIdx++], animProps.displayTextDur);
+                const { title, description, list } = animProps.displayTextList[displayIdx++];
+                const formattedText = `
+                <div class="interaction-title">${title}</div>
+                `;
+                InteractionDescHUD.getInstance().setDisplayText(formattedText, animProps.displayTextDur);
             }
-            loopFunc();
 
             let repetitions = animProps.displayTextList.length;
             if(repetitions > 1){
+                loopFunc();
                 action.setLoop(THREE.LoopRepeat, repetitions);
                 mixer.addEventListener('loop',loopFunc);
             }

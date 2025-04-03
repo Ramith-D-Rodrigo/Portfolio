@@ -1,15 +1,39 @@
-const FUNDAMENTALS = [
-    'Data Structures and Algorithms',
-    'Time and Space Complexity',
-    'Object Oriented Programming',
-    'Full Stack Development',
-    'Operating Systems',
-    'Automata Theory',
-    'Database',
-    'Linear Algebra',
-    'Computer Graphics',
-    'Architectural Patterns',
-    'Design Patterns'
+import { DisplayTextProps } from "../interactionBuilder";
+
+const FUNDAMENTALS: DisplayTextProps[] = [
+    {
+        title: 'Data Structures and Algorithms'
+    },
+    {
+        title: 'Time and Space Complexity',
+    },
+    {
+        title: 'Object Oriented Programming'
+    },
+    {
+        title: 'Full Stack Development'
+    },
+    {
+        title: 'Operating Systems'
+    },
+    {
+        title: 'Automata Theory'
+    },
+    {
+        title: 'Database'
+    },
+    {
+        title: 'Linear Algebra'
+    },
+    {
+        title: 'Machine Learning'
+    },
+    {
+        title: 'Computer Graphics'
+    },
+    {
+        title: 'Architectural and Design Patterns'
+    }
 ];
 
 export default FUNDAMENTALS;

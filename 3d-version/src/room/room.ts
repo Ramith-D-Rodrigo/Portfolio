@@ -219,7 +219,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     const barbellInteraction = barbellInteractionBuilder
         .setDisplayText("Flex")
         .setAnimations([
-            {animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 4}, 
+            {animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 8}, 
         ])
         .setCharacterTransform(new THREE.Vector3(4.97, 0, 4.90), new THREE.Quaternion(0, 0.7, 0, 0.72))
         .setDestCameraTransform(new THREE.Vector3(-0.57, 3.84, 2.09), new THREE.Quaternion(0.11, 0.84, 0.19, -0.49))
@@ -254,7 +254,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
         .setDisplayText("Squat")
         .setAnimations([
             {animName: START_SQUAT, displayTextList: [], displayTextDur: 0}, 
-            {animName: SQUAT, displayTextList: EDUCATION, displayTextDur: 2.5}, 
+            {animName: SQUAT, displayTextList: EDUCATION, displayTextDur: 6}, 
             {animName: STOP_SQUAT, displayTextList: [], displayTextDur: 0}
         ])
         .setCharacterTransform(new THREE.Vector3(-4.73, 0, 5.1), new THREE.Quaternion(0, -0.70, 0, 0.71))

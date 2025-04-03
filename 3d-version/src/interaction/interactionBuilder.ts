@@ -11,9 +11,15 @@ type AttachableObjectProps = {
     scale: THREE.Vector3
 }
 
+type DisplayTextProps = {
+    title: string,
+    description?: string,
+    list?: string[]
+}
+
 type InteractionAnimProps = {
     animName: string,
-    displayTextList: string[], //we infer the loop and repeat count from this list's length
+    displayTextList: DisplayTextProps[], //we infer the loop and repeat count from this list's length
     displayTextDur: number
 }
 
@@ -59,5 +65,5 @@ class InteractionBuilder{
     }
 }
 
-export type {AttachableObjectProps, InteractionAnimProps};
+export type {AttachableObjectProps, InteractionAnimProps, DisplayTextProps};
 export default InteractionBuilder;

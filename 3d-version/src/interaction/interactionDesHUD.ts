@@ -44,10 +44,10 @@ class InteractionDescHUD implements HUDComponent{
         this.hudContainer.style = "";
     }
 
-    public setDisplayText(txt: string, dur: number): void{
+    public setDisplayText(innerHTML: string, dur: number): void{
         const message = document.createElement("div");
         message.className = "interaction-seq-text";
-        message.innerHTML = txt;
+        message.innerHTML = innerHTML;
 
         message.style.animationDuration = `${dur}s`;
 
