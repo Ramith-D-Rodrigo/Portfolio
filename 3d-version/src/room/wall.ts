@@ -3,7 +3,7 @@ import * as CANNON from "cannon-es";
 import { customizeTexture } from "../utils/utils";
 
 // Load the textures
-const STRING_PREFIX = './textures/wall_new/fiber-textured-wall1_';
+const STRING_PREFIX = 'assets/textures/wall_new/fiber-textured-wall1_';
 
 const createWall = (width: number, height: number, 
     xPos: number, yPos: number, zPos: number,
