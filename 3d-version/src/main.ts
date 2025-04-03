@@ -149,7 +149,7 @@ const main = async () => {
     
     await hideLoadingScreenWithDelay(500);
 
-    const settingsPanel: HUDComponent = SettingsPanel.getInstance();
+    //const settingsPanel: HUDComponent = SettingsPanel.getInstance();
     
     const clock = new THREE.Clock();
     let lastDelta = 0;
