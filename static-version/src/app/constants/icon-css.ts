@@ -128,6 +128,11 @@ const MONGODB : TechnologyWithCSSClass = {
     class: "devicon-mongodb-plain-wordmark colored"
 }
 
+const POSTGRESQL : TechnologyWithCSSClass = {
+    name: "PostgreSQL",
+    class: "devicon-postgresql-plain-wordmark colored"
+}
+
 const WASM : TechnologyWithCSSClass = {
     name: "WebAssembly",
     class: "devicon-wasm-original colored"
@@ -165,7 +170,7 @@ const WEBXR : TechnologyWithCSSClass = {
 
 export {
     BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA,
-    JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS,
+    JS, LARAVEL, MONGODB, MYSQL, POSTGRESQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS,
     TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WINDOWS, WEBXR
 };
 export type { TechnologyWithCSSClass };

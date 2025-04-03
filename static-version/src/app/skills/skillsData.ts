@@ -1,4 +1,4 @@
-import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WEBXR } from '../constants/icon-css';
+import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, POSTGRESQL, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WEBXR } from '../constants/icon-css';
 import { SkillCardProps } from '../components/SkillCard';
 
 interface SkillsInterface {
@@ -134,6 +134,10 @@ const skills : SkillsInterface[] = [
             {                 
                 tech: MONGODB,
                 description: "Worked with MongoDB to design and implement NoSQL databases, applying document-based storage for scalable and flexible data management." 
+            },
+            {                 
+                tech: POSTGRESQL,
+                description: "Utilized PostgreSQL to develop persistence in distributed microservices." 
             },
         ],
     },
