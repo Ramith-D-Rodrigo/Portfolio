@@ -189,7 +189,7 @@ const skills : SkillsInterface[] = [
                 {   name: "Japanese", 
                     class: "icon-[uil--letter-japanese-a]"
                 }, 
-                description: "Have been learning Japanese for more than 4 years. Currently JLPT N4 Certified, JLPT N3 Reading." 
+                description: "Have been learning Japanese for more than 4 years. Currently JLPT N3 Certified, JLPT N2 Reading." 
             },
             // { 
             //     tech:{

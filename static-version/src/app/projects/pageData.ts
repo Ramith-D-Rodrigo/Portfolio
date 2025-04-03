@@ -2,9 +2,9 @@ import { BALLERINA, CPP, CSHARP, DOCKER, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML,
 
 const projects = [
     {
-        title: 'Enhancing the performance of web-based Augmented Reality applications',
+        title: 'Enhancing the performance of web-based Extended Reality applications',
         description: "The final year research project of my Bachelor's degree. Currently I am conducting this research to improve the runtime"
-            + " performance of the web-based augmented reality applications with the use of new web technologies and evaluate it's performance with"
+            + " performance of the web-based extended reality applications with the use of new web technologies and evaluate it's performance with"
             + " suitable quantitative and qualitative metrics.",
         techStack: [CPP, WEBGL, WEBGPU, WASM, GIT, TS, WEBXR],
         timePeriod: "2024 June - Present",
@@ -17,8 +17,9 @@ const projects = [
         title: 'Portfolio',
         description: "To showcase my skills, education, experience and projects, I have developed a simple website"
             + " in which it's design and the user interface (UI) is inspired by the popular IDEs. "
-            + "The reason for choosing this UI is to introduce the viewers into my professional yet passionate field.",
-        techStack: [NEXTJS, TS, GIT],
+            + "The reason for choosing this UI is to introduce the viewers into my professional yet passionate field."
+            + " In addition to that, I have also developed an interactive/3D version of the portfolio to showcase my interest in Computer Graphics.",
+        techStack: [NEXTJS, TS, GIT, THREEJS],
         timePeriod: "2024 December - Present",
         isExternalLink: false,
         link: "/",
