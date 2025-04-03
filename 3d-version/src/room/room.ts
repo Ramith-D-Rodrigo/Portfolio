@@ -84,7 +84,7 @@ const setupMirrors = (scene: THREE.Scene) => {
 
 const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader: GLTFLoader) => {
     // Load dumbbell rack
-    const dumbellRack = await loadGLTFModel('./models/gym_assets/dumbbell_rack/scene.gltf', loader);
+    const dumbellRack = await loadGLTFModel('assets/models/gym_assets/dumbbell_rack/scene.gltf', loader);
     const rack1 = createObjectFromGLTF(dumbellRack, -9, 0, -7, 0, 0, 0, 1, 1, 1);
     scene.add(rack1);
     const rack2 = createObjectFromGLTF(dumbellRack, -9, 0, -1.4, 0, 0, 0, 1, 1, -1);
@@ -96,44 +96,44 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
     world.addBody(rack2Phy);
 
     // load flat bench
-    const flatBench = await loadGLTFModel('./models/gym_assets/flat_seat/scene.gltf', loader);
+    const flatBench = await loadGLTFModel('assets/models/gym_assets/flat_seat/scene.gltf', loader);
     const bench = createObjectFromGLTF(flatBench, 0, 0, -5, 0, Math.PI / 2, 0, 1, 1, 1);
     scene.add(bench);
     const benchPhy = createObjectPhysics(0, 0, 0, -6.5, 0, 0, 0, 1, 2, 2);
     world.addBody(benchPhy);
 
     // load incline bench
-    const inclineBench = await loadGLTFModel('./models/gym_assets/incline_seat/scene.gltf', loader);
+    const inclineBench = await loadGLTFModel('assets/models/gym_assets/incline_seat/scene.gltf', loader);
     const inclineBenchObject = createObjectFromGLTF(inclineBench, 6.5, 0, -2, 0, 0, 0, 1, 1, 1);
     scene.add(inclineBenchObject);
     const inclineBenchPhy = createObjectPhysics(0, 6, 1, -2, 0, 0, 0, 1.25, 2, 1);
     world.addBody(inclineBenchPhy);
 
     // load mattress 
-    const mattress = await loadGLTFModel('./models/gym_assets/mattress/scene.gltf', loader);
+    const mattress = await loadGLTFModel('assets/models/gym_assets/mattress/scene.gltf', loader);
     const mattressObject = createObjectFromGLTF(mattress, 0, 0, 0, 0, Math.PI / 2, 0, 1, 1, 1);
     scene.add(mattressObject);
 
     // load barbell
-    const barbell = await loadGLTFModel('./models/gym_assets/barbell/scene.gltf', loader);
+    const barbell = await loadGLTFModel('assets/models/gym_assets/barbell/scene.gltf', loader);
     const barbellObject = createObjectFromGLTF(barbell, 7, 0, 5, 0, 0, 0, 1, 1, 1);
     scene.add(barbellObject);
     const barbellPhy = createObjectPhysics(0, 7, 1, 5, 0, 0, 0, 0.8, 1, 1.6);
     world.addBody(barbellPhy);
 
     // load barbell weights
-    const barbellWeights = await loadGLTFModel('./models/gym_assets/barbell_weights/scene.gltf', loader);
+    const barbellWeights = await loadGLTFModel('assets/models/gym_assets/barbell_weights/scene.gltf', loader);
     const barbellWeightsObject = createObjectFromGLTF(barbellWeights, 9, 0, 8, 0, 0, 0, 1, 1, 1);
     scene.add(barbellWeightsObject);
 
     //import squat rack
-    const squatRack = await loadGLTFModel('./models/squat_rack/result.gltf', loader);
+    const squatRack = await loadGLTFModel('assets/models/squat_rack/result.gltf', loader);
     const squatRackObject = createObjectFromGLTF(squatRack, -9, 0, 5, 0, 0, 0, 0.05, 0.05, 0.05);
     scene.add(squatRackObject);
     const squatRackPhy = createObjectPhysics(0, -9, 1.5, 5, 0, 0, 0, 1, 3, 2.5);
     world.addBody(squatRackPhy);
 
-    const allObjects = await loadGLTFModel('./models/gym_equipment/scene.gltf', loader);
+    const allObjects = await loadGLTFModel('assets/models/gym_equipment/scene.gltf', loader);
     try {
         allObjects.scene.traverse((child) => {
             if (child instanceof THREE.Object3D && child.name === 'Bench_press_0') {
@@ -153,7 +153,7 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
 
 const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, hud: HUD, loader: GLTFLoader): Promise<FrameUpdate[]> => {
     // add the interactable collision area
-    const dumbbell = await loadGLTFModel('./models/gym_assets/dumbbell/scene.gltf', loader);
+    const dumbbell = await loadGLTFModel('assets/models/gym_assets/dumbbell/scene.gltf', loader);
     const dumbbellObj = createObjectFromGLTF(dumbbell, 0, 0, 0, 0, 0, 0, 1, 1, 1);
 
     const rackInteractionBuilder = new InteractionBuilder();
@@ -251,7 +251,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     hud.addComponent(interactable2);
 
     // add the interactable collision area
-    const barbell = await loadGLTFModel('./models/gym_assets/barbell/scene.gltf', loader);
+    const barbell = await loadGLTFModel('assets/models/gym_assets/barbell/scene.gltf', loader);
     const barbellObject = createObjectFromGLTF(barbell, 0, 0, 0, 0, 0, 0, 1, 1, 1);
 
     const barbellObj: AttachableObjectProps = {
@@ -337,7 +337,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
 }
 
 const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scene) => {
-    textureLoader.load('logos/linkedin_logo.png', (texture) => {
+    textureLoader.load('assets/logos/linkedin_logo.png', (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;   
         texture.wrapS = THREE.RepeatWrapping;     
         // Create extruded geometry
@@ -353,7 +353,7 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
         scene.add(mesh);
     });
 
-    textureLoader.load('logos/github_logo.png', (texture) => {
+    textureLoader.load('assets/logos/github_logo.png', (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;   
         texture.wrapS = THREE.RepeatWrapping;     
         // Create extruded geometry
@@ -453,7 +453,7 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
 }
 
 const addDoor = async (loader:GLTFLoader, scene: THREE.Scene): Promise<void> => {
-    const barbell = await loadGLTFModel('./models/door/scene.gltf', loader);
+    const barbell = await loadGLTFModel('assets/models/door/scene.gltf', loader);
     const barbellObject = createObjectFromGLTF(barbell, 0, 0, 10.25, 0, Math.PI, 0, 0.028, 0.028, 0.028);
     scene.add(barbellObject);
     return;
@@ -631,7 +631,7 @@ const addSkills = (skillObjs: THREE.Group[], scene: THREE.Scene, loader: GLTFLoa
     ];
 
     skills.forEach(async (skill) => {
-        const model = await loadGLTFModel(`logos/skills/${skill.name}.glb`, loader);
+        const model = await loadGLTFModel(`assets/logos/skills/${skill.name}.glb`, loader);
         const obj = createObjectFromGLTF(model, 0, 0, 0, 0, 0, 0, 1, 1, 1);
         obj.traverse(o =>{
             o.castShadow = false;
