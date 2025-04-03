@@ -6,13 +6,13 @@ const createCeiling = (xPos: number, yPos: number, zPos: number,
     textureLoader: THREE.TextureLoader) => {
     // load ceiling texture
     const CEILING_STRING_PREFIX = 'OfficeCeiling002_1K-JPG_';
-    const ceilingAoTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'AmbientOcclusion.jpg');
-    const ceilingAlbedoTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'Color.jpg');
-    const ceilingEmissiveTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'Emission.jpg');
-    const ceilingMetallicTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'Metalness.jpg');
-    const ceilingNormalTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'NormalGL.jpg');
+    const ceilingAoTexture = textureLoader.load('assets/textures/ceiling/' + CEILING_STRING_PREFIX + 'AmbientOcclusion.jpg');
+    const ceilingAlbedoTexture = textureLoader.load('assets/textures/ceiling/' + CEILING_STRING_PREFIX + 'Color.jpg');
+    const ceilingEmissiveTexture = textureLoader.load('assets/textures/ceiling/' + CEILING_STRING_PREFIX + 'Emission.jpg');
+    const ceilingMetallicTexture = textureLoader.load('assets/textures/ceiling/' + CEILING_STRING_PREFIX + 'Metalness.jpg');
+    const ceilingNormalTexture = textureLoader.load('assets/textures/ceiling/' + CEILING_STRING_PREFIX + 'NormalGL.jpg');
     ceilingNormalTexture.flipY = false;  // Inverts the Y-axis, making it compatible with OpenGL
-    const ceilingRoughnessTexture = textureLoader.load('./textures/ceiling/' + CEILING_STRING_PREFIX + 'Roughness.jpg');
+    const ceilingRoughnessTexture = textureLoader.load('assets/textures/ceiling/' + CEILING_STRING_PREFIX + 'Roughness.jpg');
 
     // Customize the ceiling textures
     customizeCeilingTexture(ceilingAoTexture);
