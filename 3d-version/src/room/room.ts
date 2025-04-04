@@ -28,6 +28,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import SKILLS from "../interaction/constants/skills";
 import SkillViewInteractionSequence, { SkillTransform } from "../interaction/skillViewInteractionSequence";
 import PROJECT_EXPERIENCE from "../interaction/constants/project_experience";
+import { GITHUB, LINKEDIN } from "../../../static-version/globalConstants";
 
 
 const setupWalls = (textureLoader: THREE.TextureLoader, scene: THREE.Scene, world: CANNON.World) => {
@@ -348,6 +349,9 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
     
         // Create mesh with different materials for front and sides
         const mesh = new THREE.Mesh(geometry, frontMaterial);
+        mesh.userData = {
+            "label": LINKEDIN
+        };
         mesh.position.set(-7, 8, -9.9);
         mesh.scale.set(2,2,2);
         scene.add(mesh);
@@ -364,6 +368,10 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
     
         // Create mesh with different materials for front and sides
         const mesh = new THREE.Mesh(geometry, frontMaterial);
+        mesh.userData = {
+            "label": GITHUB
+        };
+
         mesh.position.set(7, 8, -9.9);
         mesh.scale.set(2,2,2);
         scene.add(mesh);
