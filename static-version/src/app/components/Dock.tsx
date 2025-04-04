@@ -12,8 +12,8 @@ const Dock = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     const items = [
-        { id: 0, label: "Home", icon: <FontAwesomeIcon icon={faCode} />, path: IDE_ROOT },
-        { id: 1, label: "Game", icon: <FontAwesomeIcon icon={faGamepad} />, path: GAME_ROOT },
+        { id: 0, label: "Game", icon: <FontAwesomeIcon icon={faGamepad} />, path: GAME_ROOT },
+        { id: 1, label: "IDE", icon: <FontAwesomeIcon icon={faCode} />, path: IDE_ROOT },
     ];
 
     const handleNavigation = (path: string) => {

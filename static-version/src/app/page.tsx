@@ -28,12 +28,12 @@ const HomePage = () => {
           <p className="text-xl mt-20 mb-8">Explore my work through two versions:</p>
           <div className="flex justify-center space-x-8">
             <div className="text-4xl">
-              <FontAwesomeIcon icon={faCode} />
-              <p className="mt-2">Informative</p>
-            </div>
-            <div className="text-4xl">
               <FontAwesomeIcon icon={faGamepad} />
               <p className="mt-2">Interactive</p>
+            </div>
+            <div className="text-4xl">
+              <FontAwesomeIcon icon={faCode} />
+              <p className="mt-2">Informative</p>
             </div>
           </div>
         </div>
