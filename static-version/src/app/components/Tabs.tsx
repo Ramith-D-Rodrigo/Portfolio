@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import OpenedTab from "./OpenedTab";
 import Notification from "./Notification";
 import { switchPage } from "../utils/utilFunctions";
+import { IDE_ROOT } from "../ide/constants";
 
 const Tabs = () => {
     const HOMEPAGE = "About";
@@ -12,7 +13,7 @@ const Tabs = () => {
     const pathName = usePathname();
     const router = useRouter();
 
-    const [tabs, setTabs] = useState<Map<string, string>>(new Map([[HOMEPAGE, "/"]]));
+    const [tabs, setTabs] = useState<Map<string, string>>(new Map([[HOMEPAGE, IDE_ROOT]]));
     const [currentTab, setCurrentTab] = useState<string>(HOMEPAGE);
     const [notification, setNotification] = useState<string | null>(null);
     const [beforePath, setBeforePath] = useState<string>('');
@@ -30,10 +31,10 @@ const Tabs = () => {
 
         const slashSplitArr = pathName.split("/");
         pageName =
-            slashSplitArr[1] === ""
+            slashSplitArr[1] === IDE_ROOT
                 ? HOMEPAGE
                 : slashSplitArr
-                    .slice(1)
+                    .slice(2)
                     .map((segment) => segment.toUpperCase())
                     .join(" / ");
 
