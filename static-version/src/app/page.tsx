@@ -13,10 +13,10 @@ const HomePage = () => {
 
 
           <div className="flex justify-center space-x-6 m-10">
-            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/ramith-d-rodrigo/" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faLinkedin} size="2x" className="text-white" />
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/Ramith-D-Rodrigo" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faGithub} size="2x" className="text-white" />
             </a>
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
