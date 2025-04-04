@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faGamepad, faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub  } from "@fortawesome/free-brands-svg-icons";
+import {LINKEDIN_URL, GITHUB_URL} from '../../globalConstants';
 
 const HomePage = () => {
   return (
@@ -13,10 +14,10 @@ const HomePage = () => {
 
 
           <div className="flex justify-center space-x-6 m-10">
-            <a href="https://www.linkedin.com/in/ramith-d-rodrigo/" target="_blank" rel="noopener noreferrer">
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faLinkedin} size="2x" className="text-white" />
             </a>
-            <a href="https://github.com/Ramith-D-Rodrigo" target="_blank" rel="noopener noreferrer">
+            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faGithub} size="2x" className="text-white" />
             </a>
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
