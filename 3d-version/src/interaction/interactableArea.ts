@@ -157,6 +157,14 @@ class InteractableArea implements FrameUpdate, HUDComponent {
         scene.add(this.displayText);
     }
 
+    public getAttachedWorld(): CANNON.World | null{
+        return this.collisionBody.world;
+    }
+
+    public getAttachedScene(): THREE.Object3D | null {
+        return this.displayText.parent;
+    }
+
     public removeFromWorld(world: CANNON.World, scene: THREE.Scene){
         world.removeBody(this.collisionBody);
         scene.remove(this.displayText);

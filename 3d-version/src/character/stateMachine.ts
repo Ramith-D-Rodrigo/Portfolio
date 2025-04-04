@@ -37,11 +37,16 @@ class CharacterStateMachine implements FrameUpdate {
             const area =  InteractionManager.getCurrContactingInteractableArea();
             if(!area) return;
             area.setInteract(true);
+            const world = area.getAttachedWorld();
+            const scene = area.getAttachedScene();
+
+            area.removeFromWorld(world as CANNON.World, scene as THREE.Scene);
             this.isInteracting = true;
             this.orbitControls.enabled = false;
             area.getCurrInteraction().interact(this.camera, this.animationMap, this.mixer, this.currAction, this.model).then(() => {
                 this.isInteracting = false;
                 this.orbitControls.enabled = true;
+                area.addToWorld(world as CANNON.World, scene as THREE.Scene);
                 area.setInteract(false);
             });
         }
