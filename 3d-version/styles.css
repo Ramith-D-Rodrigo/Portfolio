@@ -118,14 +118,14 @@ canvas {
     background: rgba(0, 0, 0, 0.8); /* Darker for better readability */
     padding: 1rem;
     border-radius: 1rem;
-    max-width: 45rem;
+    max-width: 40rem;
     text-align: left;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Title Styling */
 .interaction-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #ffcc00; /* Highlighted color */
     margin-bottom: 0.3rem;
@@ -135,7 +135,7 @@ canvas {
 
 /* Description Styling */
 .interaction-description {
-    font-size: 1.4rem;
+    font-size: 1rem;
     color: #ddd;
     margin-bottom: 0.2rem;
     white-space: pre-line;
@@ -143,6 +143,7 @@ canvas {
 
 /* Points List Styling */
 .interaction-points {
+    font-size: 0.9rem;
     padding-left: 1.5rem;
     font-size: 1.3rem;
     color: #bbb;
