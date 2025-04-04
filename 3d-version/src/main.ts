@@ -11,6 +11,7 @@ import HUD from './other/hud';
 import SettingsPanel from './other/settingsPanel';
 import { HUDComponent } from './other/hudComponent';
 import { GITHUB, GITHUB_URL, LINKEDIN, LINKEDIN_URL } from '../../static-version/globalConstants';
+import CannonDebugger from 'cannon-es-debugger';
 
 const showLoadingScreen = () => {
     const loadingScreen = document.createElement('div');
@@ -160,6 +161,8 @@ const main = async () => {
         pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     }
 
+    //const cannonDebugger = new CannonDebugger(scene, world);
+
     function onPointerClick(event: MouseEvent) {
         // update the picking ray with the camera and pointer position
 	    raycaster.setFromCamera(pointer, camera);
@@ -191,21 +194,22 @@ const main = async () => {
 
     const animate = () => {
         const delta = clock.getDelta();
+        hud.display();
         interactableAreas.forEach(obj => obj.update(delta));
-
+        
         skillObjs.forEach(obj => {
             lastDelta += delta * 0.1;
             const scaleFactor = 1 + Math.sin(lastDelta) * 0.15;
             obj.scale.copy(obj.userData.originalScale.clone().multiplyScalar(scaleFactor));
         });
-
+        
         if (characterStateMachine) {
             characterStateMachine.update(delta);
         }
-
-        world.fixedStep();
+        
         if (controls.enabled) controls.update();
-        hud.display();
+        world.fixedStep(delta);
+        //cannonDebugger.update();
         renderer.render(scene, camera);
 
         requestAnimationFrame(animate);
