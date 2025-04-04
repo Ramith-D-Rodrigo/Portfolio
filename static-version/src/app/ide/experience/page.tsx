@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import EventGrid, { EventInterface } from "../components/Events";
-import PageTitle from "../components/PageTitle";
+import EventGrid, { EventInterface } from "../../components/Events";
+import PageTitle from "../../components/PageTitle";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const events: EventInterface[] = [

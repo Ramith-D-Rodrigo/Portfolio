@@ -1,5 +1,5 @@
-import PageTitle from '../components/PageTitle';
-import SkillCard from '../components/SkillCard';
+import PageTitle from '../../components/PageTitle';
+import SkillCard from '../../components/SkillCard';
 import {skills} from './skillsData';
 
 

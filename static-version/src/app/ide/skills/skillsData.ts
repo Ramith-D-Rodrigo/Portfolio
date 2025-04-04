@@ -1,5 +1,5 @@
-import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, POSTGRESQL, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WEBXR } from '../constants/icon-css';
-import { SkillCardProps } from '../components/SkillCard';
+import { BALLERINA, C, CPP, CSHARP, DOCKER, EXPRESSJS, GIT, GMAIL_API, GOOGLE_DRIVE_API, HTML, JAVA, JS, LARAVEL, MONGODB, MYSQL, NEXTJS, OPENGL, PHP, POSTGRESQL, PYTHON, REACTJS, SCALA, SPRINGBOOT, THREEJS, TS, UBUNTU, UNITY, UNREAL, WASM, WEBGL, WEBGPU, WEBXR } from '../../constants/icon-css';
+import { SkillCardProps } from '../../components/SkillCard';
 
 interface SkillsInterface {
     category: string,

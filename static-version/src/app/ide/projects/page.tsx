@@ -1,5 +1,5 @@
-import PageTitle from '../components/PageTitle';
-import ProjectCard from '../components/ProjectCard';
+import PageTitle from '../../components/PageTitle';
+import ProjectCard from '../../components/ProjectCard';
 import { projects } from './pageData';
 
 const ProjectsPage = () => {

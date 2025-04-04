@@ -30,11 +30,11 @@ const degreeInfo = {
     achievements: [
         {
             title: "Director's List - 2nd Academic Year",
-            image: "achievements/2nd_year.jpg",
+            image: "/education/achievements/2nd_year.jpg",
         },
         {
             title: "Director's List - 3rd Academic Year 1st Semester",
-            image: "achievements/3rd_year.jpg",
+            image: "/education/achievements/3rd_year.jpg",
         }
     ],
 };

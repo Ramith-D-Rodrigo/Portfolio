@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import EventGrid, { EventInterface } from "../components/Events";
-import PageTitle from "../components/PageTitle";
+import EventGrid, { EventInterface } from "../../components/Events";
+import PageTitle from "../../components/PageTitle";
 import { faSchool } from "@fortawesome/free-solid-svg-icons";
 import { educationData } from "./educationData";
 

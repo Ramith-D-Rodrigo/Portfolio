@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList, faArrowTrendUp, faBuildingColumns, faCalendarDays, faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
 import PageTitle from "@/app/components/PageTitle";
 import { degreeInfo } from "./pageData";
-import BachelorAchievements from "../../components/BachelorAchievements";
+import BachelorAchievements from "../../../components/BachelorAchievements";
 
 const BachelorsDegreePage = () => {
     return (
