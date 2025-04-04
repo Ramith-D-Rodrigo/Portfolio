@@ -379,7 +379,7 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
 
     const font = await Utils.loadFont('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json');
 
-    const name = "Ramith-D-Rodrigo";
+    const name = "Ramith Rodrigo";
     const textGeometry = new TextGeometry(name, {
         font: font,
         size: 1,
@@ -416,7 +416,7 @@ const addMainText = async (textureLoader: THREE.TextureLoader, scene: THREE.Scen
     textGroup.add(borderTextMesh);
     textGroup.add(textMesh);
     textGroup.scale.set(1.08, 1.08, 1.08);
-    textGroup.position.set(-6, 7.5, -10);
+    textGroup.position.set(-5, 7.5, -10);
     scene.add(textGroup);
 
     const title = "Software Engineer";
