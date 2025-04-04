@@ -128,8 +128,8 @@ const setupGymEquipment = async (scene: THREE.Scene, world: CANNON.World, loader
     scene.add(barbellWeightsObject);
 
     //import squat rack
-    const squatRack = await loadGLTFModel('assets/models/squat_rack/result.gltf', loader);
-    const squatRackObject = createObjectFromGLTF(squatRack, -9, 0, 5, 0, 0, 0, 0.05, 0.05, 0.05);
+    const squatRack = await loadGLTFModel('assets/models/squat_rack/scene.gltf', loader);
+    const squatRackObject = createObjectFromGLTF(squatRack, -9, 0, 5, 0, 0, 0, 5, 5, 5);
     scene.add(squatRackObject);
     const squatRackPhy = createObjectPhysics(0, -9, 1.5, 5, 0, 0, 0, 1, 3, 2.5);
     world.addBody(squatRackPhy);
