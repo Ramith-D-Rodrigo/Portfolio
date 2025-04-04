@@ -10,6 +10,7 @@ import { loadCharacter } from './character/utils';
 import HUD from './other/hud';
 import SettingsPanel from './other/settingsPanel';
 import { HUDComponent } from './other/hudComponent';
+import { GITHUB, GITHUB_URL, LINKEDIN, LINKEDIN_URL } from '../../static-version/globalConstants';
 
 const showLoadingScreen = () => {
     const loadingScreen = document.createElement('div');
@@ -150,6 +151,40 @@ const main = async () => {
     await hideLoadingScreenWithDelay(500);
 
     //const settingsPanel: HUDComponent = SettingsPanel.getInstance();
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+
+    function onPointerMove(event: MouseEvent) {
+        pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    }
+
+    function onPointerClick(event: MouseEvent) {
+        // update the picking ray with the camera and pointer position
+	    raycaster.setFromCamera(pointer, camera);
+
+        // calculate objects intersecting the picking ray
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        for (let i = 0; i < intersects.length; i++ ) {
+            if(intersects[i].object instanceof THREE.Mesh && intersects[i].object.userData.label !== undefined){
+                const label = intersects[i].object.userData.label;
+                switch(label){
+                    case LINKEDIN:
+                        window.open(LINKEDIN_URL, '_blank');
+                    break;
+
+                    case GITHUB:
+                        window.open(GITHUB_URL, '_blank');
+                    break;
+                }
+            }
+        }
+    }
+
+    window.addEventListener('click', onPointerClick);
+    window.addEventListener('pointermove', onPointerMove);
     
     const clock = new THREE.Clock();
     let lastDelta = 0;
