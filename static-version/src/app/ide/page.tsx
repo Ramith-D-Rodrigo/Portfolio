@@ -4,9 +4,7 @@ import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GITHUB_URL, LINKEDIN_URL } from "../../../globalConstants";
 
-const IDEPage = (prop: {
-    children: React.ReactNode;
-}) => {
+const IDEPage = () => {
     return (
         <div className="">
             {/* Header Section */}

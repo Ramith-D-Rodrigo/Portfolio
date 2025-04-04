@@ -43,10 +43,7 @@ copyDir(assetSource, assetDest)
 
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    turbo: true, // Enable TurboPack if needed
-  },
+  reactStrictMode: true
 };
 
 export default nextConfig;
