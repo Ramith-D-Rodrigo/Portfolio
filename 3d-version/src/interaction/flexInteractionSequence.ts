@@ -10,7 +10,7 @@ class FlexInteractionSequence extends BaseInteractionSequence{
     ): Promise<void> {
         await this.setupForCharacterAndCamera(camera, destCameraPos, destCameraQuat, character, characterPos, characterRot);
         await this.fadeOut();
-        InteractionDescHUD.getInstance().setContainerStyle(10, 65, 'flex-start');
+        InteractionDescHUD.getInstance().setContainerStyle(10, 70, 'flex-start');
 
         const currentAction = animationMap.get(currAction);
         currentAction?.fadeOut(0.2);
