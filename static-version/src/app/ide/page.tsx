@@ -2,6 +2,7 @@ import React from "react";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GITHUB_URL, LINKEDIN_URL } from "../../../globalConstants";
 
 const IDEPage = (prop: {
     children: React.ReactNode;
@@ -45,7 +46,7 @@ const IDEPage = (prop: {
                 {/* GitHub Link */}
                 <li>
                     <a
-                        href="https://github.com/Ramith-D-Rodrigo"
+                        href={GITHUB_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-5 py-3 rounded-lg bg-gray-900 text-gray-100 hover:bg-gray-700 transition-all duration-300 ease-in-out transform hover:scale-105"
@@ -58,7 +59,7 @@ const IDEPage = (prop: {
                 {/* LinkedIn Link */}
                 <li>
                     <a
-                        href="https://www.linkedin.com/in/ramith-d-rodrigo/"
+                        href={LINKEDIN_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-5 py-3 rounded-lg bg-blue-700 text-gray-100 hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105"
