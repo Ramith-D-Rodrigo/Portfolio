@@ -1,5 +1,5 @@
 import { DisplayTextProps } from "../interactionBuilder";
-import { skills } from "../../../../static-version/src/app/skills/skillsData/";
+import { skills } from "../../../../static-version/src/app/ide/skills/skillsData/";
 
 const SKILLS: DisplayTextProps[] = [];
 

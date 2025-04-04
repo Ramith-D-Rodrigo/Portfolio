@@ -1,5 +1,5 @@
 import { DisplayTextProps } from "../interactionBuilder";
-import { projects } from "../../../../static-version/src/app/projects/pageData";
+import { projects } from "../../../../static-version/src/app/ide/projects/pageData";
 
 const PROJECT_EXPERIENCE: DisplayTextProps[] = [];
 

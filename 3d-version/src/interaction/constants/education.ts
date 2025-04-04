@@ -1,5 +1,5 @@
 import { DisplayTextProps } from "../interactionBuilder";
-import {educationData} from "../../../../static-version/src/app/education/educationData";
+import {educationData} from "../../../../static-version/src/app/ide/education/educationData";
 
 const EDUCATION :DisplayTextProps[] = [];
 
