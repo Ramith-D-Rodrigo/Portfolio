@@ -218,7 +218,7 @@ const setupInteractableAreas = async (scene: THREE.Scene, world: CANNON.World, h
     // add the interactable collision area
     const barbellInteractionBuilder = new InteractionBuilder();
     const barbellInteraction = barbellInteractionBuilder
-        .setDisplayText("Flex (Industry Experience)")
+        .setDisplayText("Flex (Professional Experience)")
         .setAnimations([
             {animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 8}, 
         ])
