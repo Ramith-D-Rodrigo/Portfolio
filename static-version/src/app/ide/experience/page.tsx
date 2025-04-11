@@ -9,7 +9,7 @@ const events: EventInterface[] = [
         description: "Looking for new opportunities to bring my skills to your team.",
         title: "Excited to Join Your Team!",
         iconBgColor: "green",
-        nav: "/contact",
+        nav: "contact",
         navContent: "Contact",
         icon: <FontAwesomeIcon icon={faPlus} />,
         isDisabled: false

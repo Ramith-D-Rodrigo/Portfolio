@@ -3,7 +3,7 @@ const educationData  = [
         date: "2021 April - Present", 
         description: "I started my undergraduate academics at University of Colombo School of Computing, Sri Lanka. Currently I'm a fourth/final year undergraduate with a CGPA of 3.89/4.00.",
         iconBgColor: "blue",
-        nav: "/education/bachelors",
+        nav: "education/bachelors",
         navContent: "Learn More",
         isDisabled: false
     },
