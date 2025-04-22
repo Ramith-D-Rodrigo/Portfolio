@@ -8,7 +8,7 @@ const degreeInfo = {
         summary:
             "After excelling in the G.C.E. Advanced Level examination, I was selected to pursue a Bachelor of Science in Computer Science at the University of Colombo School of Computing. "
             + "My dedication and passion for the field enabled me to excel during my 1st and 2nd academic years, qualifying me for the prestigious Honours degree program. "
-            + "Currently, as a final-year undergraduate, I am conducting research focused on enhancing the performance of web-based augmented reality applications. "
+            + "Currently, as a final-year undergraduate, I am conducting research focused on enhancing the performance of web-based extended reality applications. "
             + "Throughout my academic journey, I have consistently taken on leadership roles in group projects and assignments, ensuring effective collaboration "
             + "among team members to deliver efficient and timely solutions.",
         link: "https://ucsc.cmb.ac.lk/"
