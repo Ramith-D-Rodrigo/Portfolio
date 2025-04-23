@@ -20,7 +20,7 @@ const BalCloudPage = () => {
                 </p>
 
                 <p className="text-gray-400 leading-relaxed">
-                    So, &quot;cloud&quot; flag was needed to be introduced to "bal test" CLI command. It was my responsibility to introduce this flag and implement the feature to support running tests on Docker containers.
+                    So, &quot;cloud&quot; flag was needed to be introduced to &quot;bal test&quot; CLI command. It was my responsibility to introduce this flag and implement the feature to support running tests on Docker containers.
                 </p>
 
                 <p className="text-gray-400 leading-relaxed">
