@@ -20,11 +20,11 @@ const BalCloudPage = () => {
                 </p>
 
                 <p className="text-gray-400 leading-relaxed">
-                    So, "--cloud" flag was needed to be introduced to "bal test" CLI command. It was my responsibility to introduce this flag and implement the feature to support running tests on Docker containers.
+                    So, &quot;cloud&quot; flag was needed to be introduced to "bal test" CLI command. It was my responsibility to introduce this flag and implement the feature to support running tests on Docker containers.
                 </p>
 
                 <p className="text-gray-400 leading-relaxed">
-                    First I had to debug the source code and understand the execution flow of "bal test" command. For this project, two repositories were involved. First was "ballerina-lang" and the second was "module-ballerina-c2c". After debugging the source code, I started implmenting the feature. To create docker containers, first I created a single FAT/UBER JAR that contains all the test execution dependencies so that can be trivially used to build the containers. Ultimately, we later decided to keep consistent with the current execution flow where only THIN JARs are used. However, the invocation of cloud repository required the FAT JAR. So the execution flow created the FAT JAR but used the THIN JARs to create the Docker containers.
+                    First I had to debug the source code and understand the execution flow of &quot;bal test&quot; command. For this project, two repositories were involved. First was &quot;ballerina-lang&quot; and the second was &quot;module-ballerina-c2c&quot;. After debugging the source code, I started implmenting the feature. To create docker containers, first I created a single FAT/UBER JAR that contains all the test execution dependencies so that can be trivially used to build the containers. Ultimately, we later decided to keep consistent with the current execution flow where only THIN JARs are used. However, the invocation of cloud repository required the FAT JAR. So the execution flow created the FAT JAR but used the THIN JARs to create the Docker containers.
                 </p>
 
                 <p className="text-gray-400 leading-relaxed">
@@ -36,7 +36,7 @@ const BalCloudPage = () => {
                 </p>
 
                 <p className="text-gray-400 leading-relaxed">
-                    Once I implemented the feature, I created unit tests, and integration tests using TestNG. I worked with Ballerina&apos;s "Full-Build Pipeline" to check if there are any breaking changes when the whole platform is concerned and fixed them appropriately.
+                    Once I implemented the feature, I created unit tests, and integration tests using TestNG. I worked with Ballerina&apos;s &quot;Full-Build Pipeline&quot; to check if there are any breaking changes when the whole platform is concerned and fixed them appropriately.
                 </p>
             </div>
 
