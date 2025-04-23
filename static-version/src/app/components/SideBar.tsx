@@ -42,6 +42,7 @@ const directoryStructure: DirectoryItem[] = [
         type: "folder",
         children: [
             { name: "Summary", type: "file", route: IDE_ROOT + "/projects" },
+            { name: "Running Ballerina tests in Docker", type: "file", route: IDE_ROOT + "/projects/ballerina_cloud" },
         ],
     },
     {
