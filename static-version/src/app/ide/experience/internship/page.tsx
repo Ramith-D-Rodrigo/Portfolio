@@ -3,6 +3,7 @@ import PageTitle from "@/app/components/PageTitle";
 import { switchPage } from "@/app/utils/utilFunctions";
 import { faBriefcase, faBuilding, faBuildingColumns, faCalendarDays, faClipboardList, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IDE_ROOT } from "../../constants";
 
 
 const InternshipPage = () => {
@@ -102,7 +103,7 @@ const InternshipPage = () => {
 
                     {/* Text Section */}
                     <div className="flex flex-col">
-                        <EventButton isDisabled={false} navContent={"Internship Project"} navLink={"/"}/>
+                        <EventButton isDisabled={false} navContent={"Internship Project"} navLink={IDE_ROOT + "/projects/ballerina_cloud"}/>
                         <a
                             href="https://github.com/pasindufernando1/WSO2-Grama-Check-Your-Local-Digital-Certificate-"
                             target="_blank"
