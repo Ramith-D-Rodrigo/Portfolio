@@ -3,6 +3,7 @@ import { faClipboardList, faArrowTrendUp, faBuildingColumns, faCalendarDays, faH
 import PageTitle from "@/app/components/PageTitle";
 import { degreeInfo } from "./pageData";
 import BachelorAchievements from "../../../components/BachelorAchievements";
+import SubHeader from "@/app/components/SubHeader";
 
 const BachelorsDegreePage = () => {
     return (
@@ -73,7 +74,7 @@ const BachelorsDegreePage = () => {
             </div>
 
             {/* Core Courses Section */}
-            <h2 className="text-2xl font-semibold mb-4">Related Courses</h2>
+            <SubHeader content={"Related Courses"}/>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                 {degreeInfo.coreCourses.map((course, index) => (
                     <div
@@ -85,7 +86,7 @@ const BachelorsDegreePage = () => {
                 ))}
             </div>
 
-            <h2 className="text-2xl font-semibold mb-4">Achievements</h2>
+            <SubHeader content={"Achievements"}/>
             <BachelorAchievements achievements={degreeInfo.achievements}/>
         </div>
     );
