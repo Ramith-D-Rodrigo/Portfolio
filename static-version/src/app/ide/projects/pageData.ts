@@ -57,9 +57,9 @@ const projects = [
         techStack: [JAVA, DOCKER, GIT, BALLERINA],
         timePeriod: "2023 December - 2024 May",
         isExternalLink: false,
-        link: "/",
+        link: "projects/ballerina_cloud",
         linkContent: "Learn More",
-        linkDisabled: true
+        linkDisabled: false
     },
     {
         title: '?D - Video Game',
