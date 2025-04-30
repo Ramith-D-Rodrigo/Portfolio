@@ -7,7 +7,7 @@ const projects = [
             + " performance of the web-based extended reality applications with the use of new web technologies and evaluate it's performance with"
             + " suitable quantitative and qualitative metrics.",
         techStack: [CPP, WEBGL, WEBGPU, WASM, GIT, TS, WEBXR],
-        timePeriod: "2024 June - Present",
+        timePeriod: "2024 June - 2025 April",
         isExternalLink: false,
         link: "/",
         linkContent: "Coming Soon",
