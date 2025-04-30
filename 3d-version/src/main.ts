@@ -28,25 +28,34 @@ const showLoadingScreen = () => {
     loadingScreen.style.color = 'white';
     loadingScreen.style.fontSize = '5rem';
     loadingScreen.style.flexDirection = 'column';
-    
+
     const text = document.createElement('p');
     text.style.fontFamily = 'Poppins';
     text.innerText = 'Loading...';
-    
+
+    const tips = document.createElement('p');
+    tips.style.fontFamily = 'Poppins';
+    tips.style.fontSize = '1.5rem';
+    tips.style.marginTop = '1rem';
+    tips.style.textAlign = 'center';
+    tips.style.maxWidth = '80%';
+    tips.innerText = 'WASD keys to move. Click and hold the left mouse button and move the mouse to rotate.';
+
     const progressBarContainer = document.createElement('div');
     progressBarContainer.style.width = '50%';
     progressBarContainer.style.height = '2rem';
     progressBarContainer.style.background = 'gray';
     progressBarContainer.style.marginTop = '2rem';
-    
+
     const progressBar = document.createElement('div');
     progressBar.id = 'progress-bar';
     progressBar.style.width = '0%';
     progressBar.style.height = '100%';
     progressBar.style.background = 'white';
-    
+
     progressBarContainer.appendChild(progressBar);
     loadingScreen.appendChild(text);
+    loadingScreen.appendChild(tips);
     loadingScreen.appendChild(progressBarContainer);
     document.body.appendChild(loadingScreen);
 };
