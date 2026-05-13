@@ -17,23 +17,23 @@ const events: EventInterface[] = [
   },
   {
     date: "2025 May - Present",
-    description: "",
+    description:
+      "Joined Zenith Xperience (Pvt) Ltd. to gain the experience related to Extended Reality and Fullstack application development. Led teams, and developed applications by going through the full process of Software Development Life Cycle.",
     title: "Immersive Xperience Engineer",
-    iconBgColor: "green",
+    iconBgColor: "purple",
     nav: "contact",
-    navContent: "Contact",
-    icon: <FontAwesomeIcon icon={faPlus} />,
-    isDisabled: false,
+    navContent: "Learn More",
+    isDisabled: true,
   },
   {
     title: "Software Engineering Intern",
     date: "2023 November - 2024 May",
     description:
       "Gained the first industrial experience by working for the Ballerina Team of WSO2 LLC. Implemented a new feature for the Ballerina programming Language.",
-    iconBgColor: "blue",
-    nav: "/",
+    iconBgColor: "orange",
+    nav: "/ide/experience/internship",
     navContent: "Learn More",
-    isDisabled: true,
+    isDisabled: false,
   },
 ];
 
