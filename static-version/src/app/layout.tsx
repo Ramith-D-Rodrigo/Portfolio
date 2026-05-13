@@ -2,7 +2,7 @@
 import "./globals.css";
 import { Instrument_Sans } from "next/font/google";
 import Dock from "./components/Dock";
-import IDEPage from "./ide/page"; // Wrap pages inside IDEPage layout
+import DesktopGate from "./components/DesktopGate";
 
 const font = Instrument_Sans({ subsets: ["latin"] });
 
@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`flex flex-col h-screen ${font.className} bg-gradient-to-r from-gray-800 via-gray-900 to-black`}>
+        <DesktopGate />
         {children}
         <div className="flex flex-col justify-end">
           <Dock />
