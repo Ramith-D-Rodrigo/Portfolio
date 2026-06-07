@@ -16,7 +16,7 @@ const events: EventInterface[] = [
     isDisabled: false,
   },
   {
-    date: "2025 May - Present",
+    date: "2025 May - 2026 May",
     description:
       "Joined Zenith Xperience (Pvt) Ltd. to gain the experience related to Extended Reality and Fullstack application development. Led teams, and developed applications by going through the full process of Software Development Life Cycle.",
     title: "Immersive Xperience Engineer",
