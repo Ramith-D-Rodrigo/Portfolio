@@ -500,7 +500,7 @@ const setupInteractableAreas = async (
   const barbellInteraction = barbellInteractionBuilder
     .setDisplayText("Flex (Professional Experience)")
     .setAnimations([
-      { animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 8 },
+      { animName: FLEX, displayTextList: EXPERIENCE, displayTextDur: 10 },
     ])
     .setCharacterTransform(
       new THREE.Vector3(4.97, 0, 4.9),

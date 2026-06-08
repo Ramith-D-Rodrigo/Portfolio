@@ -45,6 +45,8 @@ class InteractionDescHUD implements HUDComponent{
     }
 
     public setDisplayText(innerHTML: string, dur: number): void{
+        this.clearDisplayText(); // Clear any existing text first
+
         const message = document.createElement("div");
         message.className = "interaction-seq-text";
         message.innerHTML = innerHTML;
